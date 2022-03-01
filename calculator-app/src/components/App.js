@@ -1,41 +1,27 @@
-import { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { incrementAction } from '../reducers/calculateReducer';
-import styled, { ThemeProvider } from 'styled-components';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import theme from '../theme';
+import { ThemeProvider } from 'styled-components';
+
+import HomePage from '../pages/Home';
+import SettingPage from '../pages/Setting';
 import { darkColors, lightColors } from '../constants/colors';
-const Button = styled.button`
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
 
-  /* Color the border and text with theme.main */
-  color: ${(props) => props.theme.colors.primary};
-  border: 2px solid ${(props) => props.theme.colors.primary}; ;
-`;
-
-function App() {
-  const dispatch = useDispatch();
-  const value = useSelector((state) => state.dataCalculator);
-  const [themeMode, setThemeMode] = useState(true);
-
-  const increment = useCallback(() => {
-    dispatch(incrementAction(1));
-  }, [dispatch]);
-
-  const changeTheme = useCallback(() => {
-    setThemeMode(!themeMode);
-  }, [themeMode]);
-
+const App = () => {
+  const themeColor = useSelector((state) => state.themeColor);
   return (
-    <ThemeProvider theme={themeMode ? darkColors : lightColors}>
-      <div className="App">
-        {value.value}
-        <Button onClick={increment}>I</Button>
-        <Button onClick={changeTheme}>Change theme</Button>
-      </div>
+    <ThemeProvider
+      theme={
+        themeColor.darkTheme ? Object.assign(theme, darkColors) : Object.assign(theme, lightColors)
+      }>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="setting" element={<SettingPage />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
-}
-
+};
 export default App;

@@ -1,4 +1,4 @@
-/* import { css } from 'styled-components';
+import { css } from 'styled-components';
 
 const font = 'sans-serif';
 
@@ -39,4 +39,3 @@ const theme = {
 };
 
 export default theme;
- */

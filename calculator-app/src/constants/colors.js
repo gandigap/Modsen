@@ -1,7 +1,7 @@
 export const darkColors = {
-  colors: { primary: 'red', secondary: '#146C43', secondaryLight: '#A3CFBB' },
+  colors: { primary: '#434343', secondary: '#C7C7C7', secondaryLight: '#F2F2F2' },
 };
 
 export const lightColors = {
-  colors: { primary: 'blue', secondary: '#FFC107', secondaryLight: '#FFE69C' },
+  colors: { primary: '#C7C7C7', secondary: '#434343', secondaryLight: '#F2F2F2' },
 };
