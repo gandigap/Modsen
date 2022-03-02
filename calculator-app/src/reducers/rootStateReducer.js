@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import { calculateReducer } from './calculateReducer';
-import { themeReducer } from './themeReducer';
+import { combineReducers } from 'redux'
+import { operationReducer } from './operationReducer'
+import { themeReducer } from './themeReducer'
 
 export const rootReducer = combineReducers({
-  dataCalculator: calculateReducer,
-  themeColor: themeReducer,
-});
+  operationState: operationReducer,
+  themeState: themeReducer,
+})

@@ -1,27 +1,48 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import theme from '../theme';
-import { ThemeProvider } from 'styled-components';
+import React from 'react'
+import { useSelector } from 'react-redux'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom'
+import theme from 'theme'
+import { ThemeProvider } from 'styled-components'
+import PageLayout from 'layouts'
+import HomePage from 'pages/Home'
+import SettingPage from 'pages/Setting'
+import { darkColors, lightColors } from 'constants/colors'
 
-import HomePage from '../pages/Home';
-import SettingPage from '../pages/Setting';
-import { darkColors, lightColors } from '../constants/colors';
+import {
+  HOME_PAGE_ROUTE,
+  SETTING_PAGE_ROUTE,
+} from 'constants'
 
 const App = () => {
-  const themeColor = useSelector((state) => state.themeColor);
+  const themeState = useSelector(
+    (state) => state.themeState,
+  )
+
   return (
     <ThemeProvider
       theme={
-        themeColor.darkTheme ? Object.assign(theme, darkColors) : Object.assign(theme, lightColors)
+        themeState.darkTheme
+          ? Object.assign(theme, darkColors)
+          : Object.assign(theme, lightColors)
       }>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="setting" element={<SettingPage />} />
+          <Route
+            path={HOME_PAGE_ROUTE}
+            element={<PageLayout />}>
+            <Route index element={<HomePage />} />
+            <Route
+              path={SETTING_PAGE_ROUTE}
+              element={<SettingPage />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
-  );
-};
-export default App;
+  )
+}
+export default App
