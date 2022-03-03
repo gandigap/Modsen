@@ -4,7 +4,13 @@ import { KEYPAD_BUTTONS } from 'constants'
 import KeypadButton from './KeypadButton'
 
 const KeypadContainer = styled.div`
+  grid-area: keypad;
   display: flex;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  border-left: 1px solid
+    ${({ theme }) => theme.colors.fourth_color};
 `
 
 const Keypad = () => {

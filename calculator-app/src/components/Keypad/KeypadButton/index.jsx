@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 
 const KeypadButtonContainer = styled.button`
+  margin: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
   background-color: ${({ theme }) =>
     theme.colors.secondary};
 `
