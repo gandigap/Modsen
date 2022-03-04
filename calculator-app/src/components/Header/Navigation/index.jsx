@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const NavigationContainer = styled.nav`
   display: flex;
-  font-size: ${({ theme }) => theme.fontSizes[3]};
+  font-size: ${({ theme }) => theme.fontSizes[3]}px;
   a {
     padding: 0 5px;
     text-decoration: none;

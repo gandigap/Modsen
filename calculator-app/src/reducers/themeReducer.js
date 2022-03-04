@@ -16,7 +16,3 @@ export const themeReducer = (
       return state
   }
 }
-
-export const changeThemeAction = () => ({
-  type: CHANGE_THEME,
-})

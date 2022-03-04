@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { changeThemeAction } from 'reducers/themeReducer'
+import { changeThemeAction } from 'actions'
 
 /* import { PageLayout } from './layouts'; */
 

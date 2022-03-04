@@ -5,7 +5,9 @@ import styled from 'styled-components'
 
 const DisplayContainer = styled.div`
   grid-area: display;
-  font-size: ${({ theme }) => theme.fontSizes[5]};
+  padding: 20px;
+  text-align: right;
+  font-size: ${({ theme }) => theme.fontSizes[5]}px;
   color: ${({ theme }) => theme.colors.fourth_color};
 `
 

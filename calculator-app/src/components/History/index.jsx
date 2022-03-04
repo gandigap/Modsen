@@ -13,7 +13,7 @@ const HistoryContainer = styled.div`
 
 const HistoryTitle = styled.h3`
   color: ${({ theme }) => theme.colors.third_color};
-  font-size: ${({ theme }) => theme.fontSizes[3]};
+  font-size: ${({ theme }) => theme.fontSizes[3]}px;
 `
 
 const History = () => {
