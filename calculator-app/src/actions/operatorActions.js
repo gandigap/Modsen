@@ -1,6 +1,14 @@
-import { SET_0 } from 'constants'
+import {
+  UPDATE_TOKENLIST,
+  UPDATE_DISPLAY_VALUE,
+} from 'constants'
 
-export const set_0_Action = (payload) => ({
-  type: SET_0,
+export const updateTokenListAction = (payload) => ({
+  type: UPDATE_TOKENLIST,
+  payload,
+})
+
+export const updateDisplayValueAction = (payload) => ({
+  type: UPDATE_DISPLAY_VALUE,
   payload,
 })

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import styled from 'styled-components'
@@ -12,14 +12,17 @@ const DisplayContainer = styled.div`
 `
 
 const Display = () => {
-  const operationState = useSelector(
+  const [displayString, setdisplayString] = useState('')
+  const { displayValue } = useSelector(
     (state) => state.operationState,
   )
 
+  useEffect(() => {
+    setdisplayString(displayValue)
+  }, [displayValue])
+
   return (
-    <DisplayContainer>
-      {operationState.currentNumber}
-    </DisplayContainer>
+    <DisplayContainer>{displayString}</DisplayContainer>
   )
 }
 

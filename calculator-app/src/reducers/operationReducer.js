@@ -1,20 +1,16 @@
 import {
-  SET_0,
-  SET_1,
-  SET_2,
-  SET_3,
-  SET_4,
-  SET_5,
-  SET_6,
-  SET_7,
-  SET_8,
-  SET_9,
-  ADDITION,
+  ADD_TOKEN,
+  UPDATE_TOKENLIST,
+  UPDATE_DISPLAY_VALUE,
 } from 'constants'
 
 const OperationState = {
   currentNumber: null,
-  tokenList: [
+  currentToken: '',
+  tokenList: [],
+  displayValue: '',
+  calcHistory: [],
+  /* tokenList: [
     '6',
     'op-subtract',
     '3',
@@ -29,8 +25,7 @@ const OperationState = {
     '3',
     'bracket-right',
     'bracket-right',
-  ],
-  calcHistory: [],
+  ], */
 }
 
 export const operationReducer = (
@@ -38,62 +33,21 @@ export const operationReducer = (
   action,
 ) => {
   switch (action.type) {
-    case SET_0:
+    case ADD_TOKEN:
       return {
         ...state,
-        value: state.currentNumber + 0,
+        tokenList: [state.tokenList, ...action.payload],
       }
-    case SET_1:
+    case UPDATE_TOKENLIST:
       return {
         ...state,
-        value: state.currentNumber + 1,
+        tokenList: action.payload,
       }
-    case SET_2:
+    case UPDATE_DISPLAY_VALUE:
       return {
         ...state,
-        value: state.currentNumber + 2,
+        displayValue: action.payload,
       }
-    case SET_3:
-      return {
-        ...state,
-        value: state.currentNumber + 3,
-      }
-    case SET_4:
-      return {
-        ...state,
-        value: state.currentNumber + 4,
-      }
-    case SET_5:
-      return {
-        ...state,
-        value: state.currentNumber + 4,
-      }
-    case SET_6:
-      return {
-        ...state,
-        value: state.currentNumber + 6,
-      }
-    case SET_7:
-      return {
-        ...state,
-        value: state.currentNumber + 7,
-      }
-    case SET_8:
-      return {
-        ...state,
-        value: state.currentNumber + 8,
-      }
-    case SET_9:
-      return {
-        ...state,
-        value: state.currentNumber + 9,
-      }
-    case ADDITION:
-      return {
-        ...state,
-        value: state.currentNumber + action.payload,
-      }
-
     default:
       return state
   }
