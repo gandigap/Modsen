@@ -1,12 +1,10 @@
 import {
-  ADD_TOKEN,
+  UPDATE_CALCHISTORY,
   UPDATE_TOKENLIST,
   UPDATE_DISPLAY_VALUE,
 } from 'constants'
 
 const OperationState = {
-  currentNumber: null,
-  currentToken: '',
   tokenList: [],
   displayValue: '',
   calcHistory: [],
@@ -33,20 +31,21 @@ export const operationReducer = (
   action,
 ) => {
   switch (action.type) {
-    case ADD_TOKEN:
-      return {
-        ...state,
-        tokenList: [state.tokenList, ...action.payload],
-      }
     case UPDATE_TOKENLIST:
       return {
         ...state,
         tokenList: action.payload,
+        /* tokenList: action.payload, */
       }
     case UPDATE_DISPLAY_VALUE:
       return {
         ...state,
         displayValue: action.payload,
+      }
+    case UPDATE_CALCHISTORY:
+      return {
+        ...state,
+        calcHistory: [...state.calcHistory, action.payload],
       }
     default:
       return state

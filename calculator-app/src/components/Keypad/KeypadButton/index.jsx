@@ -6,6 +6,7 @@ import {
   addToken,
   displayEquation,
   deleteLast,
+  calculateAction,
 } from 'actions/asyncActions'
 
 const KeypadButtonContainer = styled.button`
@@ -52,7 +53,7 @@ const KeypadButton = ({ buttonInfo }) => {
           dispatch(displayEquation())
           break
         case 'equals':
-          /* calculate(tokenList) */
+          dispatch(calculateAction())
           break
         case 'toggle-advanced':
           console.log('отобразить дополнительную панель')

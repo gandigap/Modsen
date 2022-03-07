@@ -1,21 +1,5 @@
 import { KEYPAD_BUTTONS } from 'constants'
 
-export const output = (out, expression, tokens) => {
-  const roundPlaces = 15
-  out = +out.toFixed(roundPlaces)
-  let calcHistory = []
-  calcHistory.push({
-    out: out,
-    expression: expression,
-    tokens: tokens,
-  })
-
-  for (let i = calcHistory.length - 1; i >= 0; i--) {
-    console.log(calcHistory[i].expression)
-    console.log(calcHistory[i].out)
-  }
-}
-
 export const applyOperator = (operator, vals) => {
   let valA = vals[0]
   let result

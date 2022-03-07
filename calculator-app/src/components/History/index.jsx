@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
@@ -17,16 +17,24 @@ const HistoryTitle = styled.h3`
 `
 
 const History = () => {
-  const operationState = useSelector(
+  const [calcHistoryState, setCalcHistoryState] = useState(
+    [],
+  )
+  const { calcHistory } = useSelector(
     (state) => state.operationState,
   )
+
+  useEffect(() => {
+    setCalcHistoryState(calcHistory)
+  }, [calcHistory])
 
   return (
     <HistoryContainer>
       <HistoryTitle>HISTORY</HistoryTitle>
-      {operationState.prevNumber +
-        ' ' +
-        operationState.currentNumber}
+      {calcHistoryState.length &&
+        calcHistoryState.map((el, index) => (
+          <p key={index}>{`${el.expression}=${el.out}`}</p>
+        ))}
     </HistoryContainer>
   )
 }

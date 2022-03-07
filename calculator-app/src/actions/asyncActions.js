@@ -1,101 +1,103 @@
 import {
   updateDisplayValueAction,
   updateTokenListAction,
+  updateCalcHistoryAction,
 } from './operatorActions'
 import {
   getOperator,
-  output,
   applyOperator,
   hasPriority,
 } from 'utils'
 
-export const calculate = () => (dispatch, getState) => {
-  let { tokenList, displayValue } =
-    getState().operationState
+export const calculateAction =
+  () => (dispatch, getState) => {
+    let { tokenList, displayValue } =
+      getState().operationState
+    let count = 0
 
-  let count = 0
-  for (let i = 0; i < tokenList.length; i++) {
-    if (tokenList[i] === 'bracket-left') {
-      count++
-    } else if (tokenList[i] === 'bracket-right') {
-      count--
-    }
-  }
-  if (count != 0) {
-    output('Error: unbalanced brackets')
-    return
-  }
-
-  let valStack = []
-  let opStack = []
-
-  for (let i = 0; i < tokenList.length; i++) {
-    if (!isNaN(tokenList[i])) {
-      valStack.push(tokenList[i])
-    } else if (tokenList[i] === 'num-pi') {
-      valStack.push(Math.PI)
-    } else if (tokenList[i] === 'bracket-left') {
-      opStack.push(tokenList[i])
-    } else if (tokenList[i] === 'bracket-right') {
-      while (
-        opStack[opStack.length - 1] !== 'bracket-left'
-      ) {
-        let operator = getOperator(opStack.pop())
-        if (operator.numOperands === 1)
-          valStack.push(
-            applyOperator(operator, [valStack.pop()]),
-          )
-        else
-          valStack.push(
-            applyOperator(operator, [
-              valStack.pop(),
-              valStack.pop(),
-            ]),
-          )
+    for (let i = 0; i < tokenList.length; i++) {
+      if (tokenList[i] === 'bracket-left') {
+        count++
+      } else if (tokenList[i] === 'bracket-right') {
+        count--
       }
-      opStack.pop()
-    } else {
-      while (
-        opStack.length > 0 &&
-        hasPriority(
-          opStack[opStack.length - 1],
-          tokenList[i],
+    }
+
+    if (count !== 0) {
+      dispatch(output('Error: unbalanced brackets'))
+      return
+    }
+
+    let valStack = []
+    let opStack = []
+    console.log('calculate')
+    for (let i = 0; i < tokenList.length; i++) {
+      if (!isNaN(tokenList[i])) {
+        valStack.push(tokenList[i])
+      } else if (tokenList[i] === 'num-pi') {
+        valStack.push(Math.PI)
+      } else if (tokenList[i] === 'bracket-left') {
+        opStack.push(tokenList[i])
+      } else if (tokenList[i] === 'bracket-right') {
+        while (
+          opStack[opStack.length - 1] !== 'bracket-left'
+        ) {
+          let operator = getOperator(opStack.pop())
+          if (operator.numOperands === 1)
+            valStack.push(
+              applyOperator(operator, [valStack.pop()]),
+            )
+          else
+            valStack.push(
+              applyOperator(operator, [
+                valStack.pop(),
+                valStack.pop(),
+              ]),
+            )
+        }
+        opStack.pop()
+      } else {
+        while (
+          opStack.length > 0 &&
+          hasPriority(
+            opStack[opStack.length - 1],
+            tokenList[i],
+          )
+        ) {
+          let operator = getOperator(opStack.pop())
+          if (operator.numOperands === 1)
+            valStack.push(
+              applyOperator(operator, [valStack.pop()]),
+            )
+          else
+            valStack.push(
+              applyOperator(operator, [
+                valStack.pop(),
+                valStack.pop(),
+              ]),
+            )
+        }
+        opStack.push(tokenList[i])
+      }
+    }
+    console.log(opStack)
+    while (opStack.length > 0) {
+      let operator = getOperator(opStack.pop())
+      if (operator.numOperands === 1)
+        valStack.push(
+          applyOperator(operator, [valStack.pop()]),
         )
-      ) {
-        let operator = getOperator(opStack.pop())
-        if (operator.numOperands === 1)
-          valStack.push(
-            applyOperator(operator, [valStack.pop()]),
-          )
-        else
-          valStack.push(
-            applyOperator(operator, [
-              valStack.pop(),
-              valStack.pop(),
-            ]),
-          )
-      }
-      opStack.push(tokenList[i])
+      else
+        valStack.push(
+          applyOperator(operator, [
+            valStack.pop(),
+            valStack.pop(),
+          ]),
+        )
     }
-  }
 
-  while (opStack.length > 0) {
-    let operator = getOperator(opStack.pop())
-    if (operator.numOperands === 1)
-      valStack.push(
-        applyOperator(operator, [valStack.pop()]),
-      )
-    else
-      valStack.push(
-        applyOperator(operator, [
-          valStack.pop(),
-          valStack.pop(),
-        ]),
-      )
+    dispatch(output(valStack[0], displayValue, tokenList))
   }
-
-  output(valStack[0], displayValue, tokenList)
-}
 
 export const addToken = (token) => (dispatch, getState) => {
   let { tokenList } = getState().operationState
@@ -168,3 +170,18 @@ export const deleteLast = () => (dispatch, getState) => {
   dispatch(updateTokenListAction(tokenList))
   dispatch(displayEquation())
 }
+
+export const output =
+  (out, expression, tokens) => (dispatch, getState) => {
+    const roundPlaces = 15
+    out = +out.toFixed(roundPlaces)
+    dispatch(updateTokenListAction([out]))
+    dispatch(displayEquation())
+    dispatch(
+      updateCalcHistoryAction({
+        out: out,
+        expression: expression,
+        tokens: tokens,
+      }),
+    )
+  }
