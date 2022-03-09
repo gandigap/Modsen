@@ -24,13 +24,12 @@ export const calculateAction =
     }
 
     if (count !== 0) {
-      dispatch(output('Error: unbalanced brackets'))
+      dispatch(outputAction(NaN, displayValue, tokenList))
       return
     }
 
     let valStack = []
     let opStack = []
-    console.log('calculate')
     for (let i = 0; i < tokenList.length; i++) {
       if (!isNaN(tokenList[i])) {
         valStack.push(tokenList[i])
@@ -43,6 +42,7 @@ export const calculateAction =
           opStack[opStack.length - 1] !== 'bracket-left'
         ) {
           let operator = getOperator(opStack.pop())
+
           if (operator.numOperands === 1)
             valStack.push(
               applyOperator(operator, [valStack.pop()]),
@@ -55,6 +55,7 @@ export const calculateAction =
               ]),
             )
         }
+
         opStack.pop()
       } else {
         while (
@@ -80,7 +81,6 @@ export const calculateAction =
         opStack.push(tokenList[i])
       }
     }
-    console.log(opStack)
     while (opStack.length > 0) {
       let operator = getOperator(opStack.pop())
       if (operator.numOperands === 1)
@@ -95,42 +95,50 @@ export const calculateAction =
           ]),
         )
     }
-
-    dispatch(output(valStack[0], displayValue, tokenList))
+    if (
+      `${valStack[0]}` === 'Infinity' ||
+      `${valStack[0]}` === '-Infinity'
+    ) {
+      dispatch(outputAction('NaN', displayValue, tokenList))
+    } else {
+      dispatch(
+        outputAction(valStack[0], displayValue, tokenList),
+      )
+    }
   }
 
-export const addToken = (token) => (dispatch, getState) => {
-  let { tokenList } = getState().operationState
-  if (isNaN(token)) {
-    if (
-      (token === 'bracket-left' || token === 'num-pi') &&
-      !isNaN(tokenList[tokenList.length - 1])
-    ) {
-      tokenList.push('op-multiply')
-    }
-    tokenList.push(token)
-  } else {
-    if (!isNaN(tokenList[tokenList.length - 1])) {
-      tokenList[tokenList.length - 1] =
-        tokenList[tokenList.length - 1] + token
-    } else {
+export const addTokenAction =
+  (token) => (dispatch, getState) => {
+    let { tokenList } = getState().operationState
+    if (isNaN(token)) {
       if (
-        !isNaN(token) &&
-        (tokenList[tokenList.length - 1] ===
-          'bracket-right' ||
-          tokenList[tokenList.length - 1] === 'num-pi')
+        (token === 'bracket-left' || token === 'num-pi') &&
+        !isNaN(tokenList[tokenList.length - 1])
       ) {
         tokenList.push('op-multiply')
       }
       tokenList.push(token)
+    } else {
+      if (!isNaN(tokenList[tokenList.length - 1])) {
+        tokenList[tokenList.length - 1] =
+          tokenList[tokenList.length - 1] + token
+      } else {
+        if (
+          !isNaN(token) &&
+          (tokenList[tokenList.length - 1] ===
+            'bracket-right' ||
+            tokenList[tokenList.length - 1] === 'num-pi')
+        ) {
+          tokenList.push('op-multiply')
+        }
+        tokenList.push(token)
+      }
     }
+    dispatch(updateTokenListAction(tokenList))
+    dispatch(displayEquationAction())
   }
-  console.log(tokenList, 'tokenList')
-  dispatch(updateTokenListAction(tokenList))
-  dispatch(displayEquation())
-}
 
-export const displayEquation =
+export const displayEquationAction =
   () => (dispatch, getState) => {
     let { tokenList } = getState().operationState
 
@@ -150,33 +158,40 @@ export const displayEquation =
         htmlString += tokenList[index]
       }
     }
-    console.log(htmlString, 'htmlstring')
     dispatch(updateDisplayValueAction(htmlString))
   }
 
-export const deleteLast = () => (dispatch, getState) => {
-  let { tokenList } = getState().operationState
+export const deleteLastTokenAction =
+  () => (dispatch, getState) => {
+    let { tokenList } = getState().operationState
 
-  if (isNaN(tokenList[tokenList.length - 1])) {
-    tokenList.pop()
-  } else {
-    tokenList[tokenList.length - 1] = tokenList[
-      tokenList.length - 1
-    ].slice(0, -1)
-    if (tokenList[tokenList.length - 1].length === 0) {
+    if (isNaN(tokenList[tokenList.length - 1])) {
       tokenList.pop()
+    } else {
+      tokenList[tokenList.length - 1] = tokenList[
+        tokenList.length - 1
+      ].slice(0, -1)
+      if (tokenList[tokenList.length - 1].length === 0) {
+        tokenList.pop()
+      }
     }
+    dispatch(updateTokenListAction(tokenList))
+    dispatch(displayEquationAction())
   }
-  dispatch(updateTokenListAction(tokenList))
-  dispatch(displayEquation())
-}
 
-export const output =
-  (out, expression, tokens) => (dispatch, getState) => {
+export const outputAction =
+  (out, expression, tokens) => (dispatch) => {
     const roundPlaces = 15
-    out = +out.toFixed(roundPlaces)
-    dispatch(updateTokenListAction([out]))
-    dispatch(displayEquation())
+    console.log(out, expression, tokens)
+
+    if (isNaN(out)) {
+      out = 'NaN'
+      dispatch(updateTokenListAction([]))
+    } else {
+      out = +out.toFixed(roundPlaces)
+      dispatch(updateTokenListAction([`${out}`]))
+    }
+    dispatch(displayEquationAction())
     dispatch(
       updateCalcHistoryAction({
         out: out,
@@ -184,4 +199,16 @@ export const output =
         tokens: tokens,
       }),
     )
+  }
+
+export const addPeriodAction =
+  () => (dispatch, getState) => {
+    let { tokenList } = getState().operationState
+    if (
+      tokenList[tokenList.length - 1].indexOf('.') === -1
+    ) {
+      tokenList[tokenList.length - 1] += '.'
+    }
+    dispatch(updateTokenListAction(tokenList))
+    dispatch(displayEquationAction())
   }

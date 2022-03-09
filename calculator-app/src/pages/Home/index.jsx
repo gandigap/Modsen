@@ -1,13 +1,14 @@
+import React from 'react'
+
 import Display from 'components/Display'
 import KeyPad from 'components/Keypad'
 import History from 'components/History'
-import React from 'react'
 
 import styled from 'styled-components'
 
 const HomePageContainer = styled.div`
-  margin: 10px;
-  height: 80%;
+  margin: ${({ theme }) => theme.spaces[2]}px;
+  height: 86%;
   display: grid;
   grid-template-rows: 100px 1fr;
   grid-template-columns: 70% 30%;

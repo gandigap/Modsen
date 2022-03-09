@@ -5,29 +5,32 @@ import {
   Routes,
   Route,
 } from 'react-router-dom'
-import theme from 'theme'
-import { ThemeProvider } from 'styled-components'
+
 import PageLayout from 'layouts'
 import HomePage from 'pages/Home'
 import SettingPage from 'pages/Setting'
-import { darkColors, lightColors } from 'constants/colors'
-
 import {
   HOME_PAGE_ROUTE,
   SETTING_PAGE_ROUTE,
+  DARK_COLORS,
+  LIGHT_COLORS,
+  THEME_VIEW,
 } from 'constants'
 
+import theme from 'theme'
+import { ThemeProvider } from 'styled-components'
+
 const App = () => {
-  const themeState = useSelector(
+  const { themeView } = useSelector(
     (state) => state.themeState,
   )
 
   return (
     <ThemeProvider
       theme={
-        themeState.darkTheme
-          ? Object.assign(theme, darkColors)
-          : Object.assign(theme, lightColors)
+        themeView === THEME_VIEW.dark
+          ? Object.assign(theme, DARK_COLORS)
+          : Object.assign(theme, LIGHT_COLORS)
       }>
       <BrowserRouter>
         <Routes>

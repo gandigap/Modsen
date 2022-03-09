@@ -2,28 +2,15 @@ import {
   UPDATE_CALCHISTORY,
   UPDATE_TOKENLIST,
   UPDATE_DISPLAY_VALUE,
+  CLEAR_TOKENLIST,
+  CLEAR_CALCHISTORY,
+  ADD_PERIOD,
 } from 'constants'
 
 const OperationState = {
   tokenList: [],
   displayValue: '',
   calcHistory: [],
-  /* tokenList: [
-    '6',
-    'op-subtract',
-    '3',
-    'op-multiply',
-    'bracket-left',
-    '23',
-    'op-subtract',
-    'op-square-root',
-    'bracket-left',
-    '3',
-    'op-multiply',
-    '3',
-    'bracket-right',
-    'bracket-right',
-  ], */
 }
 
 export const operationReducer = (
@@ -35,7 +22,6 @@ export const operationReducer = (
       return {
         ...state,
         tokenList: action.payload,
-        /* tokenList: action.payload, */
       }
     case UPDATE_DISPLAY_VALUE:
       return {
@@ -46,6 +32,21 @@ export const operationReducer = (
       return {
         ...state,
         calcHistory: [...state.calcHistory, action.payload],
+      }
+    case CLEAR_TOKENLIST:
+      return {
+        ...state,
+        tokenList: [],
+      }
+    case CLEAR_CALCHISTORY:
+      return {
+        ...state,
+        calcHistory: [],
+      }
+    case ADD_PERIOD:
+      return {
+        ...state,
+        tokenList: [],
       }
     default:
       return state

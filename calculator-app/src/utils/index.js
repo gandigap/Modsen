@@ -1,4 +1,4 @@
-import { KEYPAD_BUTTONS } from 'constants'
+import { OPERATORS } from 'constants'
 
 export const applyOperator = (operator, vals) => {
   let valA = vals[0]
@@ -13,7 +13,6 @@ export const applyOperator = (operator, vals) => {
       parseFloat(valA),
     )
   }
-
   return result
 }
 
@@ -26,9 +25,9 @@ export const hasPriority = (op1, op2) => {
 }
 
 export const getOperator = (opID) => {
-  for (var i = 0; i < KEYPAD_BUTTONS.length; i++) {
-    if (KEYPAD_BUTTONS[i].id === opID) {
-      return KEYPAD_BUTTONS[i]
+  for (let i = 0; i < OPERATORS.length; i++) {
+    if (OPERATORS[i].id === opID) {
+      return OPERATORS[i]
     }
   }
   return undefined
@@ -43,8 +42,8 @@ export const toRadians = (degrees) => {
 }
 
 function getOperatorPriority(opID) {
-  for (let i = 0; i < KEYPAD_BUTTONS.length; i++) {
-    if (KEYPAD_BUTTONS[i].id === opID) {
+  for (let i = 0; i < OPERATORS.length; i++) {
+    if (OPERATORS[i].id === opID) {
       return i
     }
   }

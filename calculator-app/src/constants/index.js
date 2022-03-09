@@ -1,4 +1,6 @@
 export * from './actions'
 export * from './router'
 export * from './colors'
-export * from './keypadButtons'
+export * from './buttons'
+export * from './operators'
+export * from './themeView'

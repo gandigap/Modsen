@@ -1,26 +1,58 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import styled from 'styled-components'
-import { updateTokenListAction } from 'actions'
+
 import {
-  addToken,
-  displayEquation,
-  deleteLast,
+  clearCalcHistoryAction,
+  clearTokenListAction,
+} from 'actions'
+import {
+  addTokenAction,
+  addPeriodAction,
+  displayEquationAction,
+  deleteLastTokenAction,
   calculateAction,
 } from 'actions/asyncActions'
 
+import styled from 'styled-components'
+
 const KeypadButtonContainer = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
+  width: 100%;
+  min-height: ${({ theme }) => theme.spaces[5]}px;
+  height: 100%;
+  border: none;
+  border-radius: ${({ theme }) => theme.spaces[2]}px;
+  font-size: ${({ theme }) => theme.fontSizes[2]}px;
+  font-weight: bold;
   background-color: ${({ theme }) =>
-    theme.colors.secondary};
+    theme.colors.third_color};
+  color: ${({ theme }) => theme.colors.fourth_color};
+  cursor: pointer;
+  text-decoration: none;
+  transition: all ease 0.3s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    ${({ theme }) => theme.boxShadows[0]};
+  }
+
+  &.num {
+    color: ${({ theme }) => theme.colors.fifth_color};
+  }
+
+  &.primary_operator {
+    background-color: ${({ theme }) =>
+      theme.colors.fifth_color};
+  }
 `
 
 const KeypadButton = ({ buttonInfo }) => {
   const dispatch = useDispatch()
 
-  const { tokenList, calcHistory } = useSelector(
+  const { tokenList } = useSelector(
     (state) => state.operationState,
   )
 
@@ -28,54 +60,45 @@ const KeypadButton = ({ buttonInfo }) => {
     (e) => {
       switch (e.target.id) {
         case 'delete':
-          dispatch(deleteLast())
+          dispatch(deleteLastTokenAction())
           break
         case 'clear':
           if (tokenList.length === 0) {
-            calcHistory.length = 0
+            dispatch(clearCalcHistoryAction())
           } else {
-            tokenList.length = 0
-            dispatch(displayEquation())
+            dispatch(clearTokenListAction())
+            dispatch(displayEquationAction())
           }
           break
         case 'period':
           if (isNaN(tokenList[tokenList.length - 1])) {
-            dispatch(updateTokenListAction('0.'))
+            dispatch(addTokenAction('0.'))
           } else {
-            if (
-              tokenList[tokenList.length - 1].indexOf(
-                '.',
-              ) === -1
-            ) {
-              tokenList[tokenList.length - 1] += '.'
-            }
+            dispatch(addPeriodAction())
           }
-          dispatch(displayEquation())
+          dispatch(displayEquationAction())
           break
         case 'equals':
           dispatch(calculateAction())
           break
-        case 'toggle-advanced':
-          console.log('отобразить дополнительную панель')
-          break
         case 'num-pi':
-          dispatch(updateTokenListAction('num-pi'))
+          dispatch(addTokenAction('num-pi'))
           break
         default:
-          console.log(e.target.id)
           if (e.target.id.includes('num')) {
-            dispatch(addToken(e.target.textContent))
+            dispatch(addTokenAction(e.target.textContent))
           } else {
-            dispatch(addToken(e.target.id))
+            dispatch(addTokenAction(e.target.id))
           }
       }
     },
-    [calcHistory, dispatch, tokenList],
+    [dispatch, tokenList],
   )
 
   return (
     <KeypadButtonContainer
       id={buttonInfo.id}
+      className={buttonInfo.class}
       onClick={clickButton}>
       {buttonInfo.valueButton}
     </KeypadButtonContainer>
