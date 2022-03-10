@@ -16,14 +16,13 @@ import {
   LIGHT_COLORS,
   THEME_VIEW,
 } from 'constants'
+import { themeSelector } from 'selectors'
 
 import theme from 'theme'
 import { ThemeProvider } from 'styled-components'
 
 const App = () => {
-  const { themeView } = useSelector(
-    (state) => state.themeState,
-  )
+  const { themeView } = useSelector(themeSelector)
 
   return (
     <ThemeProvider

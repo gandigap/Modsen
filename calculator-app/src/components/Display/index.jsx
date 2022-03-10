@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import styled from 'styled-components'
+import { operationSelector } from 'selectors'
 
-const DisplayContainer = styled.div`
-  grid-area: display;
-  padding: 20px;
-  text-align: right;
-  font-size: ${({ theme }) => theme.fontSizes[5]}px;
-  color: ${({ theme }) => theme.colors.fourth_color};
-`
+import DisplayContainer from './style'
 
 const Display = () => {
-  const [displayString, setdisplayString] = useState('')
-  const { displayValue } = useSelector(
-    (state) => state.operationState,
-  )
+  const [displayString, setDisplayString] = useState('')
+  const { displayValue } = useSelector(operationSelector)
 
   useEffect(() => {
-    setdisplayString(displayValue)
+    setDisplayString(displayValue)
   }, [displayValue])
 
   return (

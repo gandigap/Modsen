@@ -1,23 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { HOME_PAGE_ROUTE } from 'constants'
+import { HOME_PAGE_ROUTE, TEXT } from 'constants'
 
-import styled from 'styled-components'
-
-const LogoContainer = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes[3]}px;
-  a {
-    text-decoration: none;
-    color: ${({ theme }) => theme.colors.fourth_color};
-  }
-`
-
+import LogoContainer from './style'
 const Logo = () => {
   return (
     <LogoContainer>
-      {' '}
-      <Link to={HOME_PAGE_ROUTE}>Calculator App</Link>
+      <Link to={HOME_PAGE_ROUTE}>
+        {TEXT.calculator_app}
+      </Link>
     </LogoContainer>
   )
 }

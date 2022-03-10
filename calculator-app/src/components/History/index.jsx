@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import styled from 'styled-components'
+import { operationSelector } from 'selectors'
+import { TEXT } from 'constants'
 
-const HistoryContainer = styled.div`
-  padding: 20px;
-  grid-area: history;
-
-  border-left: 1px solid
-    ${({ theme }) => theme.colors.fourth_color};
-  color: ${({ theme }) => theme.colors.fourth_color};
-`
-
-const HistoryTitle = styled.h3`
-  color: ${({ theme }) => theme.colors.fourth_color};
-  font-size: ${({ theme }) => theme.fontSizes[3]}px;
-  padding-bottom: ${({ theme }) => theme.spaces[3]}px;
-`
+import {
+  HistoryContainer,
+  HistoryTitle,
+  HistoryExpression,
+  HistoryResult,
+} from './style'
 
 const History = () => {
   const [calcHistoryState, setCalcHistoryState] = useState(
     [],
   )
-  const { calcHistory } = useSelector(
-    (state) => state.operationState,
-  )
+  const { calcHistory } = useSelector(operationSelector)
 
   useEffect(() => {
     setCalcHistoryState(calcHistory)
@@ -32,13 +23,14 @@ const History = () => {
 
   return (
     <HistoryContainer>
-      <HistoryTitle>HISTORY</HistoryTitle>
+      <HistoryTitle>{TEXT.history}</HistoryTitle>
       {calcHistoryState.length
         ? calcHistoryState.map((el, index) => (
-            <p
-              key={
-                index
-              }>{`${el.expression} = ${el.out}`}</p>
+            <HistoryExpression
+              key={`history_item_${index}`}>
+              {`${el.expression} = `}
+              <HistoryResult>{el.out}</HistoryResult>
+            </HistoryExpression>
           ))
         : null}
     </HistoryContainer>

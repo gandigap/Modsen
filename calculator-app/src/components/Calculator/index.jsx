@@ -1,12 +1,6 @@
 import React from 'react'
 
-import styled from 'styled-components'
-
-const CalculatorContainer = styled.div`
-  height: 100%;
-  background-color: ${({ theme }) =>
-    theme.colors.second_color};
-`
+import CalculatorContainer from './style'
 
 const Calculator = (props) => {
   return (

@@ -8,17 +8,21 @@ import {
   applyOperator,
   hasPriority,
 } from 'utils'
+import { OPERATORS_ID, TEXT } from 'constants'
 
 export const calculateAction =
   () => (dispatch, getState) => {
-    let { tokenList, displayValue } =
-      getState().operationState
+    const {
+      operationState: { tokenList, displayValue },
+    } = getState()
     let count = 0
 
-    for (let i = 0; i < tokenList.length; i++) {
-      if (tokenList[i] === 'bracket-left') {
+    for (let index = 0; index < tokenList.length; index++) {
+      if (tokenList[index] === OPERATORS_ID.bracket_left) {
         count++
-      } else if (tokenList[i] === 'bracket-right') {
+      } else if (
+        tokenList[index] === OPERATORS_ID.bracket_right
+      ) {
         count--
       }
     }
@@ -28,94 +32,110 @@ export const calculateAction =
       return
     }
 
-    let valStack = []
-    let opStack = []
+    let valuesStack = []
+    let operatorsStack = []
     for (let i = 0; i < tokenList.length; i++) {
       if (!isNaN(tokenList[i])) {
-        valStack.push(tokenList[i])
-      } else if (tokenList[i] === 'num-pi') {
-        valStack.push(Math.PI)
-      } else if (tokenList[i] === 'bracket-left') {
-        opStack.push(tokenList[i])
-      } else if (tokenList[i] === 'bracket-right') {
+        valuesStack.push(tokenList[i])
+      } else if (tokenList[i] === OPERATORS_ID.num_pi) {
+        valuesStack.push(Math.PI)
+      } else if (
+        tokenList[i] === OPERATORS_ID.bracket_left
+      ) {
+        operatorsStack.push(tokenList[i])
+      } else if (
+        tokenList[i] === OPERATORS_ID.bracket_right
+      ) {
         while (
-          opStack[opStack.length - 1] !== 'bracket-left'
+          operatorsStack[operatorsStack.length - 1] !==
+          OPERATORS_ID.bracket_left
         ) {
-          let operator = getOperator(opStack.pop())
+          let operator = getOperator(operatorsStack.pop())
 
           if (operator.numOperands === 1)
-            valStack.push(
-              applyOperator(operator, [valStack.pop()]),
+            valuesStack.push(
+              applyOperator(operator, [valuesStack.pop()]),
             )
           else
-            valStack.push(
+            valuesStack.push(
               applyOperator(operator, [
-                valStack.pop(),
-                valStack.pop(),
+                valuesStack.pop(),
+                valuesStack.pop(),
               ]),
             )
         }
 
-        opStack.pop()
+        operatorsStack.pop()
       } else {
         while (
-          opStack.length > 0 &&
+          operatorsStack.length > 0 &&
           hasPriority(
-            opStack[opStack.length - 1],
+            operatorsStack[operatorsStack.length - 1],
             tokenList[i],
           )
         ) {
-          let operator = getOperator(opStack.pop())
+          let operator = getOperator(operatorsStack.pop())
           if (operator.numOperands === 1)
-            valStack.push(
-              applyOperator(operator, [valStack.pop()]),
+            valuesStack.push(
+              applyOperator(operator, [valuesStack.pop()]),
             )
           else
-            valStack.push(
+            valuesStack.push(
               applyOperator(operator, [
-                valStack.pop(),
-                valStack.pop(),
+                valuesStack.pop(),
+                valuesStack.pop(),
               ]),
             )
         }
-        opStack.push(tokenList[i])
+        operatorsStack.push(tokenList[i])
       }
     }
-    while (opStack.length > 0) {
-      let operator = getOperator(opStack.pop())
+    while (operatorsStack.length > 0) {
+      let operator = getOperator(operatorsStack.pop())
       if (operator.numOperands === 1)
-        valStack.push(
-          applyOperator(operator, [valStack.pop()]),
+        valuesStack.push(
+          applyOperator(operator, [valuesStack.pop()]),
         )
       else
-        valStack.push(
+        valuesStack.push(
           applyOperator(operator, [
-            valStack.pop(),
-            valStack.pop(),
+            valuesStack.pop(),
+            valuesStack.pop(),
           ]),
         )
     }
     if (
-      `${valStack[0]}` === 'Infinity' ||
-      `${valStack[0]}` === '-Infinity'
+      `${valuesStack[0]}` === TEXT.positiveInfinity ||
+      `${valuesStack[0]}` === TEXT.negativeInfinity
     ) {
-      dispatch(outputAction('NaN', displayValue, tokenList))
+      dispatch(
+        outputAction(TEXT.nan, displayValue, tokenList),
+      )
     } else {
       dispatch(
-        outputAction(valStack[0], displayValue, tokenList),
+        outputAction(
+          valuesStack[0],
+          displayValue,
+          tokenList,
+        ),
       )
     }
   }
 
 export const addTokenAction =
   (token) => (dispatch, getState) => {
-    let { tokenList } = getState().operationState
+    const {
+      operationState: { tokenList },
+    } = getState()
+
     if (isNaN(token)) {
       if (
-        (token === 'bracket-left' || token === 'num-pi') &&
+        (token === OPERATORS_ID.bracket_left ||
+          token === OPERATORS_ID.num_pi ||
+          token === OPERATORS_ID.op_square_root) &&
         !isNaN(tokenList[tokenList.length - 1])
       ) {
-        tokenList.push('op-multiply')
+        tokenList.push(OPERATORS_ID.op_multiply)
       }
       tokenList.push(token)
     } else {
@@ -126,10 +146,11 @@ export const addTokenAction =
         if (
           !isNaN(token) &&
           (tokenList[tokenList.length - 1] ===
-            'bracket-right' ||
-            tokenList[tokenList.length - 1] === 'num-pi')
+            OPERATORS_ID.bracket_right ||
+            tokenList[tokenList.length - 1] ===
+              OPERATORS_ID.num_pi)
         ) {
-          tokenList.push('op-multiply')
+          tokenList.push(OPERATORS_ID.op_multiply)
         }
         tokenList.push(token)
       }
@@ -140,17 +161,26 @@ export const addTokenAction =
 
 export const displayEquationAction =
   () => (dispatch, getState) => {
-    let { tokenList } = getState().operationState
+    const {
+      operationState: { tokenList },
+    } = getState()
 
     let htmlString = ''
+
     for (let index = 0; index < tokenList.length; index++) {
       if (isNaN(tokenList[index])) {
-        if (tokenList[index] === 'bracket-left') {
-          htmlString += ' ('
-        } else if (tokenList[index] === 'bracket-right') {
-          htmlString += ') '
-        } else if (tokenList[index] === 'num-pi') {
-          htmlString += ' π '
+        if (
+          tokenList[index] === OPERATORS_ID.bracket_left
+        ) {
+          htmlString += TEXT.bracket_left
+        } else if (
+          tokenList[index] === OPERATORS_ID.bracket_right
+        ) {
+          htmlString += TEXT.bracket_right
+        } else if (
+          tokenList[index] === OPERATORS_ID.num_pi
+        ) {
+          htmlString += TEXT.pi
         } else {
           htmlString += getOperator(tokenList[index]).symbol
         }
@@ -163,7 +193,9 @@ export const displayEquationAction =
 
 export const deleteLastTokenAction =
   () => (dispatch, getState) => {
-    let { tokenList } = getState().operationState
+    const {
+      operationState: { tokenList },
+    } = getState()
 
     if (isNaN(tokenList[tokenList.length - 1])) {
       tokenList.pop()
@@ -181,14 +213,13 @@ export const deleteLastTokenAction =
 
 export const outputAction =
   (out, expression, tokens) => (dispatch) => {
-    const roundPlaces = 15
-    console.log(out, expression, tokens)
+    const ROUND_PLACES = 15
 
     if (isNaN(out)) {
-      out = 'NaN'
+      out = TEXT.nan
       dispatch(updateTokenListAction([]))
     } else {
-      out = +out.toFixed(roundPlaces)
+      out = +out.toFixed(ROUND_PLACES)
       dispatch(updateTokenListAction([`${out}`]))
     }
     dispatch(displayEquationAction())
@@ -203,11 +234,16 @@ export const outputAction =
 
 export const addPeriodAction =
   () => (dispatch, getState) => {
-    let { tokenList } = getState().operationState
+    const {
+      operationState: { tokenList },
+    } = getState()
+
     if (
-      tokenList[tokenList.length - 1].indexOf('.') === -1
+      tokenList[tokenList.length - 1].indexOf(
+        TEXT.point,
+      ) === -1
     ) {
-      tokenList[tokenList.length - 1] += '.'
+      tokenList[tokenList.length - 1] += TEXT.point
     }
     dispatch(updateTokenListAction(tokenList))
     dispatch(displayEquationAction())

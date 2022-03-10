@@ -1,32 +1,36 @@
 import { OPERATORS } from 'constants'
 
-export const applyOperator = (operator, vals) => {
-  let valA = vals[0]
-  let result
+export const applyOperator = (operator, values) => {
+  const firstValue = values[0]
+  let result = null
 
-  if (vals.length === 1) {
-    result = operator.calc(parseFloat(valA))
+  if (values.length === 1) {
+    result = operator.calc(parseFloat(firstValue))
   } else {
-    let valB = vals[1]
+    const secondValue = values[1]
     result = operator.calc(
-      parseFloat(valB),
-      parseFloat(valA),
+      parseFloat(secondValue),
+      parseFloat(firstValue),
     )
   }
   return result
 }
 
-export const hasPriority = (op1, op2) => {
-  if (getOperator(op1) !== undefined) {
+export const hasPriority = (
+  firstOperator,
+  secondOperator,
+) => {
+  if (getOperator(firstOperator) !== undefined) {
     return (
-      getOperatorPriority(op1) <= getOperatorPriority(op2)
+      getOperatorPriority(firstOperator) <=
+      getOperatorPriority(secondOperator)
     )
   }
 }
 
-export const getOperator = (opID) => {
+export const getOperator = (operatorID) => {
   for (let i = 0; i < OPERATORS.length; i++) {
-    if (OPERATORS[i].id === opID) {
+    if (OPERATORS[i].id === operatorID) {
       return OPERATORS[i]
     }
   }
@@ -41,9 +45,9 @@ export const toRadians = (degrees) => {
   return degrees * (Math.PI / 180)
 }
 
-function getOperatorPriority(opID) {
+function getOperatorPriority(operatorId) {
   for (let i = 0; i < OPERATORS.length; i++) {
-    if (OPERATORS[i].id === opID) {
+    if (OPERATORS[i].id === operatorId) {
       return i
     }
   }
