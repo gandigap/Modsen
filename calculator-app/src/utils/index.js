@@ -5,14 +5,8 @@ import {
   OPERATORS_ID,
 } from 'constants'
 
-export const applyOperator = (operator, values) => {
-  return values.length === 1
-    ? operator.calc(parseFloat(values[0]))
-    : operator.calc(
-        parseFloat(values[1]),
-        parseFloat(values[0]),
-      )
-}
+export const applyOperator = (operator, values) =>
+  operator.calc(...values.reverse().map(parseFloat))
 
 export const hasPriority = (
   firstOperator,
