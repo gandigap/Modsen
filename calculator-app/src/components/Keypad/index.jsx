@@ -1,8 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-} from 'react'
+import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
@@ -29,12 +25,7 @@ import KeypadContainer from './style'
 const Keypad = () => {
   const { mode } = useSelector(themeSelector)
   const { tokenList } = useSelector(operationSelector)
-  const [modeKeypad, setModeKeypad] = useState(mode)
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    setModeKeypad(mode)
-  }, [mode])
 
   const clickButton = useCallback(
     (e) => {
@@ -89,24 +80,26 @@ const Keypad = () => {
     },
     [dispatch, tokenList],
   )
+  const keypadButtonRender = (button, index) => {
+    const NUMBER_OF_CLASSIC_BUTTONS = 19
+    const countButtons =
+      mode === MODE_CALCULATOR.classic
+        ? NUMBER_OF_CLASSIC_BUTTONS
+        : KEYPAD_BUTTONS.length
+
+    return index < countButtons ? (
+      <KeypadButton
+        handle={clickButton}
+        buttonInfo={button}
+        key={`button_${button.id}`}
+      />
+    ) : null
+  }
 
   return (
     <KeypadContainer>
-      {KEYPAD_BUTTONS.map((button, index) => {
-        const NUMBER_OF_CLASSIC_BUTTONS = 19
-        const countButtons =
-          modeKeypad === MODE_CALCULATOR.classic
-            ? NUMBER_OF_CLASSIC_BUTTONS
-            : KEYPAD_BUTTONS.length
-
-        return index < countButtons ? (
-          <KeypadButton
-            handle={clickButton}
-            buttonInfo={button}
-            key={`button_${button.id}`}
-          />
-        ) : null
-      })}
+      {KEYPAD_BUTTONS.length &&
+        KEYPAD_BUTTONS.map(keypadButtonRender)}
     </KeypadContainer>
   )
 }

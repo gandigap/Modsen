@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TEXT } from 'constants'
+import { PAGE_TEXT } from 'constants'
 import ColorToggle from './ColorToggle'
 import DropDown from './DropDown'
 
@@ -10,7 +10,11 @@ const Toogles = ({ type }) => {
   return (
     <TogglesContainer>
       <TogglesTitle>{`${type}:`}</TogglesTitle>
-      {type === TEXT.mode ? <DropDown /> : <ColorToggle />}
+      {type === PAGE_TEXT.mode ? (
+        <DropDown />
+      ) : (
+        <ColorToggle />
+      )}
     </TogglesContainer>
   )
 }

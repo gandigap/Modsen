@@ -50,11 +50,11 @@
 
 Ссылка на макет: [Макет "Калькулятор"](https://xd.adobe.com/view/3d64c8c6-a59f-4785-736f-6b50257b8e83-4b55/). Также макет можно найти в папке **doc** c расширением **.xd** для программы **Adobe XD**.
 
-> ![example_1](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/example_1.png?raw=true)
+> ![example_1](./public/images/image.png)
 
-> ![example_2](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/example_2.png?raw=true)
+> ![example_2](./public/images/image1.png)
 
-> ![example_3](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/example_3.png?raw=true)
+> ![example_3](./public/images/image2.png)
 
 #### Также проект предполагает:
 

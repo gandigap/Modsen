@@ -8,7 +8,7 @@ import {
   applyOperator,
   hasPriority,
 } from 'utils'
-import { OPERATORS_ID, TEXT } from 'constants'
+import { OPERATORS_ID, MATH_TEXT } from 'constants'
 
 export const calculateAction =
   () => (dispatch, getState) => {
@@ -105,11 +105,15 @@ export const calculateAction =
         )
     }
     if (
-      `${valuesStack[0]}` === TEXT.positiveInfinity ||
-      `${valuesStack[0]}` === TEXT.negativeInfinity
+      `${valuesStack[0]}` === MATH_TEXT.positiveInfinity ||
+      `${valuesStack[0]}` === MATH_TEXT.negativeInfinity
     ) {
       dispatch(
-        outputAction(TEXT.nan, displayValue, tokenList),
+        outputAction(
+          MATH_TEXT.nan,
+          displayValue,
+          tokenList,
+        ),
       )
     } else {
       dispatch(
@@ -172,15 +176,15 @@ export const displayEquationAction =
         if (
           tokenList[index] === OPERATORS_ID.bracket_left
         ) {
-          htmlString += TEXT.bracket_left
+          htmlString += MATH_TEXT.bracket_left
         } else if (
           tokenList[index] === OPERATORS_ID.bracket_right
         ) {
-          htmlString += TEXT.bracket_right
+          htmlString += MATH_TEXT.bracket_right
         } else if (
           tokenList[index] === OPERATORS_ID.num_pi
         ) {
-          htmlString += TEXT.pi
+          htmlString += MATH_TEXT.pi
         } else {
           htmlString += getOperator(tokenList[index]).symbol
         }
@@ -216,7 +220,7 @@ export const outputAction =
     const ROUND_PLACES = 15
 
     if (isNaN(out)) {
-      out = TEXT.nan
+      out = MATH_TEXT.nan
       dispatch(updateTokenListAction([]))
     } else {
       out = +out.toFixed(ROUND_PLACES)
@@ -240,10 +244,10 @@ export const addPeriodAction =
 
     if (
       tokenList[tokenList.length - 1].indexOf(
-        TEXT.point,
+        MATH_TEXT.point,
       ) === -1
     ) {
-      tokenList[tokenList.length - 1] += TEXT.point
+      tokenList[tokenList.length - 1] += MATH_TEXT.point
     }
     dispatch(updateTokenListAction(tokenList))
     dispatch(displayEquationAction())
