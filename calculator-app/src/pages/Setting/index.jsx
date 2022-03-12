@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Toogles from 'components/Toggles'
-import { NAMES_OF_PAGES, PAGE_TEXT } from 'constants'
+import { NAMES_OF_PAGES, PAGES_TEXT } from 'constants'
 
 import {
   SettingPageContainer,
@@ -14,8 +14,8 @@ const SettingPage = () => {
       <SettingPageTitle>
         {NAMES_OF_PAGES.settings}
       </SettingPageTitle>
-      <Toogles type={PAGE_TEXT.theme} />
-      <Toogles type={PAGE_TEXT.mode} />
+      <Toogles type={PAGES_TEXT.theme} />
+      <Toogles type={PAGES_TEXT.mode} />
     </SettingPageContainer>
   )
 }

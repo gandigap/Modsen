@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { changeModeCalculatorAction } from 'actions'
@@ -14,23 +14,20 @@ import {
 } from './style'
 
 const DropDown = () => {
+  const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false)
   const { mode } = useSelector(themeSelector)
-  const dispatch = useDispatch()
 
-  const changeView = useCallback(() => {
+  const changeView = () => {
     setIsOpen(!isOpen)
-  }, [isOpen])
+  }
 
-  const changeMode = useCallback(
-    (e) => {
-      changeView()
-      dispatch(
-        changeModeCalculatorAction(e.target.textContent),
-      )
-    },
-    [changeView, dispatch],
-  )
+  const changeMode = (e) => {
+    changeView()
+    dispatch(
+      changeModeCalculatorAction(e.target.textContent),
+    )
+  }
 
   return (
     <DropDownContainer>

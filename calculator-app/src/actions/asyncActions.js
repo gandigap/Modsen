@@ -7,6 +7,7 @@ import {
   getOperator,
   applyOperator,
   hasPriority,
+  sumTokenString,
 } from 'utils'
 import { OPERATORS_ID, MATH_TEXT } from 'constants'
 
@@ -169,29 +170,8 @@ export const displayEquationAction =
       operationState: { tokenList },
     } = getState()
 
-    let htmlString = ''
+    const htmlString = tokenList.reduce(sumTokenString, '')
 
-    for (let index = 0; index < tokenList.length; index++) {
-      if (isNaN(tokenList[index])) {
-        if (
-          tokenList[index] === OPERATORS_ID.bracket_left
-        ) {
-          htmlString += MATH_TEXT.bracket_left
-        } else if (
-          tokenList[index] === OPERATORS_ID.bracket_right
-        ) {
-          htmlString += MATH_TEXT.bracket_right
-        } else if (
-          tokenList[index] === OPERATORS_ID.num_pi
-        ) {
-          htmlString += MATH_TEXT.pi
-        } else {
-          htmlString += getOperator(tokenList[index]).symbol
-        }
-      } else {
-        htmlString += tokenList[index]
-      }
-    }
     dispatch(updateDisplayValueAction(htmlString))
   }
 

@@ -1,4 +1,4 @@
-export const PAGE_TEXT = {
+export const PAGES_TEXT = {
   theme: 'Theme',
   mode: 'Mode',
   calculator_app: 'Calculator App',

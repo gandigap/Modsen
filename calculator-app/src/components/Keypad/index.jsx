@@ -16,6 +16,7 @@ import {
   OPERATORS_ID,
   KEYPAD_BUTTONS,
   MODE_CALCULATOR,
+  NUMBER_OF_CLASSIC_BUTTONS,
 } from 'constants'
 import { operationSelector, themeSelector } from 'selectors'
 import KeypadButton from './KeypadButton'
@@ -23,9 +24,9 @@ import KeypadButton from './KeypadButton'
 import KeypadContainer from './style'
 
 const Keypad = () => {
+  const dispatch = useDispatch()
   const { mode } = useSelector(themeSelector)
   const { tokenList } = useSelector(operationSelector)
-  const dispatch = useDispatch()
 
   const clickButton = useCallback(
     (e) => {
@@ -69,10 +70,13 @@ const Keypad = () => {
             if (
               (tokenList.length &&
                 tokenList[tokenList.length - 1].match(
-                  /[\d√]/g,
+                  /[\d]/,
                 )) ||
               e.target.id === OPERATORS_ID.op_square_root ||
-              e.target.id === OPERATORS_ID.bracket_left
+              e.target.id === OPERATORS_ID.bracket_right ||
+              e.target.id === OPERATORS_ID.bracket_left ||
+              tokenList[tokenList.length - 1] ===
+                OPERATORS_ID.bracket_right
             )
               dispatch(addTokenAction(e.target.id))
           }
@@ -81,7 +85,6 @@ const Keypad = () => {
     [dispatch, tokenList],
   )
   const keypadButtonRender = (button, index) => {
-    const NUMBER_OF_CLASSIC_BUTTONS = 19
     const countButtons =
       mode === MODE_CALCULATOR.classic
         ? NUMBER_OF_CLASSIC_BUTTONS
@@ -98,8 +101,7 @@ const Keypad = () => {
 
   return (
     <KeypadContainer>
-      {KEYPAD_BUTTONS.length &&
-        KEYPAD_BUTTONS.map(keypadButtonRender)}
+      {KEYPAD_BUTTONS?.map(keypadButtonRender)}
     </KeypadContainer>
   )
 }

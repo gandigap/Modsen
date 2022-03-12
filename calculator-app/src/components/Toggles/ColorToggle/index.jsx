@@ -8,8 +8,9 @@ import { themeSelector } from 'selectors'
 import ColorToggleContainer from './style'
 
 const ColorToggle = () => {
-  const { themeView } = useSelector(themeSelector)
   const dispatch = useDispatch()
+  const { themeView } = useSelector(themeSelector)
+
   const changeTheme = useCallback(() => {
     dispatch(
       changeThemeAction(

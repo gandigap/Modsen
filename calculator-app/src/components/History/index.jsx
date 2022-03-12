@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { operationSelector } from 'selectors'
-import { PAGE_TEXT } from 'constants'
+import { PAGES_TEXT } from 'constants'
 
 import {
   HistoryContainer,
@@ -14,17 +14,17 @@ import {
 const History = () => {
   const { calcHistory } = useSelector(operationSelector)
 
+  const historyExpressionRender = (item, index) => (
+    <HistoryExpression key={`history_item_${index}`}>
+      {`${item.expression} = `}
+      <HistoryResult>{item.out}</HistoryResult>
+    </HistoryExpression>
+  )
+
   return (
     <HistoryContainer>
-      <HistoryTitle>{PAGE_TEXT.history}</HistoryTitle>
-      {(calcHistory.length &&
-        calcHistory.map((el, index) => (
-          <HistoryExpression key={`history_item_${index}`}>
-            {`${el.expression} = `}
-            <HistoryResult>{el.out}</HistoryResult>
-          </HistoryExpression>
-        ))) ||
-        null}
+      <HistoryTitle>{PAGES_TEXT.history}</HistoryTitle>
+      {calcHistory?.map(historyExpressionRender)}
     </HistoryContainer>
   )
 }
