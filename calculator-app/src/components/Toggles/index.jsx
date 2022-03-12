@@ -6,17 +6,15 @@ import DropDown from './DropDown'
 
 import { TogglesContainer, TogglesTitle } from './style'
 
-const Toogles = ({ type }) => {
-  return (
-    <TogglesContainer>
-      <TogglesTitle>{`${type}:`}</TogglesTitle>
-      {type === PAGE_TEXT.mode ? (
-        <DropDown />
-      ) : (
-        <ColorToggle />
-      )}
-    </TogglesContainer>
-  )
-}
+const Toogles = ({ type }) => (
+  <TogglesContainer>
+    <TogglesTitle>{`${type}:`}</TogglesTitle>
+    {type === PAGE_TEXT.mode ? (
+      <DropDown />
+    ) : (
+      <ColorToggle />
+    )}
+  </TogglesContainer>
+)
 
 export default Toogles

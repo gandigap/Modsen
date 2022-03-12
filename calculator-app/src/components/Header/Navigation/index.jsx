@@ -12,21 +12,17 @@ import NavigationContainer from './style'
 const setActiveLink = ({ isActive }) =>
   isActive ? 'active-link' : ''
 
-const Navigation = () => {
-  return (
-    <NavigationContainer>
-      <NavLink
-        to={HOME_PAGE_ROUTE}
-        className={setActiveLink}>
-        {NAMES_OF_PAGES.home}
-      </NavLink>
-      <NavLink
-        to={SETTING_PAGE_ROUTE}
-        className={setActiveLink}>
-        {NAMES_OF_PAGES.settings}
-      </NavLink>
-    </NavigationContainer>
-  )
-}
+const Navigation = () => (
+  <NavigationContainer>
+    <NavLink to={HOME_PAGE_ROUTE} className={setActiveLink}>
+      {NAMES_OF_PAGES.home}
+    </NavLink>
+    <NavLink
+      to={SETTING_PAGE_ROUTE}
+      className={setActiveLink}>
+      {NAMES_OF_PAGES.settings}
+    </NavLink>
+  </NavigationContainer>
+)
 
 export default Navigation

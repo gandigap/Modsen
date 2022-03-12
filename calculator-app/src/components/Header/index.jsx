@@ -5,13 +5,11 @@ import Navigation from './Navigation'
 
 import HeaderContainer from './style'
 
-const Header = () => {
-  return (
-    <HeaderContainer>
-      <Logo />
-      <Navigation />
-    </HeaderContainer>
-  )
-}
+const Header = () => (
+  <HeaderContainer>
+    <Logo />
+    <Navigation />
+  </HeaderContainer>
+)
 
 export default Header
