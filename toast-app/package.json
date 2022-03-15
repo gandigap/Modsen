@@ -28,7 +28,8 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
-    "storybook": "^6.4.19"
+    "storybook": "^6.4.19",
+    "styled-components": "^5.3.3"
   },
   "peerDependencies": {
     "react": "^17.0.2",
