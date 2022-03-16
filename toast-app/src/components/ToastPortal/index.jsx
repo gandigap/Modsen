@@ -1,24 +1,22 @@
-import { useEffect } from 'react'
-import { createPortal } from 'react-dom'
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
-import './style.css'
+import './style.css';
 
-const ToastPortal = ({ children }) => {
-  const modal = document.createElement('div')
-  const modalWrapper = document.createElement('div')
-  modal.setAttribute('id', 'modal')
-  modalWrapper.setAttribute('id', 'modal__wrapper')
-  document.body.appendChild(modal)
+const ToastPortal = ({ children, id = 'root__portal', el = 'div' }) => {
+  const [portal] = useState(() => {
+    return document.createElement(el);
+  });
 
   useEffect(() => {
-    modal.appendChild(modalWrapper)
+    portal.id = id;
+    document.body.appendChild(portal);
     return () => {
-      modal.removeChild(modalWrapper)
-      document.getElementById('modal').remove()
-    }
-  }, [modal, modalWrapper])
+      document.body.removeChild(portal);
+    };
+  }, []);
 
-  return createPortal(children, modalWrapper)
-}
+  return createPortal(children, portal);
+};
 
-export default ToastPortal
+export default ToastPortal;
