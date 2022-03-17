@@ -10,3 +10,15 @@ export const TOAST_SIZES = {
   medium: 'medium',
   big: 'big',
 }
+
+export const TOAST_POSITIONS = {
+  top_left: 'top_left',
+  top_right: 'top_right',
+  bottom_left: 'bottom_left',
+  bottom_right: 'bottom_right',
+}
+
+export const TOAST_ANIMATION = {
+  example1: 'top_left',
+  example2: 'top_right',
+}

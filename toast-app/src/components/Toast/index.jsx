@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { getDefaultColors, getIcons, getPadding } from '../../utils'
-import { TOAST_TYPES, TOAST_SIZES } from '../../constants'
+import { TOAST_TYPES, TOAST_SIZES, TOAST_POSITIONS } from '../../constants'
 import { CloseIcon } from '../icons'
 import ToastPortal from '../ToastPortal'
 import { ToastContainer, TypeIconContainer, CloseIconContainer } from './style'
@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 
 const Toast = (props) => {
   const {
+    position = TOAST_POSITIONS.top_left,
     label,
     size = getPadding(TOAST_SIZES.small).padding,
     toastType = TOAST_TYPES.info,
@@ -24,7 +25,7 @@ const Toast = (props) => {
       borderRadius: '4px',
     }
   }
-
+  console.log(position, 'position')
   const typeIcon = getIcons(toastType, color)
   /* 
   useEffect(() => {
@@ -53,6 +54,12 @@ const Toast = (props) => {
 }
 
 Toast.propTypes = {
+  position: PropTypes.oneOf([
+    TOAST_POSITIONS.top_left,
+    TOAST_POSITIONS.top_right,
+    TOAST_POSITIONS.bottom_left,
+    TOAST_POSITIONS.bottom_right,
+  ]),
   label: PropTypes.string,
   handleClick: PropTypes.func,
   color: PropTypes.string,

@@ -1,5 +1,6 @@
 import ToastPortal from '../components/ToastPortal'
 import Toast from '../components/Toast'
+import ErrorBoundary from '../components/ErrorBoundary'
 
 class ToastService {
   constructor(toastList) {
@@ -8,11 +9,14 @@ class ToastService {
     this.toastList = toastList
   }
 
-  displayToast() {
+  displayToast(toastType, toastPosition) {
+    console.log(toastType, toastPosition)
     return (
-      <ToastPortal>
-        <Toast />
-      </ToastPortal>
+      <ErrorBoundary>
+        <ToastPortal>
+          <Toast position={toastPosition} />
+        </ToastPortal>
+      </ErrorBoundary>
     )
   }
 }
