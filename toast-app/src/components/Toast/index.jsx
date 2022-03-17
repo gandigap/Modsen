@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
-import ToastPortal from '../ToastPortal'
 import { getDefaultColors, getIcons, getPadding } from '../../utils'
 import { TOAST_TYPES, TOAST_SIZES } from '../../constants'
-
+import { CloseIcon } from '../icons'
+import ToastPortal from '../ToastPortal'
+import { ToastContainer, TypeIconContainer, CloseIconContainer } from './style'
 import { useEffect } from 'react'
 
 const Toast = (props) => {
@@ -17,9 +18,6 @@ const Toast = (props) => {
 
   const style = () => {
     return {
-      position: 'absolute',
-      top: '0',
-      left: '0',
       color: `${color}`,
       backgroundColor: `${bgColor}`,
       padding: `${getPadding(size).padding}`,
@@ -27,7 +25,7 @@ const Toast = (props) => {
     }
   }
 
-  const icon = getIcons(toastType, color)
+  const typeIcon = getIcons(toastType, color)
   /* 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,10 +39,15 @@ const Toast = (props) => {
 
   return (
     <ToastPortal>
-      <div className="toast_wrapper" style={style()}>
-        <div>{icon}</div>
-        <span onClick={handleClick}>{label}</span>
-      </div>
+      <ToastContainer>
+        <div className="toast_wrapper" style={style()}>
+          <TypeIconContainer>{typeIcon}</TypeIconContainer>
+          <span onClick={handleClick}>{label}</span>
+          <CloseIconContainer>
+            <CloseIcon color={color} />
+          </CloseIconContainer>
+        </div>
+      </ToastContainer>
     </ToastPortal>
   )
 }

@@ -1,4 +1,4 @@
-import Toast from '../components/Toast'
+import { toastService } from '../components/ToastService'
 import { TOAST_TYPES, TOAST_SIZES } from '../constants'
 
 export default {
@@ -17,9 +17,10 @@ export default {
   },
 }
 
-const Template = (args) => <Toast {...args} />
+const Template = (args) => toastService.display()
 
 export const DefaultToast = Template.bind({})
+
 DefaultToast.args = {
   label: 'Info',
 }
