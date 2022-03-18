@@ -1,21 +1,11 @@
-import { toastService } from '../ToastService'
-import Toast from '../components/Toast'
-import { TOAST_TYPES, TOAST_SIZES, TOAST_POSITIONS } from '../constants'
+import Toast from '../components/ToastsContainer/Toast'
+import { TOAST_TYPES, TOAST_SIZES } from '../constants'
 
 export default {
-  title: 'Components/Toast',
+  title: 'Toast',
   component: Toast,
   argTypes: {
     handleClick: { action: 'handleClick' },
-    toastPosition: {
-      options: [
-        TOAST_POSITIONS.top_left,
-        TOAST_POSITIONS.top_right,
-        TOAST_POSITIONS.bottom_left,
-        TOAST_POSITIONS.bottom_right,
-      ],
-      control: { type: 'radio' },
-    },
     toastType: {
       options: [TOAST_TYPES.info, TOAST_TYPES.warning, TOAST_TYPES.error, TOAST_TYPES.success],
       control: { type: 'radio' },
@@ -27,12 +17,12 @@ export default {
   },
 }
 
-const Template = ({ toastType, toastPosition }) =>
-  toastService.displayToast(toastType, toastPosition)
+const Template = (args) => <Toast {...args} />
 
 export const DefaultToast = Template.bind({})
 
 DefaultToast.args = {
-  toastPosition: TOAST_POSITIONS.top_left,
   label: 'Info',
+  toastType: TOAST_TYPES.info,
+  size: TOAST_SIZES.small,
 }

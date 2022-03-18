@@ -1,16 +1,18 @@
-import PropTypes from 'prop-types'
-import { getDefaultColors, getIcons, getPadding } from '../../utils'
-import { TOAST_TYPES, TOAST_SIZES, TOAST_POSITIONS } from '../../constants'
-import { CloseIcon } from '../icons'
-import ToastPortal from '../ToastPortal'
-import { ToastContainer, TypeIconContainer, CloseIconContainer } from './style'
 import { useEffect } from 'react'
+import PropTypes from 'prop-types'
+
+import { getDefaultColors, getIcons, getPadding } from '../../../utils'
+import { TOAST_TYPES, TOAST_SIZES, TOAST_ANIMATIONS } from '../../../constants'
+import { CloseIcon } from '../../icons'
+
+import { StypedTypeIcon, StyledCloseIcon, StyledToastContainer, StyledToastTitle } from './style'
 
 const Toast = (props) => {
   const {
-    position = TOAST_POSITIONS.top_left,
+    id = '1',
     label,
     size = getPadding(TOAST_SIZES.small).padding,
+    animationType = TOAST_ANIMATIONS.ease,
     toastType = TOAST_TYPES.info,
     color = getDefaultColors(toastType).font,
     bgColor = getDefaultColors(toastType).background,
@@ -22,10 +24,10 @@ const Toast = (props) => {
       color: `${color}`,
       backgroundColor: `${bgColor}`,
       padding: `${getPadding(size).padding}`,
-      borderRadius: '4px',
+      /*  animation: */
     }
   }
-  console.log(position, 'position')
+
   const typeIcon = getIcons(toastType, color)
   /* 
   useEffect(() => {
@@ -38,28 +40,23 @@ const Toast = (props) => {
     }
   }, []) */
 
+  const deleteToast = (e) => {
+    e.preventDefault()
+    console.log(e.currentTarget.id)
+  }
+
   return (
-    <ToastPortal>
-      <ToastContainer>
-        <div className="toast_wrapper" style={style()}>
-          <TypeIconContainer>{typeIcon}</TypeIconContainer>
-          <span onClick={handleClick}>{label}</span>
-          <CloseIconContainer>
-            <CloseIcon color={color} />
-          </CloseIconContainer>
-        </div>
-      </ToastContainer>
-    </ToastPortal>
+    <StyledToastContainer id={id} className={'test'} style={style()}>
+      <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
+      <StyledToastTitle onClick={handleClick}>{label}</StyledToastTitle>
+      <StyledCloseIcon onClick={deleteToast}>
+        <CloseIcon color={color} />
+      </StyledCloseIcon>
+    </StyledToastContainer>
   )
 }
 
 Toast.propTypes = {
-  position: PropTypes.oneOf([
-    TOAST_POSITIONS.top_left,
-    TOAST_POSITIONS.top_right,
-    TOAST_POSITIONS.bottom_left,
-    TOAST_POSITIONS.bottom_right,
-  ]),
   label: PropTypes.string,
   handleClick: PropTypes.func,
   color: PropTypes.string,

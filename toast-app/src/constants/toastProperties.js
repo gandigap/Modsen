@@ -18,7 +18,7 @@ export const TOAST_POSITIONS = {
   bottom_right: 'bottom_right',
 }
 
-export const TOAST_ANIMATION = {
-  example1: 'top_left',
-  example2: 'top_right',
+export const TOAST_ANIMATIONS = {
+  ease: 'ease',
+  linear: 'linear',
 }
