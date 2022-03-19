@@ -16,7 +16,7 @@ export const getDefaultColors = (type) => {
 export const getPadding = (size) => {
   switch (size) {
     case TOAST_SIZES.small:
-      return { padding: `5px 10px` }
+      return { padding: '5px 10px' }
     case TOAST_SIZES.medium:
       return { padding: '10px 15px' }
     default:

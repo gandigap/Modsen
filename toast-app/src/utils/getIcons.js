@@ -1,3 +1,4 @@
+import React from 'react'
 import { WarningIcon, ErrorIcon, SuccessIcon, InfoIcon } from '../components/icons'
 import { TOAST_TYPES } from '../constants'
 

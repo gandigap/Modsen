@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const WarningIcon = ({ color }) => {
   return (
     <svg

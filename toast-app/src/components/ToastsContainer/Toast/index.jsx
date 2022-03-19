@@ -12,25 +12,24 @@ const Toast = (props) => {
     id = '1',
     label,
     size = getPadding(TOAST_SIZES.small).padding,
-    animationType = TOAST_ANIMATIONS.ease,
+    animationType = TOAST_ANIMATIONS.horizontal,
     toastType = TOAST_TYPES.info,
     color = getDefaultColors(toastType).font,
     bgColor = getDefaultColors(toastType).background,
     handleClick,
   } = { ...props }
-
+console.log(TOAST_ANIMATIONS.horizontal)
   const style = () => {
     return {
       color: `${color}`,
       backgroundColor: `${bgColor}`,
-      padding: `${getPadding(size).padding}`,
-      /*  animation: */
+      padding: `${getPadding(size).padding}`,     
     }
   }
 
   const typeIcon = getIcons(toastType, color)
-  /* 
-  useEffect(() => {
+  
+ /*  useEffect(() => {
     const interval = setInterval(() => {
       document.body.removeChild(document.getElementById('root__portal'))
     }, 3000)
@@ -46,7 +45,7 @@ const Toast = (props) => {
   }
 
   return (
-    <StyledToastContainer id={id} className={'test'} style={style()}>
+    <StyledToastContainer id={id} className={'test'} style={style()} animation={animationType}>
       <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
       <StyledToastTitle onClick={handleClick}>{label}</StyledToastTitle>
       <StyledCloseIcon onClick={deleteToast}>
@@ -59,6 +58,7 @@ const Toast = (props) => {
 Toast.propTypes = {
   label: PropTypes.string,
   handleClick: PropTypes.func,
+  animationType: PropTypes.oneOf([TOAST_ANIMATIONS.horizontal, TOAST_ANIMATIONS.vertical]),
   color: PropTypes.string,
   bgColor: PropTypes.string,
   toastType: PropTypes.oneOf([
@@ -68,6 +68,7 @@ Toast.propTypes = {
     TOAST_TYPES.success,
   ]),
   size: PropTypes.oneOf([TOAST_SIZES.small, TOAST_SIZES.medium, TOAST_SIZES.big]),
+  
 }
 
 export default Toast

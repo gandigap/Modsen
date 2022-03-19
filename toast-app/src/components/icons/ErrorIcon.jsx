@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const ErrorIcon = ({ color }) => {
   return (
     <svg
