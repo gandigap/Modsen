@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 export const ErrorIcon = ({ color }) => {
   return (
     <svg
@@ -15,22 +18,42 @@ export const ErrorIcon = ({ color }) => {
       </g>
       <g>
         <g>
-          <rect x="40.96" y="40.96" width="20.48" height="20.48" />
+          <rect
+            x="40.96"
+            y="40.96"
+            width="20.48"
+            height="20.48"
+          />
         </g>
       </g>
       <g>
         <g>
-          <rect x="81.92" y="40.96" width="20.48" height="20.48" />
+          <rect
+            x="81.92"
+            y="40.96"
+            width="20.48"
+            height="20.48"
+          />
         </g>
       </g>
       <g>
         <g>
-          <rect x="122.88" y="40.96" width="20.48" height="20.48" />
+          <rect
+            x="122.88"
+            y="40.96"
+            width="20.48"
+            height="20.48"
+          />
         </g>
       </g>
       <g>
         <g>
-          <rect x="194.56" y="40.96" width="245.76" height="20.48" />
+          <rect
+            x="194.56"
+            y="40.96"
+            width="245.76"
+            height="20.48"
+          />
         </g>
       </g>
       <g>
@@ -60,12 +83,22 @@ export const ErrorIcon = ({ color }) => {
       </g>
       <g>
         <g>
-          <rect x="143.36" y="133.12" width="204.8" height="20.48" />
+          <rect
+            x="143.36"
+            y="133.12"
+            width="204.8"
+            height="20.48"
+          />
         </g>
       </g>
       <g>
         <g>
-          <rect x="143.36" y="419.84" width="204.8" height="20.48" />
+          <rect
+            x="143.36"
+            y="419.84"
+            width="204.8"
+            height="20.48"
+          />
         </g>
       </g>
       <g></g>
@@ -85,4 +118,8 @@ export const ErrorIcon = ({ color }) => {
       <g></g>
     </svg>
   )
+}
+
+ErrorIcon.propTypes = {
+  color: PropTypes.string,
 }

@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 export const CloseIcon = ({ color }) => {
   return (
     <svg
@@ -29,4 +32,8 @@ export const CloseIcon = ({ color }) => {
       <g></g>
     </svg>
   )
+}
+
+CloseIcon.propTypes = {
+  color: PropTypes.string,
 }

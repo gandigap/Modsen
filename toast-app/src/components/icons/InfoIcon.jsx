@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 export const InfoIcon = ({ color }) => {
   return (
     <svg
@@ -53,4 +56,8 @@ export const InfoIcon = ({ color }) => {
       <g></g>
     </svg>
   )
+}
+
+InfoIcon.propTypes = {
+  color: PropTypes.string,
 }

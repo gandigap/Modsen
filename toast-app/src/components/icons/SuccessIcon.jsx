@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 export const SuccessIcon = ({ color }) => {
   return (
     <svg
@@ -36,4 +39,8 @@ export const SuccessIcon = ({ color }) => {
       <g></g>
     </svg>
   )
+}
+
+SuccessIcon.propTypes = {
+  color: PropTypes.string,
 }

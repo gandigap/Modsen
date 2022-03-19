@@ -3,7 +3,11 @@ import { createPortal } from 'react-dom'
 
 import './style.css'
 
-const ToastPortal = ({ children, id = 'root__portal', el = 'div' }) => {
+const ToastPortal = ({
+  children,
+  id = 'root__portal',
+  el = 'div',
+}) => {
   const [portal] = useState(() => {
     return document.createElement(el)
   })
