@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-import { toastService } from '../../../ToastService'
 import {
   getDefaultColors,
   getIcons,
@@ -20,6 +19,7 @@ import {
   StyledToastContainer,
   StyledToastTitle,
 } from './style'
+import ErrorBoundary from '../../ErrorBoundary'
 
 const Toast = (props) => {
   const {
@@ -43,36 +43,27 @@ const Toast = (props) => {
 
   const typeIcon = getIcons(toastType, color)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log(toastService.toastList)
-      toastService.toastList.splice(id, 1)
-    }, 3000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [toastService.toastList])
-
   const deleteToast = (e) => {
     e.preventDefault()
     console.log(e.currentTarget.id)
   }
 
   return (
-    <StyledToastContainer
-      id={id}
-      className={'test'}
-      style={style()}
-      animation={animationType}>
-      <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
-      <StyledToastTitle onClick={handleClick}>
-        {label}
-      </StyledToastTitle>
-      <StyledCloseIcon onClick={deleteToast}>
-        <CloseIcon color={color} />
-      </StyledCloseIcon>
-    </StyledToastContainer>
+    <ErrorBoundary>
+      <StyledToastContainer
+        id={id}
+        className={'test'}
+        style={style()}
+        animation={animationType}>
+        <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
+        <StyledToastTitle onClick={handleClick}>
+          {label}
+        </StyledToastTitle>
+        <StyledCloseIcon onClick={deleteToast}>
+          <CloseIcon color={color} />
+        </StyledCloseIcon>
+      </StyledToastContainer>
+    </ErrorBoundary>
   )
 }
 

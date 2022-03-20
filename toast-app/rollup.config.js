@@ -1,8 +1,9 @@
-import babel from 'rollup-plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
-import external from 'rollup-plugin-peer-deps-external';
-import { terser } from 'rollup-plugin-terser';
-import postcss from 'rollup-plugin-postcss';
+import babel from 'rollup-plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
+import external from 'rollup-plugin-peer-deps-external'
+import commonjs from 'rollup-plugin-commonjs'
+import { terser } from 'rollup-plugin-terser'
+import postcss from 'rollup-plugin-postcss'
 
 export default [
   {
@@ -19,6 +20,7 @@ export default [
       },
     ],
     plugins: [
+      resolve(),
       postcss({
         plugins: [],
         minimize: true,
@@ -27,9 +29,17 @@ export default [
         exclude: 'node_modules/**',
         presets: ['@babel/preset-react'],
       }),
+      commonjs({
+        ignoreGlobal: true,
+        include: /\/node_modules\//,
+        namedExports: {
+          react: Object.keys(require('react')),
+          'react-is': Object.keys(require('react-is')),
+        },
+      }),
       external(),
-      resolve(),
+
       terser(),
     ],
   },
-];
+]

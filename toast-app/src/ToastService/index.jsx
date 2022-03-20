@@ -2,11 +2,11 @@ import React from 'react'
 import ToastsContainer from '../components/ToastsContainer'
 
 class ToastService {
-  constructor(toastList) {
+  constructor() {
     if (typeof ToastService.instance === 'object')
       return ToastService.instance
     ToastService.instance = this
-    this.toastList = toastList
+    this.toastList = []
   }
 
   addToast({ toastPosition, toast }) {
@@ -21,4 +21,4 @@ class ToastService {
   }
 }
 
-export const toastService = new ToastService([])
+export const toastService = new ToastService()
