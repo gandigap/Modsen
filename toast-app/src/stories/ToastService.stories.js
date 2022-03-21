@@ -1,9 +1,9 @@
-import { toastService } from '../ToastService'
+import { toastService } from '@/ToastService'
 import {
   TOAST_POSITIONS,
   TOAST_TYPES,
   TOAST_SIZES,
-} from '../constants'
+} from '@/constants'
 
 export default {
   title: 'ToastService',

@@ -4,6 +4,7 @@ import external from 'rollup-plugin-peer-deps-external'
 import commonjs from 'rollup-plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
+import alias from '@rollup/plugin-alias'
 
 export default [
   {
@@ -20,10 +21,31 @@ export default [
       },
     ],
     plugins: [
-      resolve({extensions: [".jsx", ".js", ".tsx"] }),
+      resolve({ extensions: ['.jsx', '.js', '.tsx'] }),
       postcss({
         plugins: [],
         minimize: true,
+      }),
+      alias({
+        resolve: ['.jsx', '.js'],
+        entries: [
+          {
+            find: '@/components',
+            replacement: '../components',
+          },
+          {
+            find: '@/utils',
+            replacement: '../../../utils',
+          },
+          {
+            find: '@/constants',
+            replacement: '../../../constants',
+          },
+          {
+            find: '@/ToastService',
+            replacement: '../ToastService',
+          },
+        ],
       }),
       babel({
         exclude: 'node_modules/**',

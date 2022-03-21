@@ -5,12 +5,12 @@ import {
   getDefaultColors,
   getIcons,
   getPadding,
-} from '../../../utils'
+} from '@/utils'
 import {
   TOAST_TYPES,
   TOAST_SIZES,
   TOAST_ANIMATIONS,
-} from '../../../constants'
+} from '@/constants'
 import { CloseIcon } from '../../icons'
 
 import {
@@ -31,24 +31,24 @@ const Toast = (props) => {
     color = getDefaultColors(toastType).font,
     bgColor = getDefaultColors(toastType).background,
     handleClick,
-  } = { ...props }  
+  } = { ...props }
 
-  const typeIcon = getIcons(toastType, color)  
+  const typeIcon = getIcons(toastType, color)
 
   return (
     <ErrorBoundary>
       <StyledToastContainer
         id={id}
-        className={'test'}        
+        className={'test'}
         color={color}
         backgroundColor={bgColor}
         animation={animationType}
         size={size}>
         <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
-        <StyledToastTitle >
-          {label}
-        </StyledToastTitle>
-        <StyledCloseIcon onClick={handleClick(id)} data-id={id}>
+        <StyledToastTitle>{label}</StyledToastTitle>
+        <StyledCloseIcon
+          onClick={handleClick(id)}
+          data-id={id}>
           <CloseIcon color={color} />
         </StyledCloseIcon>
       </StyledToastContainer>

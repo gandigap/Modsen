@@ -1,5 +1,5 @@
 import React from 'react'
-import ToastsContainer from '../components/ToastsContainer'
+import ToastsContainer from '@/components/ToastsContainer'
 
 class ToastService {
   constructor() {
@@ -9,11 +9,11 @@ class ToastService {
     this.toastList = []
   }
 
-  addToast({ toastPosition, toast }) { 
+  addToast({ toastPosition, toast }) {
     if (this.toastList.length < 3)
       this.toastList = [...this.toastList, toast]
-      console.log(this.toastList,'this')
-      
+    console.log(this.toastList, 'this')
+
     return (
       <ToastsContainer
         position={toastPosition}

@@ -1,10 +1,10 @@
 import React from 'react'
-import Toast from '../components/ToastsContainer/Toast'
+import Toast from '@/components/ToastsContainer/Toast'
 import {
   TOAST_TYPES,
   TOAST_SIZES,
   TOAST_ANIMATIONS,
-} from '../constants'
+} from '@/constants'
 
 export default {
   title: 'Toast',

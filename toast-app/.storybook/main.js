@@ -10,12 +10,28 @@ module.exports = {
     '@storybook/addon-interactions',
   ],
   framework: '@storybook/react',
-  /* webpackFinal: async (config) => {
+  webpackFinal: async (config) => {
     config.resolve.alias['@'] = path.resolve(
       __dirname,
       '../src',
     )
     config.resolve.alias['@components'] = path.resolve(
+      __dirname,
+      '../src/components/',
+    )
+    config.resolve.alias['@constants'] = path.resolve(
+      __dirname,
+      '../src/constants/',
+    )
+    config.resolve.alias['@utils'] = path.resolve(
+      __dirname,
+      '../src/utils/',
+    )
+
+    return config
+  },
+
+  /* config.resolve.alias['@components'] = path.resolve(
       __dirname,
       '../src/components',
     )
@@ -28,5 +44,5 @@ module.exports = {
       '../src/utils',
     )
     return config
-  }, */
+   */
 }
