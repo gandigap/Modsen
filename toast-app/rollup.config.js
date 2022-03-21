@@ -20,7 +20,7 @@ export default [
       },
     ],
     plugins: [
-      resolve(),
+      resolve({extensions: [".jsx", ".js", ".tsx"] }),
       postcss({
         plugins: [],
         minimize: true,

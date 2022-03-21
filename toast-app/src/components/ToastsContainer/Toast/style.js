@@ -1,13 +1,19 @@
 import styled from 'styled-components'
 import { TOAST_ANIMATIONS } from '../../../constants'
+import { 
+  getPadding,
+} from '../../../utils'
 export const StyledToastContainer = styled.div`
-  display: inline-flex;
   margin: 10px;
-  justify-content: space-between;
-  align-items: center;
+  padding:${({size}) =>  getPadding(size).padding};
   min-width: 200px;
   min-height: 40px;
+  display: inline-flex;  
+  justify-content: space-between;
+  align-items: center;  
   border-radius: 10px;
+  color: ${({color}) =>  color};
+  background-color: ${({backgroundColor}) =>  backgroundColor};
   animation: 0.5s
     ${(props) =>
       props.animation === TOAST_ANIMATIONS.vertical
@@ -17,8 +23,8 @@ export const StyledToastContainer = styled.div`
 
   &.animation-start {
     animation: 0.5s
-      ${(props) =>
-        props.animation === TOAST_ANIMATIONS.vertical
+      ${({animation}) =>
+        animation === TOAST_ANIMATIONS.vertical
           ? 'start-y'
           : 'start-x'}
       1s;
@@ -26,8 +32,8 @@ export const StyledToastContainer = styled.div`
 
   &.animation-end {
     animation: 0.5s
-      ${(props) =>
-        props.animation === TOAST_ANIMATIONS.ease
+      ${({animation}) =>
+        animation === TOAST_ANIMATIONS.ease
           ? 'end-y'
           : 'end-x'}
       1s;

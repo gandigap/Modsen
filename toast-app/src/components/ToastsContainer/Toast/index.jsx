@@ -31,35 +31,24 @@ const Toast = (props) => {
     color = getDefaultColors(toastType).font,
     bgColor = getDefaultColors(toastType).background,
     handleClick,
-  } = { ...props }
+  } = { ...props }  
 
-  const style = () => {
-    return {
-      color: `${color}`,
-      backgroundColor: `${bgColor}`,
-      padding: `${getPadding(size).padding}`,
-    }
-  }
-
-  const typeIcon = getIcons(toastType, color)
-
-  const deleteToast = (e) => {
-    e.preventDefault()
-    console.log(e.currentTarget.id)
-  }
+  const typeIcon = getIcons(toastType, color)  
 
   return (
     <ErrorBoundary>
       <StyledToastContainer
         id={id}
-        className={'test'}
-        style={style()}
-        animation={animationType}>
+        className={'test'}        
+        color={color}
+        backgroundColor={bgColor}
+        animation={animationType}
+        size={size}>
         <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
-        <StyledToastTitle onClick={handleClick}>
+        <StyledToastTitle >
           {label}
         </StyledToastTitle>
-        <StyledCloseIcon onClick={deleteToast}>
+        <StyledCloseIcon onClick={handleClick(id)} data-id={id}>
           <CloseIcon color={color} />
         </StyledCloseIcon>
       </StyledToastContainer>
