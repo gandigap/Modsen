@@ -12,6 +12,7 @@ class ToastService {
   addToast({ toastPosition, toast }) {
     if (this.toastList.length < 3)
       this.toastList = [...this.toastList, toast]
+
     console.log(this.toastList, 'this')
 
     return (

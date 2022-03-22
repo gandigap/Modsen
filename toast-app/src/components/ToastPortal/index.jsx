@@ -11,6 +11,7 @@ const ToastPortal = ({
   const [portal] = useState(() => {
     return document.createElement(el)
   })
+  console.log('portal')
 
   useEffect(() => {
     portal.id = id

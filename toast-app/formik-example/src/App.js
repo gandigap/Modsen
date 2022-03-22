@@ -1,4 +1,4 @@
-import ToastForm from './ToastForm'
+import ToastForm from './components/ToastForm'
 
 function App() {
   return <ToastForm />

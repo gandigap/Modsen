@@ -36,7 +36,7 @@ const ToastsContainer = ({ position, toastList }) => {
       clearInterval(interval)
     }
   }, [toastList, list])
-
+  console.log('container')
   return (
     <ToastPortal>
       <StyledToastContainer className={position}>

@@ -2,7 +2,6 @@ import babel from 'rollup-plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import external from 'rollup-plugin-peer-deps-external'
 import commonjs from 'rollup-plugin-commonjs'
-import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
 import alias from '@rollup/plugin-alias'
 
@@ -12,14 +11,14 @@ export default [
     output: [
       {
         file: 'dist/index.js',
-        format: 'cjs',
-      },
-      {
-        file: 'dist/index.es.js',
-        format: 'es',
-        exports: 'named',
+        format: 'esm',
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDom',
+        },
       },
     ],
+    external: ['react', 'react-dom', 'styled-components'],
     plugins: [
       resolve({ extensions: ['.jsx', '.js', '.tsx'] }),
       postcss({
@@ -49,7 +48,7 @@ export default [
       }),
       babel({
         exclude: 'node_modules/**',
-        presets: ['@babel/preset-react'],
+        presets: [['@babel/preset-react']],
       }),
       commonjs({
         ignoreGlobal: true,
@@ -60,8 +59,6 @@ export default [
         },
       }),
       external(),
-
-      terser(),
     ],
   },
 ]
