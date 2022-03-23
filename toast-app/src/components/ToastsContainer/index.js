@@ -13,12 +13,10 @@ const ToastsContainer = ({ position, toastList }) => {
     list.splice(id, 1)
     toastList.splice(id, 1)
     setList([...list])
-    console.log('ha')
   }
 
   useEffect(() => {
     setList([...toastList])
-    console.log('use effect')
   }, [toastList])
 
   useEffect(() => {
@@ -29,7 +27,6 @@ const ToastsContainer = ({ position, toastList }) => {
         setList([...list])
         console.log('true')
       }
-      console.log('useEffect some')
     }, 3000)
 
     return () => {

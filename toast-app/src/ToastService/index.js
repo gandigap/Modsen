@@ -2,7 +2,31 @@ import React from 'react'
 import ToastsContainer from '@/components/ToastsContainer'
 
 class ToastService {
-  constructor() {
+
+  constructor(){
+    if (typeof ToastService.instance === 'object')
+      return ToastService.instance
+    ToastService.instance = this
+    this.eventsList = new Map();
+  }
+ 
+  addListener(event, callback) {
+     if (!this.eventsList.has(event)) {
+       this.eventsList.set(event, []);
+     }
+ 
+     this.eventsList.get(event).push(callback);
+  }
+ 
+  addToast(options){
+    ....
+    this.eventsList.get(DISPATCH_SHOW_TOAST).forEach((callback) => {
+       callback(options);
+    });
+  }
+
+
+  /* constructor() {
     if (typeof ToastService.instance === 'object')
       return ToastService.instance
     ToastService.instance = this
@@ -21,7 +45,7 @@ class ToastService {
         toastList={this.toastList}
       />
     )
-  }
+  } */
 }
 
 export const toastService = new ToastService()

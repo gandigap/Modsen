@@ -8,7 +8,6 @@ import {
 } from '../../constants'
 
 import InputTitle from './InputTitle'
-import { toastService } from 'dist'
 
 import {
   StyledButtonSubmit,
@@ -37,15 +36,6 @@ const ToastForm = () => {
 
   const handleClick = () => {
     console.log('click')
-    const args = {
-      toastPosition: TOAST_POSITIONS.top_left,
-      toast: {
-        label: 'Warning',
-        toastType: TOAST_TYPES.warning,
-        size: TOAST_SIZES.big,
-      },
-    }
-    toastService.addToast(args)
   }
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
