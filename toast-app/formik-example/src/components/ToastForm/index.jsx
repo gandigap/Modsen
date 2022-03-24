@@ -1,8 +1,8 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import { toastService, ToastsContainer } from 'dist'
+import { toastService, ToastsContainer } from './dist'
 
-import InputTitle from './InputTitle'
+import TextInputs from './TextInputs'
 
 import {
   StyledButtonSubmit,
@@ -17,10 +17,12 @@ const ToastForm = () => {
     enableReinitialize: true,
     initialValues: {
       title: '',
+      content: '',
       size: '',
       position: '',
       type: '',
       color: '',
+      bgcolor: '',
       timeDelay: '',
       animation: '',
     },
@@ -46,14 +48,19 @@ const ToastForm = () => {
         handleRemoveToast={() => console.log('ex')}
       />
       <StyledFormTitle>Toast config form</StyledFormTitle>
-      <InputTitle
+      <TextInputs
         handleChange={formik.handleChange}
-        value={formik.values.title}
+        values={
+          (formik.values.title, formik.values.content)
+        }
       />
       <Selects
         handleChange={formik.handleChange}
-        valueSize={formik.values.size}
-        valuePosition={formik.values.position}
+        values={[
+          formik.values.size,
+          formik.values.animation,
+          formik.values.position,
+        ]}
       />
       <RadioContainer
         handleChange={

@@ -25,6 +25,7 @@ export const TOAST_ANIMATIONS = {
 
 export const TYPES_ELEMENT_FORM = {
   title: 'title',
+  content: 'content',
   position: 'position',
   size: 'size',
   color: 'color',
