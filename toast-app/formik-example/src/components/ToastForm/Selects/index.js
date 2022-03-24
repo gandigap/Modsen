@@ -10,6 +10,7 @@ const Selects = ({
   valueSize,
   valuePosition,
 }) => {
+  console.log(valueSize, valuePosition, 'example')
   return (
     <StyledCelects>
       <CustomSelect

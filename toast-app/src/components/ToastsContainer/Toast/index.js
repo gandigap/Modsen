@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -22,16 +22,27 @@ import {
 import ErrorBoundary from '../../ErrorBoundary'
 
 const Toast = (props) => {
+  const [viewState, setViewState] = useState(true)
+
+  const deleteToast = () => {
+    setViewState(false)
+    setTimeout(() => {
+      document.getElementById(id).remove()
+    }, delay)
+  }
+
   const {
     id = '1',
-    label,
+    label = TOAST_TYPES.info,
     size = getPadding(TOAST_SIZES.small).padding,
     animationType = TOAST_ANIMATIONS.horizontal,
     toastType = TOAST_TYPES.info,
     color = getDefaultColors(toastType).font,
     bgColor = getDefaultColors(toastType).background,
-    handleClick,
+    delay = 1000,
+    handleClick = deleteToast,
   } = { ...props }
+  console.log(props)
 
   const typeIcon = getIcons(toastType, color)
 
@@ -39,16 +50,17 @@ const Toast = (props) => {
     <ErrorBoundary>
       <StyledToastContainer
         id={id}
-        className={'test'}
+        className={
+          viewState ? 'animation-start' : 'animation-end'
+        }
         color={color}
         backgroundColor={bgColor}
         animation={animationType}
-        size={size}>
+        size={size}
+        delay={delay}>
         <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
         <StyledToastTitle>{label}</StyledToastTitle>
-        <StyledCloseIcon
-          onClick={handleClick(id)}
-          data-id={id}>
+        <StyledCloseIcon onClick={handleClick} data-id={id}>
           <CloseIcon color={color} />
         </StyledCloseIcon>
       </StyledToastContainer>
@@ -76,6 +88,7 @@ Toast.propTypes = {
     TOAST_SIZES.medium,
     TOAST_SIZES.big,
   ]),
+  delay: PropTypes.number,
 }
 
 export default Toast

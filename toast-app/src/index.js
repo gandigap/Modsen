@@ -1,1 +1,2 @@
-export * from './ToastService/index.js'
+export { ToastsContainer } from './components/ToastsContainer'
+export * from './ToastService'

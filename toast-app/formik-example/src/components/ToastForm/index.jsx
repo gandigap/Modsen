@@ -1,11 +1,6 @@
 import React from 'react'
 import { useFormik } from 'formik'
-
-import {
-  TOAST_TYPES,
-  TOAST_POSITIONS,
-  TOAST_SIZES,
-} from '../../constants'
+import { toastService, ToastsContainer } from 'dist'
 
 import InputTitle from './InputTitle'
 
@@ -27,18 +22,29 @@ const ToastForm = () => {
       type: '',
       color: '',
       timeDelay: '',
+      animation: '',
     },
     onSubmit: (values) => {
-      handleClick()
       console.log(JSON.stringify(values, null, 2))
     },
   })
 
-  const handleClick = () => {
-    console.log('click')
+  const handleClick = (e) => {
+    const args = {
+      label: formik.values.title,
+      toastType: formik.values.type,
+      size: formik.values.size,
+    }
+    toastService.addToast(args)
   }
+
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
+      <ToastsContainer
+        position="top_left"
+        toastList={toastService.toastList}
+        handleRemoveToast={() => console.log('ex')}
+      />
       <StyledFormTitle>Toast config form</StyledFormTitle>
       <InputTitle
         handleChange={formik.handleChange}
@@ -55,7 +61,9 @@ const ToastForm = () => {
         }
       />
 
-      <StyledButtonSubmit type="submit">
+      <StyledButtonSubmit
+        type="submit"
+        onClick={handleClick}>
         Submit
       </StyledButtonSubmit>
     </StyledForm>

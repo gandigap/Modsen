@@ -13,29 +13,23 @@ export const StyledToastContainer = styled.div`
   color: ${({ color }) => color};
   background-color: ${({ backgroundColor }) =>
     backgroundColor};
-  animation: 0.5s
-    ${(props) =>
-      props.animation === TOAST_ANIMATIONS.vertical
-        ? 'start-y'
-        : 'start-x'}
-    1s;
 
   &.animation-start {
-    animation: 0.5s
+    animation: ${({ delay }) => delay / 1000}s
       ${({ animation }) =>
         animation === TOAST_ANIMATIONS.vertical
           ? 'start-y'
           : 'start-x'}
-      1s;
+      0s;
   }
 
   &.animation-end {
-    animation: 0.5s
+    animation: ${({ delay }) => delay / 1000}s
       ${({ animation }) =>
-        animation === TOAST_ANIMATIONS.ease
+        animation === TOAST_ANIMATIONS.vertical
           ? 'end-y'
           : 'end-x'}
-      1s;
+      0s;
   }
 
   &:hover {
@@ -58,12 +52,12 @@ export const StyledToastContainer = styled.div`
 
   @keyframes end-y {
     from {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    to {
       transform: translateY(0);
       opacity: 1;
+    }
+    to {
+      transform: translateY(-100%);
+      opacity: 0;
     }
   }
 
@@ -80,12 +74,12 @@ export const StyledToastContainer = styled.div`
 
   @keyframes end-x {
     from {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-    to {
       transform: translateX(0);
       opacity: 1;
+    }
+    to {
+      transform: translateX(-100%);
+      opacity: 0;
     }
   }
 `

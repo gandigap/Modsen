@@ -10,7 +10,6 @@ export default {
   title: 'Toast',
   component: Toast,
   argTypes: {
-    handleClick: { action: 'handleClick' },
     animationType: {
       options: [
         TOAST_ANIMATIONS.horizontal,
@@ -43,7 +42,7 @@ const Template = (args) => <Toast {...args} />
 export const DefaultToast = Template.bind({})
 
 DefaultToast.args = {
-  label: 'Info',
   toastType: TOAST_TYPES.info,
+  label: TOAST_TYPES.info,
   size: TOAST_SIZES.small,
 }

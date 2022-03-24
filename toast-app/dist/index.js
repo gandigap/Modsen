@@ -2981,50 +2981,22 @@ const StyledToastContainer = styled.div`
 
 const ToastsContainer = ({
   position,
-  toastList
+  toastList,
+  handleRemoveToast
 }) => {
-  const [list, setList] = useState(toastList);
-
-  const deleteToast = id => e => {
-    list.splice(id, 1);
-    toastList.splice(id, 1);
-    setList([...list]);
-    console.log('ha');
-  };
-
-  useEffect(() => {
-    setList([...toastList]);
-    console.log('use effect');
-  }, [toastList]);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (toastList.length && list.length) {
-        list.shift();
-        toastList.shift();
-        setList([...list]);
-        console.log('true');
-      }
-
-      console.log('useEffect some');
-    }, 3000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [toastList, list]);
-  console.log('container');
   return /*#__PURE__*/React.createElement(ToastPortal, null, /*#__PURE__*/React.createElement(StyledToastContainer, {
     className: position
-  }, toastList?.map((toastProperty, index) => /*#__PURE__*/React.createElement(Toast, _extends({
+  }, toastList.map((toastProperty, index) => /*#__PURE__*/React.createElement(Toast, _extends({
     key: `toastProperty-${index}`,
     id: index
   }, toastProperty, {
-    handleClick: deleteToast
+    handleClick: handleRemoveToast
   })))));
 };
-
 ToastsContainer.propTypes = {
   position: PropTypes.string,
-  toastList: PropTypes.array
+  toastList: PropTypes.array,
+  handleRemoveToast: PropTypes.func
 };
 
 class ToastService {
@@ -3034,20 +3006,17 @@ class ToastService {
     this.toastList = [];
   }
 
-  addToast({
-    toastPosition,
-    toast
-  }) {
-    if (this.toastList.length < 3) this.toastList = [...this.toastList, toast];
-    console.log(this.toastList, 'this');
-    return /*#__PURE__*/React.createElement(ToastsContainer, {
-      position: toastPosition,
-      toastList: this.toastList
-    });
+  removeToast(id) {
+    console.log(id);
+    /* this.toastList.splice(id, 1) */
+  }
+
+  addToast(toast) {
+    this.toastList.push(toast);
   }
 
 }
 
 const toastService = new ToastService();
 
-export { toastService };
+export { ToastsContainer, toastService };
