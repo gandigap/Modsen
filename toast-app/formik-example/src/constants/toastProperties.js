@@ -31,5 +31,5 @@ export const TYPES_ELEMENT_FORM = {
   color: 'color',
   bgcolor: 'bgcolor',
   animation: 'animation',
-  timeDelay: 'timeDelay',
+  delay: 'delay',
 }

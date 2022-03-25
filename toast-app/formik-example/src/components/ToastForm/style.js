@@ -15,6 +15,7 @@ export const StyledFormTitle = styled.h2`
   color: #fff;
   font-size: 36px;
   font-weight: bold;
+  text-align: center;
 `
 
 export const StyledButtonSubmit = styled.button`
@@ -27,4 +28,8 @@ export const StyledButtonSubmit = styled.button`
 
 export const StyledLabel = styled.label`
   padding: 4px;
+`
+
+export const StyledColorSettingContainer = styled.label`
+  display: flex;
 `

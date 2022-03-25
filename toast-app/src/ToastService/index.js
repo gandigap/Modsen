@@ -6,13 +6,13 @@ class ToastService {
     this.toastList = []
   }
 
-  removeToast(id) {
-    console.log(id)
-    /* this.toastList.splice(id, 1) */
+  removeToast(id = 0) {
+    if (this.toastList.length) this.toastList.splice(id, 1)
   }
 
   addToast(toast) {
-    this.toastList.push(toast)
+    if (this.toastList.length < 4)
+      this.toastList.push(toast)
   }
 }
 

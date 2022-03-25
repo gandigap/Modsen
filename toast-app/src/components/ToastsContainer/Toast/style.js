@@ -84,14 +84,23 @@ export const StyledToastContainer = styled.div`
   }
 `
 
-export const StyledToastTitle = styled.span`
-  flex-grow: 1;
+export const StyledToastTitle = styled.h4`
+  margin: 0;
   padding: 4px;
   font-size: 20px;
   font-weight: bold;
 `
 
-export const StypedTypeIcon = styled.div`
+export const StyledToastText = styled.div`
+  flex-grow: 1;
+`
+export const StyledToastContent = styled.p`
+  margin: 0;
+  padding: 4px;
+  font-size: 16px;
+`
+
+export const StyledTypeIcon = styled.div`
   width: 30px;
   height: 30px;
 `

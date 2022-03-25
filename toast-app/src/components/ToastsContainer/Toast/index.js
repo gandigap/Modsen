@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  getDefaultColors,
-  getIcons,
-  getPadding,
-} from '@/utils'
+import { getDefaultColors, getIcons } from '@/utils'
 import {
   TOAST_TYPES,
   TOAST_SIZES,
@@ -14,38 +14,52 @@ import {
 import { CloseIcon } from '../../icons'
 
 import {
-  StypedTypeIcon,
+  StyledTypeIcon,
   StyledCloseIcon,
   StyledToastContainer,
   StyledToastTitle,
+  StyledToastContent,
+  StyledToastText,
 } from './style'
 import ErrorBoundary from '../../ErrorBoundary'
 
 const Toast = (props) => {
   const [viewState, setViewState] = useState(true)
 
-  const deleteToast = () => {
+  const deleteToast = useCallback(() => {
     setViewState(false)
     setTimeout(() => {
-      document.getElementById(id).remove()
+      handleClick
+        ? handleClick(id)
+        : document.getElementById(id).remove()
     }, delay)
-  }
+  })
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      deleteToast()
+    }, delay)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
 
   const {
     id = '1',
-    label = TOAST_TYPES.info,
-    size = getPadding(TOAST_SIZES.small).padding,
-    animationType = TOAST_ANIMATIONS.horizontal,
+    title,
+    content,
+    size,
+    animationType,
     toastType = TOAST_TYPES.info,
-    color = getDefaultColors(toastType).font,
-    bgColor = getDefaultColors(toastType).background,
+    color,
+    bgcolor,
     delay = 1000,
     handleClick = deleteToast,
   } = { ...props }
-  console.log(props)
 
   const typeIcon = getIcons(toastType, color)
-
+  console.log(color, bgcolor, 'colors')
   return (
     <ErrorBoundary>
       <StyledToastContainer
@@ -53,13 +67,24 @@ const Toast = (props) => {
         className={
           viewState ? 'animation-start' : 'animation-end'
         }
-        color={color}
-        backgroundColor={bgColor}
+        color={
+          color === ''
+            ? getDefaultColors(toastType).font
+            : color
+        }
+        backgroundColor={
+          bgcolor === ''
+            ? getDefaultColors(toastType).background
+            : bgcolor
+        }
         animation={animationType}
         size={size}
         delay={delay}>
-        <StypedTypeIcon>{typeIcon}</StypedTypeIcon>
-        <StyledToastTitle>{label}</StyledToastTitle>
+        <StyledTypeIcon>{typeIcon}</StyledTypeIcon>
+        <StyledToastText>
+          <StyledToastTitle>{title}</StyledToastTitle>
+          <StyledToastContent>{content}</StyledToastContent>
+        </StyledToastText>
         <StyledCloseIcon onClick={handleClick} data-id={id}>
           <CloseIcon color={color} />
         </StyledCloseIcon>
@@ -69,14 +94,14 @@ const Toast = (props) => {
 }
 
 Toast.propTypes = {
-  label: PropTypes.string,
+  title: PropTypes.string,
   handleClick: PropTypes.func,
   animationType: PropTypes.oneOf([
     TOAST_ANIMATIONS.horizontal,
     TOAST_ANIMATIONS.vertical,
   ]),
   color: PropTypes.string,
-  bgColor: PropTypes.string,
+  bgcolor: PropTypes.string,
   toastType: PropTypes.oneOf([
     TOAST_TYPES.info,
     TOAST_TYPES.warning,

@@ -6,16 +6,16 @@ import { StyledCustomColorInput } from './style'
 const CustomTextInput = ({ type, value, handleChange }) => {
   return (
     <StyledCustomColorInput>
-      <StyledLabel htmlFor={`input-${type}`}>
-        {type.toUpperCase()}
-      </StyledLabel>
       <input
         id={`input-${type}`}
         name={type}
         type="color"
         onChange={handleChange}
-        values={value}
+        value={value}
       />
+      <StyledLabel htmlFor={`input-${type}`}>
+        {type.toUpperCase()}
+      </StyledLabel>
     </StyledCustomColorInput>
   )
 }

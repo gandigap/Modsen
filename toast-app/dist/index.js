@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useDebugValue, useContext, createElement } from 'react';
+import React, { useState, useEffect, useRef, useDebugValue, useContext, createElement, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 function _extends() {
@@ -1166,7 +1166,6 @@ const ToastPortal = ({
   const [portal] = useState(() => {
     return document.createElement(el);
   });
-  console.log('portal');
   useEffect(() => {
     portal.id = id;
     document.body.appendChild(portal);
@@ -2784,24 +2783,25 @@ const StyledToastContainer$1 = styled.div`
   background-color: ${({
   backgroundColor
 }) => backgroundColor};
-  animation: 0.5s
-    ${props => props.animation === TOAST_ANIMATIONS.vertical ? 'start-y' : 'start-x'}
-    1s;
 
   &.animation-start {
-    animation: 0.5s
+    animation: ${({
+  delay
+}) => delay / 1000}s
       ${({
   animation
 }) => animation === TOAST_ANIMATIONS.vertical ? 'start-y' : 'start-x'}
-      1s;
+      0s;
   }
 
   &.animation-end {
-    animation: 0.5s
+    animation: ${({
+  delay
+}) => delay / 1000}s
       ${({
   animation
-}) => animation === TOAST_ANIMATIONS.ease ? 'end-y' : 'end-x'}
-      1s;
+}) => animation === TOAST_ANIMATIONS.vertical ? 'end-y' : 'end-x'}
+      0s;
   }
 
   &:hover {
@@ -2824,12 +2824,12 @@ const StyledToastContainer$1 = styled.div`
 
   @keyframes end-y {
     from {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    to {
       transform: translateY(0);
       opacity: 1;
+    }
+    to {
+      transform: translateY(-100%);
+      opacity: 0;
     }
   }
 
@@ -2846,22 +2846,30 @@ const StyledToastContainer$1 = styled.div`
 
   @keyframes end-x {
     from {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-    to {
       transform: translateX(0);
       opacity: 1;
     }
+    to {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
   }
 `;
-const StyledToastTitle = styled.span`
-  flex-grow: 1;
+const StyledToastTitle = styled.h4`
+  margin: 0;
   padding: 4px;
   font-size: 20px;
   font-weight: bold;
 `;
-const StypedTypeIcon = styled.div`
+const StyledToastText = styled.div`
+  flex-grow: 1;
+`;
+const StyledToastContent = styled.p`
+  margin: 0;
+  padding: 4px;
+  font-size: 16px;
+`;
+const StyledTypeIcon = styled.div`
   width: 30px;
   height: 30px;
 `;
@@ -2915,27 +2923,46 @@ ErrorBoundary.propTypes = {
 };
 
 const Toast = props => {
+  const [viewState, setViewState] = useState(true);
+  const deleteToast = useCallback(() => {
+    setViewState(false);
+    setTimeout(() => {
+      handleClick ? handleClick(id) : document.getElementById(id).remove();
+    }, delay);
+  });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      deleteToast();
+    }, delay);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
   const {
     id = '1',
-    label,
-    size = getPadding(TOAST_SIZES.small).padding,
-    animationType = TOAST_ANIMATIONS.horizontal,
+    title,
+    content,
+    size,
+    animationType,
     toastType = TOAST_TYPES.info,
-    color = getDefaultColors(toastType).font,
-    bgColor = getDefaultColors(toastType).background,
-    handleClick
+    color,
+    bgcolor,
+    delay = 1000,
+    handleClick = deleteToast
   } = { ...props
   };
   const typeIcon = getIcons(toastType, color);
+  console.log(color, bgcolor, 'colors');
   return /*#__PURE__*/React.createElement(ErrorBoundary, null, /*#__PURE__*/React.createElement(StyledToastContainer$1, {
     id: id,
-    className: 'test',
-    color: color,
-    backgroundColor: bgColor,
+    className: viewState ? 'animation-start' : 'animation-end',
+    color: color === '' ? getDefaultColors(toastType).font : color,
+    backgroundColor: bgcolor === '' ? getDefaultColors(toastType).background : bgcolor,
     animation: animationType,
-    size: size
-  }, /*#__PURE__*/React.createElement(StypedTypeIcon, null, typeIcon), /*#__PURE__*/React.createElement(StyledToastTitle, null, label), /*#__PURE__*/React.createElement(StyledCloseIcon, {
-    onClick: handleClick(id),
+    size: size,
+    delay: delay
+  }, /*#__PURE__*/React.createElement(StyledTypeIcon, null, typeIcon), /*#__PURE__*/React.createElement(StyledToastText, null, /*#__PURE__*/React.createElement(StyledToastTitle, null, title), /*#__PURE__*/React.createElement(StyledToastContent, null, content)), /*#__PURE__*/React.createElement(StyledCloseIcon, {
+    onClick: handleClick,
     "data-id": id
   }, /*#__PURE__*/React.createElement(CloseIcon, {
     color: color
@@ -2943,13 +2970,14 @@ const Toast = props => {
 };
 
 Toast.propTypes = {
-  label: PropTypes.string,
+  title: PropTypes.string,
   handleClick: PropTypes.func,
   animationType: PropTypes.oneOf([TOAST_ANIMATIONS.horizontal, TOAST_ANIMATIONS.vertical]),
   color: PropTypes.string,
-  bgColor: PropTypes.string,
+  bgcolor: PropTypes.string,
   toastType: PropTypes.oneOf([TOAST_TYPES.info, TOAST_TYPES.warning, TOAST_TYPES.error, TOAST_TYPES.success]),
-  size: PropTypes.oneOf([TOAST_SIZES.small, TOAST_SIZES.medium, TOAST_SIZES.big])
+  size: PropTypes.oneOf([TOAST_SIZES.small, TOAST_SIZES.medium, TOAST_SIZES.big]),
+  delay: PropTypes.number
 };
 
 const StyledToastContainer = styled.div`
@@ -2981,22 +3009,18 @@ const StyledToastContainer = styled.div`
 
 const ToastsContainer = ({
   position,
-  toastList,
-  handleRemoveToast
+  toastList
 }) => {
   return /*#__PURE__*/React.createElement(ToastPortal, null, /*#__PURE__*/React.createElement(StyledToastContainer, {
     className: position
   }, toastList.map((toastProperty, index) => /*#__PURE__*/React.createElement(Toast, _extends({
-    key: `toastProperty-${index}`,
-    id: index
-  }, toastProperty, {
-    handleClick: handleRemoveToast
-  })))));
+    id: index,
+    key: `toastProperty-${index}`
+  }, toastProperty)))));
 };
 ToastsContainer.propTypes = {
   position: PropTypes.string,
-  toastList: PropTypes.array,
-  handleRemoveToast: PropTypes.func
+  toastList: PropTypes.array
 };
 
 class ToastService {
@@ -3006,13 +3030,12 @@ class ToastService {
     this.toastList = [];
   }
 
-  removeToast(id) {
-    console.log(id);
-    /* this.toastList.splice(id, 1) */
+  removeToast(id = 0) {
+    if (this.toastList.length) this.toastList.splice(id, 1);
   }
 
   addToast(toast) {
-    this.toastList.push(toast);
+    if (this.toastList.length < 4) this.toastList.push(toast);
   }
 
 }

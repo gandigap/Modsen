@@ -3,7 +3,11 @@ import React from 'react'
 import { StyledLabel } from '../../style'
 import { StyledCustomTextInput } from './style'
 
-const CustomTextInput = ({ type, value, handleChange }) => {
+const CustomTextInput = ({
+  type,
+  values,
+  handleChange,
+}) => {
   return (
     <StyledCustomTextInput>
       <StyledLabel htmlFor={`input-${type}`}>
@@ -14,7 +18,7 @@ const CustomTextInput = ({ type, value, handleChange }) => {
         name={type}
         type="text"
         onChange={handleChange}
-        values={value}
+        value={values}
       />
     </StyledCustomTextInput>
   )

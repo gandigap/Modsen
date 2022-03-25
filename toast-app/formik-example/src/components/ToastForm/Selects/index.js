@@ -9,12 +9,7 @@ const Selects = ({ handleChange, values }) => {
   const [valueSize, valueAnimation, valuePosition] = [
     ...values,
   ]
-  console.log(
-    valueSize,
-    valueAnimation,
-    valuePosition,
-    'example',
-  )
+
   const getSelects = () => {
     return Object.keys(TYPES_ELEMENT_FORM)
       .filter(

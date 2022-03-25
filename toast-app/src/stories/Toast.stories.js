@@ -42,7 +42,14 @@ const Template = (args) => <Toast {...args} />
 export const DefaultToast = Template.bind({})
 
 DefaultToast.args = {
-  toastType: TOAST_TYPES.info,
-  label: TOAST_TYPES.info,
+  id: 0,
+  title: TOAST_TYPES.info,
+  content: TOAST_TYPES.info,
   size: TOAST_SIZES.small,
+  animationType: TOAST_ANIMATIONS.horizontal,
+  toastType: TOAST_TYPES.info,
+  color: '',
+  bgcolor: '',
+  delay: 2000,
+  handleClick: (id) => console.log(id),
 }
