@@ -5,6 +5,10 @@ export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   font-size: 20px;
+
+  input {
+    max-width: 100px;
+  }
 `
 
 export const StyledFormTitle = styled.h2`

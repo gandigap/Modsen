@@ -29,6 +29,7 @@ export const TYPES_ELEMENT_FORM = {
   position: 'position',
   size: 'size',
   color: 'color',
+  bgcolor: 'bgcolor',
   animation: 'animation',
   timeDelay: 'timeDelay',
 }

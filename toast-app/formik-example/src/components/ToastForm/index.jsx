@@ -3,6 +3,8 @@ import { useFormik } from 'formik'
 import { toastService, ToastsContainer } from './dist'
 
 import TextInputs from './TextInputs'
+import ColorInputs from './ColorInputs'
+import ColorCheckBox from './ColorCheckBox'
 
 import {
   StyledButtonSubmit,
@@ -25,6 +27,7 @@ const ToastForm = () => {
       bgcolor: '',
       timeDelay: '',
       animation: '',
+      checkbox: true,
     },
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2))
@@ -62,6 +65,19 @@ const ToastForm = () => {
           formik.values.position,
         ]}
       />
+      <ColorCheckBox
+        value={formik.values.checkbox}
+        handleChange={formik.handleChange}
+      />
+      {formik.values.checkbox ? null : (
+        <ColorInputs
+          handleChange={formik.handleChange}
+          values={
+            (formik.values.color, formik.values.bgcolor)
+          }
+        />
+      )}
+
       <RadioContainer
         handleChange={
           formik.getFieldProps(formik.values.type).onChange

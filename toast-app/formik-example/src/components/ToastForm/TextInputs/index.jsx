@@ -11,7 +11,7 @@ const TextInputs = ({ handleChange, values }) => {
     <StyledTextInputs>
       <CustomTextInput
         type={TYPES_ELEMENT_FORM.title}
-        value={valueTitle}
+        values={valueTitle}
         handleChange={handleChange}
       />
       <CustomTextInput
