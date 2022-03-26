@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useDebugValue, useContext, createElement, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useDebugValue, useContext, createElement } from 'react';
 import { createPortal } from 'react-dom';
 
 function _extends() {
@@ -2924,20 +2924,6 @@ ErrorBoundary.propTypes = {
 
 const Toast = props => {
   const [viewState, setViewState] = useState(true);
-  const deleteToast = useCallback(() => {
-    setViewState(false);
-    setTimeout(() => {
-      handleClick ? handleClick(id) : document.getElementById(id).remove();
-    }, delay);
-  });
-  useEffect(() => {
-    const interval = setInterval(() => {
-      deleteToast();
-    }, delay);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
   const {
     id = '1',
     title,
@@ -2948,11 +2934,24 @@ const Toast = props => {
     color,
     bgcolor,
     delay = 1000,
-    handleClick = deleteToast
+    handleClick,
+    changeList
   } = { ...props
   };
+
+  const deleteToast = () => {
+    setViewState(false);
+    changeList(id);
+    setTimeout(() => {
+      if (handleClick) {
+        handleClick(id);
+      } else {
+        document.getElementById(id).remove();
+      }
+    }, delay);
+  };
+
   const typeIcon = getIcons(toastType, color);
-  console.log(color, bgcolor, 'colors');
   return /*#__PURE__*/React.createElement(ErrorBoundary, null, /*#__PURE__*/React.createElement(StyledToastContainer$1, {
     id: id,
     className: viewState ? 'animation-start' : 'animation-end',
@@ -2962,7 +2961,7 @@ const Toast = props => {
     size: size,
     delay: delay
   }, /*#__PURE__*/React.createElement(StyledTypeIcon, null, typeIcon), /*#__PURE__*/React.createElement(StyledToastText, null, /*#__PURE__*/React.createElement(StyledToastTitle, null, title), /*#__PURE__*/React.createElement(StyledToastContent, null, content)), /*#__PURE__*/React.createElement(StyledCloseIcon, {
-    onClick: handleClick,
+    onClick: deleteToast,
     "data-id": id
   }, /*#__PURE__*/React.createElement(CloseIcon, {
     color: color
@@ -3009,18 +3008,38 @@ const StyledToastContainer = styled.div`
 
 const ToastsContainer = ({
   position,
-  toastList
+  toastList,
+  handleClick,
+  delay
 }) => {
+  const [list, setList] = useState(toastList);
+
+  const changeList = (id = 0) => {
+    setList(list.splice(id, 1));
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      changeList();
+      handleClick();
+    }, delay);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [changeList, delay, handleClick]);
   return /*#__PURE__*/React.createElement(ToastPortal, null, /*#__PURE__*/React.createElement(StyledToastContainer, {
     className: position
-  }, toastList.map((toastProperty, index) => /*#__PURE__*/React.createElement(Toast, _extends({
+  }, toastList?.map((toastProperty, index) => /*#__PURE__*/React.createElement(Toast, _extends({
     id: index,
-    key: `toastProperty-${index}`
+    key: `toastProperty-${index}`,
+    changeList: changeList
   }, toastProperty)))));
 };
 ToastsContainer.propTypes = {
   position: PropTypes.string,
-  toastList: PropTypes.array
+  toastList: PropTypes.array,
+  handleClick: PropTypes.func,
+  delay: PropTypes.number
 };
 
 class ToastService {
@@ -3035,7 +3054,7 @@ class ToastService {
   }
 
   addToast(toast) {
-    if (this.toastList.length < 4) this.toastList.push(toast);
+    if (this.toastList.length < 3) this.toastList.push(toast);
   }
 
 }

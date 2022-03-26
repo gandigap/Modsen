@@ -1,8 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { getDefaultColors, getIcons } from '@/utils'
@@ -26,25 +22,6 @@ import ErrorBoundary from '../../ErrorBoundary'
 const Toast = (props) => {
   const [viewState, setViewState] = useState(true)
 
-  const deleteToast = useCallback(() => {
-    setViewState(false)
-    setTimeout(() => {
-      handleClick
-        ? handleClick(id)
-        : document.getElementById(id).remove()
-    }, delay)
-  })
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      deleteToast()
-    }, delay)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
-
   const {
     id = '1',
     title,
@@ -55,11 +32,24 @@ const Toast = (props) => {
     color,
     bgcolor,
     delay = 1000,
-    handleClick = deleteToast,
+    handleClick,
+    changeList,
   } = { ...props }
 
+  const deleteToast = () => {
+    setViewState(false)
+    changeList(id)
+    setTimeout(() => {
+      if (handleClick) {
+        handleClick(id)
+      } else {
+        document.getElementById(id).remove()
+      }
+    }, delay)
+  }
+
   const typeIcon = getIcons(toastType, color)
-  console.log(color, bgcolor, 'colors')
+
   return (
     <ErrorBoundary>
       <StyledToastContainer
@@ -85,7 +75,7 @@ const Toast = (props) => {
           <StyledToastTitle>{title}</StyledToastTitle>
           <StyledToastContent>{content}</StyledToastContent>
         </StyledToastText>
-        <StyledCloseIcon onClick={handleClick} data-id={id}>
+        <StyledCloseIcon onClick={deleteToast} data-id={id}>
           <CloseIcon color={color} />
         </StyledCloseIcon>
       </StyledToastContainer>

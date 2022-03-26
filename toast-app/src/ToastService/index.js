@@ -11,7 +11,7 @@ class ToastService {
   }
 
   addToast(toast) {
-    if (this.toastList.length < 4)
+    if (this.toastList.length < 3)
       this.toastList.push(toast)
   }
 }

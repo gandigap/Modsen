@@ -1,6 +1,9 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import { toastService, ToastsContainer } from './dist'
+import {
+  toastService,
+  ToastsContainer,
+} from '../../library'
 
 import TextInputs from './TextInputs'
 import ColorInputs from './ColorInputs'
@@ -27,7 +30,7 @@ const ToastForm = () => {
       type: 'info',
       color: '',
       bgcolor: '',
-      delay: '1000',
+      delay: '3000',
       animation: 'horizontal',
       checkbox: false,
     },
@@ -45,7 +48,8 @@ const ToastForm = () => {
       color: formik.values.color,
       bgcolor: formik.values.bgcolor,
       delay: +formik.values.delay,
-      handleClick: toastService.removeToast,
+      handleClick:
+        toastService.removeToast.bind(toastService),
     }
     toastService.addToast(args)
   }
@@ -55,6 +59,10 @@ const ToastForm = () => {
       <ToastsContainer
         position={formik.values.position}
         toastList={toastService.toastList}
+        delay={+formik.values.delay}
+        handleClick={toastService.removeToast.bind(
+          toastService,
+        )}
       />
       <StyledFormTitle>Toast config form</StyledFormTitle>
       <TextInputs
