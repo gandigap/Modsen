@@ -22,14 +22,3 @@ export const TOAST_ANIMATIONS = {
   horizontal: 'horizontal',
   vertical: 'vertical',
 }
-
-export const TYPES_ELEMENT_FORM = {
-  title: 'title',
-  content: 'content',
-  position: 'position',
-  size: 'size',
-  color: 'color',
-  bgcolor: 'bgcolor',
-  animation: 'animation',
-  delay: 'delay',
-}
