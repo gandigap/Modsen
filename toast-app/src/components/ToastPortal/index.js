@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import './style.css'
-
 const ToastPortal = ({
   children,
   id = 'root__portal',
@@ -18,7 +16,7 @@ const ToastPortal = ({
     return () => {
       document.body.removeChild(portal)
     }
-  }, [])
+  }, [id, portal])
 
   return createPortal(children, portal)
 }

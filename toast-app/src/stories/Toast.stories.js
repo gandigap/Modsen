@@ -51,5 +51,4 @@ DefaultToast.args = {
   color: '',
   bgcolor: '',
   delay: 2000,
-  handleClick: (id) => console.log(id),
 }

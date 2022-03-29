@@ -1,6 +1,10 @@
 import styled from 'styled-components'
-import { TOAST_ANIMATIONS } from '@/constants'
-import { getPadding } from '@/utils'
+import {
+  TOAST_ANIMATIONS,
+  TOAST_DEFAULT_DELIMETER_DELAY,
+  MILLISECCONDS_PER_SECCOND,
+} from '../../../constants'
+import { getPadding } from '../../../utils'
 export const StyledToastContainer = styled.div`
   margin: 10px;
   padding: ${({ size }) => getPadding(size).padding};
@@ -15,7 +19,10 @@ export const StyledToastContainer = styled.div`
     backgroundColor};
 
   &.animation-start {
-    animation: ${({ delay }) => delay / 1000}s
+    animation: ${({ delay }) =>
+        delay /
+        MILLISECCONDS_PER_SECCOND /
+        TOAST_DEFAULT_DELIMETER_DELAY}s
       ${({ animation }) =>
         animation === TOAST_ANIMATIONS.vertical
           ? 'start-y'
@@ -24,7 +31,10 @@ export const StyledToastContainer = styled.div`
   }
 
   &.animation-end {
-    animation: ${({ delay }) => delay / 1000}s
+    animation: ${({ delay }) =>
+        delay /
+        MILLISECCONDS_PER_SECCOND /
+        TOAST_DEFAULT_DELIMETER_DELAY}s
       ${({ animation }) =>
         animation === TOAST_ANIMATIONS.vertical
           ? 'end-y'

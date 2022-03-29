@@ -23,9 +23,13 @@ export const TOAST_ANIMATIONS = {
   vertical: 'vertical',
 }
 
-export const TOAST_DEFAULT_DELAY = 2000
-
-export const TOAST_ANIMATION_CLASSES = {
-  start: 'animation-start',
-  end: 'animation-end',
+export const TYPES_ELEMENT_FORM = {
+  title: 'title',
+  content: 'content',
+  position: 'position',
+  size: 'size',
+  color: 'color',
+  bgcolor: 'bgcolor',
+  animation: 'animation',
+  delay: 'delay',
 }

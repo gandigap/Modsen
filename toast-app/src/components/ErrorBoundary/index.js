@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { ERROR_MESSAGE } from '@/constants'
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class ErrorBoundary extends React.Component {
     if (this.state.errorInfo) {
       return (
         <div>
-          <h2>Something went wrong.</h2>
+          <h2>{ERROR_MESSAGE}</h2>
           <details style={{ whiteSpace: 'pre-wrap' }}>
             {this.state.error &&
               this.state.error.toString()}

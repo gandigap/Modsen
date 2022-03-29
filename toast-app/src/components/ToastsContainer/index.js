@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import ToastPortal from '../ToastPortal'
+import { toastService } from '@/ToastService'
 import Toast from './Toast'
 
 import { StyledToastContainer } from './style'
+import { useToastContainer } from '@/hooks'
+import { TOAST_POSITIONS } from '@/constants'
 
 export const ToastsContainer = ({
-  position,
-  toastList,
-  handleClick,
-  delay,
+  position = TOAST_POSITIONS.top_left,
 }) => {
-  const [list, setList] = useState(toastList)
-
-  const changeList = (id = 0) => {
-    setList(list.splice(id, 1))
-  }
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      changeList()
-      handleClick()
-    }, delay)
-    return () => {
-      clearInterval(timer)
-    }
-  }, [changeList, delay, handleClick])
+  const { toastList } = useToastContainer()
 
   return (
     <ToastPortal>
@@ -35,7 +21,9 @@ export const ToastsContainer = ({
           <Toast
             id={index}
             key={`toastProperty-${index}`}
-            changeList={changeList}
+            handleClick={toastService.removeToast.bind(
+              toastService,
+            )}
             {...toastProperty}
           />
         ))}
