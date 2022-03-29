@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import ToastPortal from '../ToastPortal'
-import { toastService } from 'ToastService'
+import { toastService } from '../../ToastService'
+import Toast from './Toast'
 
 import { StyledToastContainer } from './style'
-import { useToastContainer } from 'hooks'
+import { useToastContainer } from '../../hooks'
 
 export const ToastsContainer = ({ delay }) => {
-  const render = useToastContainer()
-  console.log('toast container')
+  const { toastList } = useToastContainer()
+
   return (
     <ToastPortal>
       <StyledToastContainer>
-        {render((toast, id) => {
-          console.log('list')
-          return (
-            <div
-              key={id}
-              onCLick={toastService.removeToast(id)}>
-              {JSON.stringify(toast)}
-            </div>
-          )
-        })}
+        {toastList?.map((toastProperty, index) => (
+          <Toast
+            id={index}
+            key={`toastProperty-${index}`}
+            handleClick={toastService.removeToast.bind(
+              toastService,
+            )}
+            {...toastProperty}
+          />
+        ))}
       </StyledToastContainer>
     </ToastPortal>
   )

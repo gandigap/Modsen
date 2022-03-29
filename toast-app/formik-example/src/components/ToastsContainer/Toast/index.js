@@ -33,19 +33,17 @@ const Toast = (props) => {
     bgcolor,
     delay = 1000,
     handleClick,
-    changeList,
   } = { ...props }
 
   const deleteToast = () => {
     setViewState(false)
-    changeList(id)
     setTimeout(() => {
       if (handleClick) {
         handleClick(id)
       } else {
         document.getElementById(id).remove()
       }
-    }, delay)
+    }, (delay * 3) / 4)
   }
 
   const typeIcon = getIcons(toastType, color)

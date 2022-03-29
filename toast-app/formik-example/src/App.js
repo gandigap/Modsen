@@ -1,11 +1,16 @@
-import { ToastsContainer } from 'components/ToastsContainer'
-import { toastService } from 'ToastService'
+import { ToastsContainer } from './components/ToastsContainer'
+import { toastService } from './ToastService'
 
 function App() {
   const toastDefaultArgs = {
-    content: 'content',
     title: 'title',
-    color: 'azure',
+    content: 'content',
+    size: 'big',
+    animationType: 'horizontal',
+    toastType: 'info',
+    color: 'red',
+    bgcolor: 'azure',
+    delay: 1000,
   }
 
   const handleClick = (type) => () => {
