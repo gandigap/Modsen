@@ -7,13 +7,16 @@ import Toast from './Toast'
 
 import { StyledToastContainer } from './style'
 import { useToastContainer } from '../../hooks'
+import { TOAST_POSITIONS } from 'constants'
 
-export const ToastsContainer = ({ delay }) => {
+export const ToastsContainer = ({
+  position = TOAST_POSITIONS.top_left,
+}) => {
   const { toastList } = useToastContainer()
 
   return (
     <ToastPortal>
-      <StyledToastContainer>
+      <StyledToastContainer className={position}>
         {toastList?.map((toastProperty, index) => (
           <Toast
             id={index}

@@ -6,6 +6,8 @@ import {
   TOAST_TYPES,
   TOAST_SIZES,
   TOAST_ANIMATIONS,
+  TOAST_DEFAULT_DELAY,
+  TOAST_ANIMATION_CLASSES,
 } from '../../../constants'
 import { CloseIcon } from '../../icons'
 
@@ -31,7 +33,7 @@ const Toast = (props) => {
     toastType = TOAST_TYPES.info,
     color,
     bgcolor,
-    delay = 1000,
+    delay = TOAST_DEFAULT_DELAY,
     handleClick,
   } = { ...props }
 
@@ -43,7 +45,7 @@ const Toast = (props) => {
       } else {
         document.getElementById(id).remove()
       }
-    }, (delay * 3) / 4)
+    }, delay)
   }
 
   const typeIcon = getIcons(toastType, color)
@@ -53,7 +55,9 @@ const Toast = (props) => {
       <StyledToastContainer
         id={id}
         className={
-          viewState ? 'animation-start' : 'animation-end'
+          viewState
+            ? TOAST_ANIMATION_CLASSES.start
+            : TOAST_ANIMATION_CLASSES.end
         }
         color={
           color === ''

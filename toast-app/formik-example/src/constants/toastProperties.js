@@ -22,3 +22,10 @@ export const TOAST_ANIMATIONS = {
   horizontal: 'horizontal',
   vertical: 'vertical',
 }
+
+export const TOAST_DEFAULT_DELAY = 2000
+
+export const TOAST_ANIMATION_CLASSES = {
+  start: 'animation-start',
+  end: 'animation-end',
+}
