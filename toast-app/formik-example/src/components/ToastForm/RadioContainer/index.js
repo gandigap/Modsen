@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TOAST_TYPES } from '../../../constants'
+import { TOAST_TYPES } from 'constants'
 
 import {
   StyledRadioContainer,

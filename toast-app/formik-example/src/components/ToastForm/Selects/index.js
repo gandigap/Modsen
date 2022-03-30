@@ -5,11 +5,10 @@ import { TYPES_ELEMENT_FORM } from '../../../constants'
 
 import { StyledSelects } from './style'
 
-const Selects = ({ handleChange, values }) => {
-  const [valueSize, valueAnimation, valuePosition] = [
-    ...values,
-  ]
-
+const Selects = ({
+  handleChange,
+  values: [valueSize, valueAnimation, valuePosition],
+}) => {
   const getSelects = () => {
     return Object.keys(TYPES_ELEMENT_FORM)
       .filter(
@@ -41,21 +40,7 @@ const Selects = ({ handleChange, values }) => {
         )
       })
   }
-  return (
-    <StyledSelects>
-      {getSelects()}
-      {/* <CustomSelect
-        type={TYPES_ELEMENT_FORM.size}
-        handleChange={handleChange}
-        value={valueSize}
-      />
-      <CustomSelect
-        type={TYPES_ELEMENT_FORM.animation}
-        handleChange={handleChange}
-        value={valueAnimation}
-      /> */}
-    </StyledSelects>
-  )
+  return <StyledSelects>{getSelects()}</StyledSelects>
 }
 
 export default Selects

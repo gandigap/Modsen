@@ -30,19 +30,4 @@ module.exports = {
 
     return config
   },
-
-  /* config.resolve.alias['@components'] = path.resolve(
-      __dirname,
-      '../src/components',
-    )
-    config.resolve.alias['@constants'] = path.resolve(
-      __dirname,
-      '../src/constants',
-    )
-    config.resolve.alias['@utils'] = path.resolve(
-      __dirname,
-      '../src/utils',
-    )
-    return config
-   */
 }

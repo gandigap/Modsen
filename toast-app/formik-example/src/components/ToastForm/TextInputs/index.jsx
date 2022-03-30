@@ -5,8 +5,10 @@ import CustomTextInput from './CustomTextInput'
 
 import { StyledTextInputs } from './style'
 
-const TextInputs = ({ handleChange, values }) => {
-  const [valueTitle, valueContent] = [...values]
+const TextInputs = ({
+  handleChange,
+  values: [valueTitle, valueContent],
+}) => {
   return (
     <StyledTextInputs>
       <CustomTextInput

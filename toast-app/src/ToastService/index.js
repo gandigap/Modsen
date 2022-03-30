@@ -1,3 +1,4 @@
+/* eslint-disable node/no-callback-literal */
 class ToastService {
   constructor() {
     if (typeof ToastService.instance === 'object')
@@ -27,7 +28,7 @@ class ToastService {
   }
 
   notifyAll() {
-    return this.subscribers.forEach((callback) => {
+    this.subscribers.forEach((callback) => {
       callback([...this.toastList])
     })
   }

@@ -8,6 +8,16 @@ import {
 import TextInputs from './TextInputs'
 import ColorInputs from './ColorInputs'
 import ColorCheckBox from './ColorCheckBox'
+import Selects from './Selects'
+import RadioContainer from './RadioContainer'
+import InputNumber from './InputNumber'
+
+import {
+  TOAST_SIZES,
+  TOAST_POSITIONS,
+  TOAST_ANIMATIONS,
+  TOAST_TYPES,
+} from 'constants'
 
 import {
   StyledButtonSubmit,
@@ -15,88 +25,77 @@ import {
   StyledForm,
   StyledFormTitle,
 } from './style'
-import Selects from './Selects'
-import RadioContainer from './RadioContainer'
-import InputNumber from './InputNumber'
 
 const ToastForm = () => {
-  const formik = useFormik({
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    getFieldProps,
+  } = useFormik({
     enableReinitialize: true,
     initialValues: {
       title: 'Title',
       content: 'Content',
-      size: 'small',
-      position: 'top_left',
-      type: 'info',
+      size: TOAST_SIZES.small,
+      position: TOAST_POSITIONS.top_left,
+      type: TOAST_TYPES.info,
       color: '',
       bgcolor: '',
       delay: '3000',
-      animation: 'horizontal',
+      animation: TOAST_ANIMATIONS.horizontal,
       checkbox: false,
     },
-    onSubmit: (values) => {},
   })
 
   const someClick = () => {
     const args = {
-      title: formik.values.title,
-      content: formik.values.content,
-      size: formik.values.size,
-      animationType: formik.values.animation,
-      toastType: formik.values.type,
-      color: formik.values.checkbox
-        ? ''
-        : formik.values.color,
-      bgcolor: formik.values.checkbox
-        ? ''
-        : formik.values.bgcolor,
+      title: values.title,
+      content: values.content,
+      size: values.size,
+      animationType: values.animation,
+      toastType: values.type,
+      color: values.checkbox ? '' : values.color,
+      bgcolor: values.checkbox ? '' : values.bgcolor,
     }
-    toastService.addToast(args, +formik.values.delay)
+    toastService.addToast(args, +values.delay)
   }
 
   return (
-    <StyledForm onSubmit={formik.handleSubmit}>
-      <ToastsContainer position={formik.values.position} />
+    <StyledForm onSubmit={handleSubmit}>
+      <ToastsContainer position={values.position} />
       <StyledFormTitle>Toast config form</StyledFormTitle>
       <TextInputs
-        handleChange={formik.handleChange}
-        values={[
-          formik.values.title,
-          formik.values.content,
-        ]}
+        handleChange={handleChange}
+        values={[values.title, values.content]}
       />
       <Selects
-        handleChange={formik.handleChange}
+        handleChange={handleChange}
         values={[
-          formik.values.size,
-          formik.values.animation,
-          formik.values.position,
+          values.size,
+          values.animation,
+          values.position,
         ]}
       />
       <StyledColorSettingContainer>
         <ColorCheckBox
-          values={formik.values.checkbox}
-          handleChange={formik.handleChange}
+          values={values.checkbox}
+          handleChange={handleChange}
         />
-        {formik.values.checkbox ? null : (
+        {!values.checkbox && (
           <ColorInputs
-            handleChange={formik.handleChange}
-            values={[
-              formik.values.color,
-              formik.values.bgcolor,
-            ]}
+            handleChange={handleChange}
+            values={[values.color, values.bgcolor]}
           />
         )}
       </StyledColorSettingContainer>
 
       <RadioContainer
-        handleChange={
-          formik.getFieldProps(formik.values.type).onChange
-        }
+        handleChange={getFieldProps(values.type).onChange}
       />
       <InputNumber
-        value={formik.values.delay}
-        handleChange={formik.handleChange}
+        value={values.delay}
+        handleChange={handleChange}
       />
 
       <StyledButtonSubmit type="submit" onClick={someClick}>
