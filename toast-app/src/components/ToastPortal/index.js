@@ -1,24 +1,9 @@
-import { useEffect, useState } from 'react'
+import { usePortal } from '../../hooks'
 import { createPortal } from 'react-dom'
 
-const ToastPortal = ({
-  children,
-  id = 'root__portal',
-  el = 'div',
-}) => {
-  const [portal] = useState(() => {
-    return document.createElement(el)
-  })
-
-  useEffect(() => {
-    portal.id = id
-    document.body.appendChild(portal)
-    return () => {
-      document.body.removeChild(portal)
-    }
-  }, [id, portal])
-
-  return createPortal(children, portal)
+const Portal = ({ id = 'root__portal', children }) => {
+  const target = usePortal(id)
+  return createPortal(children, target)
 }
 
-export default ToastPortal
+export default Portal

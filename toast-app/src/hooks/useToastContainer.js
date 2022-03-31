@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toastService } from '@/ToastService'
+import { DISPATCH_UPDATE_LIST } from '@/constants'
 
 export const useToastContainer = () => {
   const [toastList, setToastList] = useState(
@@ -11,9 +12,9 @@ export const useToastContainer = () => {
   }
 
   useEffect(() => {
-    toastService.subscribe('useToastContainer', updateList)
+    toastService.subscribe(DISPATCH_UPDATE_LIST, updateList)
     return () => {
-      toastService.unsubscribe('useToastContainer')
+      toastService.unsubscribe(DISPATCH_UPDATE_LIST)
     }
   }, [])
 

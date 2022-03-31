@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ToastPortal from '../ToastPortal'
+import Portal from '../ToastPortal'
 import { toastService } from '@/ToastService'
 import Toast from './Toast'
 
@@ -15,7 +15,7 @@ export const ToastsContainer = ({
   const { toastList } = useToastContainer()
 
   return (
-    <ToastPortal>
+    <Portal>
       <StyledToastContainer className={position}>
         {toastList?.map((toastProperty, index) => (
           <Toast
@@ -28,7 +28,7 @@ export const ToastsContainer = ({
           />
         ))}
       </StyledToastContainer>
-    </ToastPortal>
+    </Portal>
   )
 }
 

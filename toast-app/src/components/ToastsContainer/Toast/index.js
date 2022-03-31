@@ -7,8 +7,6 @@ import {
   TOAST_SIZES,
   TOAST_ANIMATIONS,
   TOAST_DEFAULT_DELAY,
-  TOAST_ANIMATION_CLASSES,
-  TOAST_DEFAULT_DELIMETER_DELAY,
 } from '@/constants'
 import { CloseIcon } from '../../icons'
 
@@ -22,31 +20,20 @@ import {
 } from './style'
 import ErrorBoundary from '../../ErrorBoundary'
 
-const Toast = (props) => {
-  const [viewState, setViewState] = useState(true)
-
-  const {
-    id = '1',
-    title,
-    content,
-    size,
-    animationType,
-    toastType = TOAST_TYPES.info,
-    color,
-    bgcolor,
-    delay = TOAST_DEFAULT_DELAY,
-    handleClick,
-  } = { ...props }
-
+const Toast = ({
+  id = '1',
+  title,
+  content,
+  size,
+  animationType,
+  toastType = TOAST_TYPES.info,
+  color,
+  bgcolor,
+  delay = TOAST_DEFAULT_DELAY,
+  handleClick,
+}) => {
   const deleteToast = () => {
-    setViewState(false)
-    setTimeout(() => {
-      if (handleClick) {
-        handleClick(id)
-      } else {
-        document.getElementById(id).remove()
-      }
-    }, delay / TOAST_DEFAULT_DELIMETER_DELAY)
+    handleClick && handleClick(id)
   }
 
   const typeIcon = getIcons(toastType, color)
@@ -55,11 +42,6 @@ const Toast = (props) => {
     <ErrorBoundary>
       <StyledToastContainer
         id={id}
-        className={
-          viewState
-            ? TOAST_ANIMATION_CLASSES.start
-            : TOAST_ANIMATION_CLASSES.end
-        }
         color={
           color === ''
             ? getDefaultColors(toastType).font
