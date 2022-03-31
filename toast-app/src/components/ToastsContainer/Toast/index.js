@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { getDefaultColors, getIcons } from '@/utils'
@@ -21,7 +21,7 @@ import {
 import ErrorBoundary from '../../ErrorBoundary'
 
 const Toast = ({
-  id = '1',
+  id = 1,
   title,
   content,
   size,
@@ -69,7 +69,9 @@ const Toast = ({
 }
 
 Toast.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string,
+  content: PropTypes.string,
   handleClick: PropTypes.func,
   animationType: PropTypes.oneOf([
     TOAST_ANIMATIONS.horizontal,

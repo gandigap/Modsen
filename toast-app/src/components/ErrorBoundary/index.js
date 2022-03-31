@@ -2,6 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { ERROR_MESSAGE } from '@/constants'
 
+import {
+  StyledErrorDetails,
+  StyledErrorTitle,
+} from './style'
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
@@ -20,13 +25,15 @@ class ErrorBoundary extends React.Component {
     if (this.state.errorInfo) {
       return (
         <div>
-          <h2>{ERROR_MESSAGE}</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
+          <StyledErrorTitle>
+            {ERROR_MESSAGE}
+          </StyledErrorTitle>
+          <StyledErrorDetails>
             {this.state.error &&
               this.state.error.toString()}
             <br />
             {this.state.errorInfo.componentStack}
-          </details>
+          </StyledErrorDetails>
         </div>
       )
     }

@@ -1,4 +1,4 @@
-import { usePortal } from '../../hooks'
+import { usePortal } from '@/hooks'
 import { createPortal } from 'react-dom'
 
 const Portal = ({ id = 'root__portal', children }) => {

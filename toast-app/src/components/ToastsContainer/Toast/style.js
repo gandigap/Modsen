@@ -19,9 +19,9 @@ export const StyledToastContainer = styled.div`
     backgroundColor};
 
   animation: ${({ delay }) =>
-      delay /
-      MILLISECCONDS_PER_SECCOND /
-      TOAST_DEFAULT_DELIMETER_DELAY}s
+    delay /
+    MILLISECCONDS_PER_SECCOND /
+    TOAST_DEFAULT_DELIMETER_DELAY}s
     ${({ animation }) =>
       animation === TOAST_ANIMATIONS.vertical
         ? 'start-y'

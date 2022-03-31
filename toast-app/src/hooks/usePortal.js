@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useRef, useEffect } from 'react'
 
 function createRootElement(id) {
   const rootContainer = document.createElement('div')
@@ -13,13 +13,15 @@ function addRootElement(rootElem) {
   )
 }
 
-export const usePortal = () => {
+export const usePortal = (id) => {
   const rootElemRef = useRef(null)
+
   useEffect(
     function setupElement() {
       const existingParent = document.querySelector(
         `#${id}`,
       )
+
       const parentElem =
         existingParent || createRootElement(id)
 
@@ -39,12 +41,12 @@ export const usePortal = () => {
     [id],
   )
 
-  const getRoomElem = () => {
+  function getRootElem() {
     if (!rootElemRef.current) {
       rootElemRef.current = document.createElement('div')
     }
     return rootElemRef.current
   }
 
-  return getRoomElem()
+  return getRootElem()
 }
