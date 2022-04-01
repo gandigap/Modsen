@@ -3,7 +3,7 @@ import {
   OPERATORS,
   MATH_TEXT,
   OPERATORS_ID,
-} from '../constants'
+} from 'constants/'
 
 export const applyOperator = (operator, values) =>
   operator.calc(...values.reverse().map(parseFloat))

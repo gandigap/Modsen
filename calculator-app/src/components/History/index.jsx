@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { operationSelector } from 'selectors'
-import { PAGES_TEXT } from 'constants'
+import { PAGES_TEXT } from 'constants/'
 
 import {
   HistoryContainer,
