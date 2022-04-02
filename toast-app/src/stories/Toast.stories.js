@@ -34,6 +34,12 @@ export default {
       ],
       control: { type: 'select' },
     },
+    color: {
+      control: { type: 'color' },
+    },
+    bgcolor: {
+      control: { type: 'color' },
+    },
   },
 }
 
