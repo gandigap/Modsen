@@ -18,29 +18,16 @@ export const StyledToastContainer = styled.div`
   background-color: ${({ backgroundColor }) =>
     backgroundColor};
 
-  &.animation-start {
-    animation: ${({ delay }) =>
-        delay /
-        MILLISECCONDS_PER_SECCOND /
-        TOAST_DEFAULT_DELIMETER_DELAY}s
-      ${({ animation }) =>
-        animation === TOAST_ANIMATIONS.vertical
-          ? 'start-y'
-          : 'start-x'}
-      0s;
-  }
-
-  &.animation-end {
-    animation: ${({ delay }) =>
-        delay /
-        MILLISECCONDS_PER_SECCOND /
-        TOAST_DEFAULT_DELIMETER_DELAY}s
-      ${({ animation }) =>
-        animation === TOAST_ANIMATIONS.vertical
-          ? 'end-y'
-          : 'end-x'}
-      0s;
-  }
+  animation: ${({ delay }) =>
+    delay /
+    MILLISECCONDS_PER_SECCOND /
+    TOAST_DEFAULT_DELIMETER_DELAY}s
+    ${({ animation }) =>
+      animation === TOAST_ANIMATIONS.vertical
+        ? 'start-y'
+        : 'start-x'}
+    0s;
+  }  
 
   &:hover {
     -webkit-box-shadow: 4px 4px 8px 0px
@@ -59,18 +46,7 @@ export const StyledToastContainer = styled.div`
       opacity: 1;
     }
   }
-
-  @keyframes end-y {
-    from {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-  }
-
+  
   @keyframes start-x {
     from {
       transform: translateX(-100%);
@@ -80,18 +56,7 @@ export const StyledToastContainer = styled.div`
       transform: translateX(0);
       opacity: 1;
     }
-  }
-
-  @keyframes end-x {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
+  }  
 `
 
 export const StyledToastTitle = styled.h4`

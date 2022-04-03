@@ -33,7 +33,7 @@ function createCommonjsModule(fn, module) {
  */
 var b$3="function"===typeof Symbol&&Symbol.for,c$2=b$3?Symbol.for("react.element"):60103,d$2=b$3?Symbol.for("react.portal"):60106,e$2=b$3?Symbol.for("react.fragment"):60107,f$2=b$3?Symbol.for("react.strict_mode"):60108,g$3=b$3?Symbol.for("react.profiler"):60114,h$2=b$3?Symbol.for("react.provider"):60109,k$3=b$3?Symbol.for("react.context"):60110,l$2=b$3?Symbol.for("react.async_mode"):60111,m$2=b$3?Symbol.for("react.concurrent_mode"):60111,n$2=b$3?Symbol.for("react.forward_ref"):60112,p$2=b$3?Symbol.for("react.suspense"):60113,q$3=b$3?
 Symbol.for("react.suspense_list"):60120,r$2=b$3?Symbol.for("react.memo"):60115,t$1=b$3?Symbol.for("react.lazy"):60116,v$3=b$3?Symbol.for("react.block"):60121,w$3=b$3?Symbol.for("react.fundamental"):60117,x$3=b$3?Symbol.for("react.responder"):60118,y$2=b$3?Symbol.for("react.scope"):60119;
-function z$3(a){if("object"===typeof a&&null!==a){var u=a.$$typeof;switch(u){case c$2:switch(a=a.type,a){case l$2:case m$2:case e$2:case g$3:case f$2:case p$2:return a;default:switch(a=a&&a.$$typeof,a){case k$3:case n$2:case t$1:case r$2:case h$2:return a;default:return u}}case d$2:return u}}}function A$3(a){return z$3(a)===m$2}var AsyncMode$1=l$2;var ConcurrentMode$1=m$2;var ContextConsumer$2=k$3;var ContextProvider$2=h$2;var Element$2=c$2;var ForwardRef$2=n$2;var Fragment$2=e$2;var Lazy$2=t$1;var Memo$2=r$2;var Portal$2=d$2;
+function z$3(a){if("object"===typeof a&&null!==a){var u=a.$$typeof;switch(u){case c$2:switch(a=a.type,a){case l$2:case m$2:case e$2:case g$3:case f$2:case p$2:return a;default:switch(a=a&&a.$$typeof,a){case k$3:case n$2:case t$1:case r$2:case h$2:return a;default:return u}}case d$2:return u}}}function A$3(a){return z$3(a)===m$2}var AsyncMode$1=l$2;var ConcurrentMode$1=m$2;var ContextConsumer$2=k$3;var ContextProvider$2=h$2;var Element$2=c$2;var ForwardRef$2=n$2;var Fragment$2=e$2;var Lazy$2=t$1;var Memo$2=r$2;var Portal$3=d$2;
 var Profiler$2=g$3;var StrictMode$2=f$2;var Suspense$2=p$2;var isAsyncMode$2=function(a){return A$3(a)||z$3(a)===l$2};var isConcurrentMode$2=A$3;var isContextConsumer$2=function(a){return z$3(a)===k$3};var isContextProvider$2=function(a){return z$3(a)===h$2};var isElement$2=function(a){return "object"===typeof a&&null!==a&&a.$$typeof===c$2};var isForwardRef$2=function(a){return z$3(a)===n$2};var isFragment$2=function(a){return z$3(a)===e$2};var isLazy$2=function(a){return z$3(a)===t$1};
 var isMemo$2=function(a){return z$3(a)===r$2};var isPortal$2=function(a){return z$3(a)===d$2};var isProfiler$2=function(a){return z$3(a)===g$3};var isStrictMode$2=function(a){return z$3(a)===f$2};var isSuspense$2=function(a){return z$3(a)===p$2};
 var isValidElementType$2=function(a){return "string"===typeof a||"function"===typeof a||a===e$2||a===m$2||a===g$3||a===f$2||a===p$2||a===q$3||"object"===typeof a&&null!==a&&(a.$$typeof===t$1||a.$$typeof===r$2||a.$$typeof===h$2||a.$$typeof===k$3||a.$$typeof===n$2||a.$$typeof===w$3||a.$$typeof===x$3||a.$$typeof===y$2||a.$$typeof===v$3)};var typeOf$2=z$3;
@@ -48,7 +48,7 @@ var reactIs_production_min$2 = {
 	Fragment: Fragment$2,
 	Lazy: Lazy$2,
 	Memo: Memo$2,
-	Portal: Portal$2,
+	Portal: Portal$3,
 	Profiler: Profiler$2,
 	StrictMode: StrictMode$2,
 	Suspense: Suspense$2,
@@ -1158,36 +1158,22 @@ if (process.env.NODE_ENV !== 'production') {
 
 var PropTypes = propTypes;
 
-const ToastPortal = ({
-  children,
-  id = 'root__portal',
-  el = 'div'
-}) => {
-  const [portal] = useState(() => {
-    return document.createElement(el);
-  });
-  useEffect(() => {
-    portal.id = id;
-    document.body.appendChild(portal);
-    return () => {
-      document.body.removeChild(portal);
-    };
-  }, [id, portal]);
-  return /*#__PURE__*/createPortal(children, portal);
-};
-
+/* eslint-disable node/no-callback-literal */
 class ToastService {
   constructor() {
     if (typeof ToastService.instance === 'object') return ToastService.instance;
     ToastService.instance = this;
     this.toastList = [];
+    this.toastQueue = [];
     this.subscribers = new Map();
     this.timer = null;
   }
 
   addToast(toast, delay) {
     this.delay = delay;
-    if (this.toastList.length < 3) this.toastList.push({ ...toast,
+    this.toastList.length < 3 ? this.toastList.push({ ...toast,
+      delay
+    }) : this.toastQueue.push({ ...toast,
       delay
     });
     this.notifyAll();
@@ -1195,18 +1181,17 @@ class ToastService {
     this.timer = setInterval(() => {
       this.removeToast();
     }, this.delay);
+    console.log(this.toastQueue, this.toastList);
   }
 
   removeToast(id = 0) {
-    if (this.toastList.length) {
-      this.toastList.splice(id, 1);
-    }
-
+    this.toastList.length && this.toastList.splice(id, 1);
+    this.toastQueue.length && this.toastList.push(this.toastQueue.shift());
     this.notifyAll();
   }
 
   notifyAll() {
-    return this.subscribers.forEach(callback => {
+    this.subscribers.forEach(callback => {
       callback([...this.toastList]);
     });
   }
@@ -1251,12 +1236,77 @@ const TOAST_ANIMATIONS = {
 const TOAST_DEFAULT_DELAY = 2000;
 const MILLISECCONDS_PER_SECCOND = 1000;
 const TOAST_DEFAULT_DELIMETER_DELAY = 5;
-const TOAST_ANIMATION_CLASSES = {
-  start: 'animation-start',
-  end: 'animation-end'
-};
+
+const DISPATCH_UPDATE_LIST = 'DISPATCH_UPDATE_LIST';
 
 const ERROR_MESSAGE = 'Something went wrong.';
+
+const useToastContainer = () => {
+  const [toastList, setToastList] = useState(toastService.toastList);
+
+  const updateList = list => {
+    setToastList(list);
+  };
+
+  useEffect(() => {
+    toastService.subscribe(DISPATCH_UPDATE_LIST, updateList);
+    return () => {
+      toastService.unsubscribe(DISPATCH_UPDATE_LIST);
+    };
+  }, []);
+  return {
+    toastList
+  };
+};
+
+function createRootElement(id) {
+  const rootContainer = document.createElement('div');
+  rootContainer.setAttribute('id', id);
+  return rootContainer;
+}
+
+function addRootElement(rootElem) {
+  document.body.insertBefore(rootElem, document.body.lastElementChild.nextElementSibling);
+}
+
+const usePortal = id => {
+  const rootElemRef = useRef(null);
+  useEffect(function setupElement() {
+    const existingParent = document.querySelector(`#${id}`);
+    const parentElem = existingParent || createRootElement(id);
+
+    if (!existingParent) {
+      addRootElement(parentElem);
+    }
+
+    parentElem.appendChild(rootElemRef.current);
+    return function removeElement() {
+      rootElemRef.current.remove();
+
+      if (!parentElem.childElementCount) {
+        parentElem.remove();
+      }
+    };
+  }, [id]);
+
+  function getRootElem() {
+    if (!rootElemRef.current) {
+      rootElemRef.current = document.createElement('div');
+    }
+
+    return rootElemRef.current;
+  }
+
+  return getRootElem();
+};
+
+const Portal$2 = ({
+  id = 'root__portal',
+  children
+}) => {
+  const target = usePortal(id);
+  return /*#__PURE__*/createPortal(children, target);
+};
 
 const getDefaultColors = type => {
   switch (type) {
@@ -2850,25 +2900,14 @@ const StyledToastContainer$1 = styled.div`
   backgroundColor
 }) => backgroundColor};
 
-  &.animation-start {
-    animation: ${({
+  animation: ${({
   delay
 }) => delay / MILLISECCONDS_PER_SECCOND / TOAST_DEFAULT_DELIMETER_DELAY}s
-      ${({
+    ${({
   animation
 }) => animation === TOAST_ANIMATIONS.vertical ? 'start-y' : 'start-x'}
-      0s;
-  }
-
-  &.animation-end {
-    animation: ${({
-  delay
-}) => delay / MILLISECCONDS_PER_SECCOND / TOAST_DEFAULT_DELIMETER_DELAY}s
-      ${({
-  animation
-}) => animation === TOAST_ANIMATIONS.vertical ? 'end-y' : 'end-x'}
-      0s;
-  }
+    0s;
+  }  
 
   &:hover {
     -webkit-box-shadow: 4px 4px 8px 0px
@@ -2887,18 +2926,7 @@ const StyledToastContainer$1 = styled.div`
       opacity: 1;
     }
   }
-
-  @keyframes end-y {
-    from {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-  }
-
+  
   @keyframes start-x {
     from {
       transform: translateX(-100%);
@@ -2908,18 +2936,7 @@ const StyledToastContainer$1 = styled.div`
       transform: translateX(0);
       opacity: 1;
     }
-  }
-
-  @keyframes end-x {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
+  }  
 `;
 const StyledToastTitle = styled.h4`
   margin: 0;
@@ -2988,37 +3005,25 @@ ErrorBoundary.propTypes = {
   children: PropTypes.element.isRequired
 };
 
-const Toast = props => {
-  const [viewState, setViewState] = useState(true);
-  const {
-    id = '1',
-    title,
-    content,
-    size,
-    animationType,
-    toastType = TOAST_TYPES.info,
-    color,
-    bgcolor,
-    delay = TOAST_DEFAULT_DELAY,
-    handleClick
-  } = { ...props
-  };
-
+const Toast = ({
+  id = 1,
+  title,
+  content,
+  size,
+  animationType,
+  toastType = TOAST_TYPES.info,
+  color,
+  bgcolor,
+  delay = TOAST_DEFAULT_DELAY,
+  handleClick
+}) => {
   const deleteToast = () => {
-    setViewState(false);
-    setTimeout(() => {
-      if (handleClick) {
-        handleClick(id);
-      } else {
-        document.getElementById(id).remove();
-      }
-    }, delay / TOAST_DEFAULT_DELIMETER_DELAY);
+    handleClick && handleClick(id);
   };
 
   const typeIcon = getIcons(toastType, color);
   return /*#__PURE__*/React.createElement(ErrorBoundary, null, /*#__PURE__*/React.createElement(StyledToastContainer$1, {
     id: id,
-    className: viewState ? TOAST_ANIMATION_CLASSES.start : TOAST_ANIMATION_CLASSES.end,
     color: color === '' ? getDefaultColors(toastType).font : color,
     backgroundColor: bgcolor === '' ? getDefaultColors(toastType).background : bgcolor,
     animation: animationType,
@@ -3033,7 +3038,9 @@ const Toast = props => {
 };
 
 Toast.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string,
+  content: PropTypes.string,
   handleClick: PropTypes.func,
   animationType: PropTypes.oneOf([TOAST_ANIMATIONS.horizontal, TOAST_ANIMATIONS.vertical]),
   color: PropTypes.string,
@@ -3070,31 +3077,13 @@ const StyledToastContainer = styled.div`
   }
 `;
 
-const useToastContainer = () => {
-  const [toastList, setToastList] = useState(toastService.toastList);
-
-  const updateList = list => {
-    setToastList(list);
-  };
-
-  useEffect(() => {
-    toastService.subscribe('useToastContainer', updateList);
-    return () => {
-      toastService.unsubscribe('useToastContainer');
-    };
-  }, []);
-  return {
-    toastList
-  };
-};
-
 const ToastsContainer = ({
   position = TOAST_POSITIONS.top_left
 }) => {
   const {
     toastList
   } = useToastContainer();
-  return /*#__PURE__*/React.createElement(ToastPortal, null, /*#__PURE__*/React.createElement(StyledToastContainer, {
+  return /*#__PURE__*/React.createElement(Portal$2, null, /*#__PURE__*/React.createElement(StyledToastContainer, {
     className: position
   }, toastList?.map((toastProperty, index) => /*#__PURE__*/React.createElement(Toast, _extends({
     id: index,

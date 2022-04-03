@@ -26,8 +26,3 @@ export const TOAST_ANIMATIONS = {
 export const TOAST_DEFAULT_DELAY = 2000
 export const MILLISECCONDS_PER_SECCOND = 1000
 export const TOAST_DEFAULT_DELIMETER_DELAY = 5
-
-export const TOAST_ANIMATION_CLASSES = {
-  start: 'animation-start',
-  end: 'animation-end',
-}

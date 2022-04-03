@@ -3,10 +3,10 @@ import {
   TOAST_ANIMATIONS,
   TOAST_SIZES,
   TOAST_POSITIONS,
-} from '../../../../constants'
+} from 'constants'
 import React from 'react'
 import { StyledCustomSelect } from './style'
-import { StyledLabel } from '../../style'
+import { StyledLabel } from 'components/ToastForm/style'
 
 const CustomSelect = ({ type, value, handleChange }) => {
   const getOptions = (type) => {

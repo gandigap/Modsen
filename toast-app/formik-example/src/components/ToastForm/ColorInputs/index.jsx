@@ -5,8 +5,10 @@ import CustomColorInput from './CustomColorInput'
 
 import { StyledColorInputs } from './style'
 
-const TextInputs = ({ handleChange, values }) => {
-  const [valueColor, valueBgcolor] = [...values]
+const TextInputs = ({
+  handleChange,
+  values: [valueColor, valueBgcolor],
+}) => {
   return (
     <StyledColorInputs>
       <CustomColorInput

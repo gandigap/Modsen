@@ -1,8 +1,9 @@
 import React from 'react'
 
+import { TYPES_ELEMENT_FORM } from 'constants'
+
 import { StyledLabel } from '../style'
 import { StyledCustomInputNumber } from './style'
-import { TYPES_ELEMENT_FORM } from 'constants'
 
 const InputNumber = ({ value, handleChange }) => {
   return (

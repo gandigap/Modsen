@@ -33,7 +33,7 @@ function createCommonjsModule(fn, module) {
  */
 var b$3="function"===typeof Symbol&&Symbol.for,c$2=b$3?Symbol.for("react.element"):60103,d$2=b$3?Symbol.for("react.portal"):60106,e$2=b$3?Symbol.for("react.fragment"):60107,f$2=b$3?Symbol.for("react.strict_mode"):60108,g$3=b$3?Symbol.for("react.profiler"):60114,h$2=b$3?Symbol.for("react.provider"):60109,k$3=b$3?Symbol.for("react.context"):60110,l$2=b$3?Symbol.for("react.async_mode"):60111,m$2=b$3?Symbol.for("react.concurrent_mode"):60111,n$2=b$3?Symbol.for("react.forward_ref"):60112,p$2=b$3?Symbol.for("react.suspense"):60113,q$3=b$3?
 Symbol.for("react.suspense_list"):60120,r$2=b$3?Symbol.for("react.memo"):60115,t$1=b$3?Symbol.for("react.lazy"):60116,v$3=b$3?Symbol.for("react.block"):60121,w$3=b$3?Symbol.for("react.fundamental"):60117,x$3=b$3?Symbol.for("react.responder"):60118,y$2=b$3?Symbol.for("react.scope"):60119;
-function z$3(a){if("object"===typeof a&&null!==a){var u=a.$$typeof;switch(u){case c$2:switch(a=a.type,a){case l$2:case m$2:case e$2:case g$3:case f$2:case p$2:return a;default:switch(a=a&&a.$$typeof,a){case k$3:case n$2:case t$1:case r$2:case h$2:return a;default:return u}}case d$2:return u}}}function A$3(a){return z$3(a)===m$2}var AsyncMode$1=l$2;var ConcurrentMode$1=m$2;var ContextConsumer$2=k$3;var ContextProvider$2=h$2;var Element$2=c$2;var ForwardRef$2=n$2;var Fragment$2=e$2;var Lazy$2=t$1;var Memo$2=r$2;var Portal$2=d$2;
+function z$3(a){if("object"===typeof a&&null!==a){var u=a.$$typeof;switch(u){case c$2:switch(a=a.type,a){case l$2:case m$2:case e$2:case g$3:case f$2:case p$2:return a;default:switch(a=a&&a.$$typeof,a){case k$3:case n$2:case t$1:case r$2:case h$2:return a;default:return u}}case d$2:return u}}}function A$3(a){return z$3(a)===m$2}var AsyncMode$1=l$2;var ConcurrentMode$1=m$2;var ContextConsumer$2=k$3;var ContextProvider$2=h$2;var Element$2=c$2;var ForwardRef$2=n$2;var Fragment$2=e$2;var Lazy$2=t$1;var Memo$2=r$2;var Portal$3=d$2;
 var Profiler$2=g$3;var StrictMode$2=f$2;var Suspense$2=p$2;var isAsyncMode$2=function(a){return A$3(a)||z$3(a)===l$2};var isConcurrentMode$2=A$3;var isContextConsumer$2=function(a){return z$3(a)===k$3};var isContextProvider$2=function(a){return z$3(a)===h$2};var isElement$2=function(a){return "object"===typeof a&&null!==a&&a.$$typeof===c$2};var isForwardRef$2=function(a){return z$3(a)===n$2};var isFragment$2=function(a){return z$3(a)===e$2};var isLazy$2=function(a){return z$3(a)===t$1};
 var isMemo$2=function(a){return z$3(a)===r$2};var isPortal$2=function(a){return z$3(a)===d$2};var isProfiler$2=function(a){return z$3(a)===g$3};var isStrictMode$2=function(a){return z$3(a)===f$2};var isSuspense$2=function(a){return z$3(a)===p$2};
 var isValidElementType$2=function(a){return "string"===typeof a||"function"===typeof a||a===e$2||a===m$2||a===g$3||a===f$2||a===p$2||a===q$3||"object"===typeof a&&null!==a&&(a.$$typeof===t$1||a.$$typeof===r$2||a.$$typeof===h$2||a.$$typeof===k$3||a.$$typeof===n$2||a.$$typeof===w$3||a.$$typeof===x$3||a.$$typeof===y$2||a.$$typeof===v$3)};var typeOf$2=z$3;
@@ -48,7 +48,7 @@ var reactIs_production_min$2 = {
 	Fragment: Fragment$2,
 	Lazy: Lazy$2,
 	Memo: Memo$2,
-	Portal: Portal$2,
+	Portal: Portal$3,
 	Profiler: Profiler$2,
 	StrictMode: StrictMode$2,
 	Suspense: Suspense$2,
@@ -1158,36 +1158,22 @@ if (process.env.NODE_ENV !== 'production') {
 
 var PropTypes = propTypes;
 
-const ToastPortal = ({
-  children,
-  id = 'root__portal',
-  el = 'div'
-}) => {
-  const [portal] = useState(() => {
-    return document.createElement(el);
-  });
-  useEffect(() => {
-    portal.id = id;
-    document.body.appendChild(portal);
-    return () => {
-      document.body.removeChild(portal);
-    };
-  }, [id, portal]);
-  return /*#__PURE__*/createPortal(children, portal);
-};
-
+/* eslint-disable node/no-callback-literal */
 class ToastService {
   constructor() {
     if (typeof ToastService.instance === 'object') return ToastService.instance;
     ToastService.instance = this;
     this.toastList = [];
+    this.toastQueue = [];
     this.subscribers = new Map();
     this.timer = null;
   }
 
   addToast(toast, delay) {
     this.delay = delay;
-    if (this.toastList.length < 3) this.toastList.push({ ...toast,
+    this.toastList.length < 3 ? this.toastList.push({ ...toast,
+      delay
+    }) : this.toastQueue.push({ ...toast,
       delay
     });
     this.notifyAll();
@@ -1198,15 +1184,13 @@ class ToastService {
   }
 
   removeToast(id = 0) {
-    if (this.toastList.length) {
-      this.toastList.splice(id, 1);
-    }
-
+    this.toastList.length && this.toastList.splice(id, 1);
+    this.toastQueue.length && this.toastList.push(this.toastQueue.shift());
     this.notifyAll();
   }
 
   notifyAll() {
-    return this.subscribers.forEach(callback => {
+    this.subscribers.forEach(callback => {
       callback([...this.toastList]);
     });
   }
@@ -1251,12 +1235,77 @@ const TOAST_ANIMATIONS = {
 const TOAST_DEFAULT_DELAY = 2000;
 const MILLISECCONDS_PER_SECCOND = 1000;
 const TOAST_DEFAULT_DELIMETER_DELAY = 5;
-const TOAST_ANIMATION_CLASSES = {
-  start: 'animation-start',
-  end: 'animation-end'
-};
+
+const DISPATCH_UPDATE_LIST = 'DISPATCH_UPDATE_LIST';
 
 const ERROR_MESSAGE = 'Something went wrong.';
+
+const useToastContainer = () => {
+  const [toastList, setToastList] = useState(toastService.toastList);
+
+  const updateList = list => {
+    setToastList(list);
+  };
+
+  useEffect(() => {
+    toastService.subscribe(DISPATCH_UPDATE_LIST, updateList);
+    return () => {
+      toastService.unsubscribe(DISPATCH_UPDATE_LIST);
+    };
+  }, []);
+  return {
+    toastList
+  };
+};
+
+function createRootElement(id) {
+  const rootContainer = document.createElement('div');
+  rootContainer.setAttribute('id', id);
+  return rootContainer;
+}
+
+function addRootElement(rootElem) {
+  document.body.insertBefore(rootElem, document.body.lastElementChild.nextElementSibling);
+}
+
+const usePortal = id => {
+  const rootElemRef = useRef(null);
+  useEffect(function setupElement() {
+    const existingParent = document.querySelector(`#${id}`);
+    const parentElem = existingParent || createRootElement(id);
+
+    if (!existingParent) {
+      addRootElement(parentElem);
+    }
+
+    parentElem.appendChild(rootElemRef.current);
+    return function removeElement() {
+      rootElemRef.current.remove();
+
+      if (!parentElem.childElementCount) {
+        parentElem.remove();
+      }
+    };
+  }, [id]);
+
+  function getRootElem() {
+    if (!rootElemRef.current) {
+      rootElemRef.current = document.createElement('div');
+    }
+
+    return rootElemRef.current;
+  }
+
+  return getRootElem();
+};
+
+const Portal$2 = ({
+  id = 'root__portal',
+  children
+}) => {
+  const target = usePortal(id);
+  return /*#__PURE__*/createPortal(children, target);
+};
 
 const getDefaultColors = type => {
   switch (type) {
@@ -1316,7 +1365,7 @@ const WarningIcon = ({
     viewBox: "0 0 52 52",
     fill: `${color}`
   }, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26 S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"
+    d: "M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26\r S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"
   }), /*#__PURE__*/React.createElement("path", {
     d: "M26,10c-0.552,0-1,0.447-1,1v22c0,0.553,0.448,1,1,1s1-0.447,1-1V11C27,10.447,26.552,10,26,10z"
   }), /*#__PURE__*/React.createElement("path", {
@@ -1361,11 +1410,11 @@ const ErrorIcon = ({
     width: "245.76",
     height: "20.48"
   }))), /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("polygon", {
-    points: "143.36,245.76 143.36,276.48 92.16,276.48 92.16,194.56 71.68,194.56 71.68,296.96 143.36,296.96 143.36,368.64  163.84,368.64 163.84,245.76 \t\t"
+    points: "143.36,245.76 143.36,276.48 92.16,276.48 92.16,194.56 71.68,194.56 71.68,296.96 143.36,296.96 143.36,368.64 \r 163.84,368.64 163.84,245.76 \t\t"
   }))), /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("polygon", {
-    points: "389.12,245.76 389.12,276.48 337.92,276.48 337.92,194.56 317.44,194.56 317.44,296.96 389.12,296.96  389.12,368.64 409.6,368.64 409.6,245.76 \t\t"
+    points: "389.12,245.76 389.12,276.48 337.92,276.48 337.92,194.56 317.44,194.56 317.44,296.96 389.12,296.96 \r 389.12,368.64 409.6,368.64 409.6,245.76 \t\t"
   }))), /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M240.64,194.56c-31.055,0-56.32,25.27-56.32,56.32v61.44c0,31.05,25.265,56.32,56.32,56.32s56.32-25.27,56.32-56.32 v-61.44C296.96,219.83,271.695,194.56,240.64,194.56z M276.48,312.32c0,19.76-16.08,35.84-35.84,35.84s-35.84-16.08-35.84-35.84 v-61.44c0-19.76,16.08-35.84,35.84-35.84s35.84,16.08,35.84,35.84V312.32z"
+    d: "M240.64,194.56c-31.055,0-56.32,25.27-56.32,56.32v61.44c0,31.05,25.265,56.32,56.32,56.32s56.32-25.27,56.32-56.32\r v-61.44C296.96,219.83,271.695,194.56,240.64,194.56z M276.48,312.32c0,19.76-16.08,35.84-35.84,35.84s-35.84-16.08-35.84-35.84\r v-61.44c0-19.76,16.08-35.84,35.84-35.84s35.84,16.08,35.84,35.84V312.32z"
   }))), /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("rect", {
     x: "143.36",
     y: "133.12",
@@ -1394,9 +1443,9 @@ const SuccessIcon = ({
     viewBox: "0 0 52 52",
     fill: `${color}`
   }, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26 S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"
+    d: "M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M26,50C12.767,50,2,39.233,2,26\r S12.767,2,26,2s24,10.767,24,24S39.233,50,26,50z"
   }), /*#__PURE__*/React.createElement("path", {
-    d: "M38.252,15.336l-15.369,17.29l-9.259-7.407c-0.43-0.345-1.061-0.274-1.405,0.156c-0.345,0.432-0.275,1.061,0.156,1.406 l10,8C22.559,34.928,22.78,35,23,35c0.276,0,0.551-0.114,0.748-0.336l16-18c0.367-0.412,0.33-1.045-0.083-1.411 C39.251,14.885,38.62,14.922,38.252,15.336z"
+    d: "M38.252,15.336l-15.369,17.29l-9.259-7.407c-0.43-0.345-1.061-0.274-1.405,0.156c-0.345,0.432-0.275,1.061,0.156,1.406\r l10,8C22.559,34.928,22.78,35,23,35c0.276,0,0.551-0.114,0.748-0.336l16-18c0.367-0.412,0.33-1.045-0.083-1.411\r C39.251,14.885,38.62,14.922,38.252,15.336z"
   })), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null));
 };
 SuccessIcon.propTypes = {
@@ -1415,9 +1464,9 @@ const InfoIcon = ({
     viewBox: "0 0 512 512",
     fill: `${color}`
   }, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M256,0C114.62,0,0,114.62,0,256s114.62,256,256,256s256-114.62,256-256S397.38,0,256,0z M256,486.4 C128.956,486.4,25.6,383.044,25.6,256S128.956,25.6,256,25.6S486.4,128.956,486.4,256S383.044,486.4,256,486.4z"
+    d: "M256,0C114.62,0,0,114.62,0,256s114.62,256,256,256s256-114.62,256-256S397.38,0,256,0z M256,486.4\r C128.956,486.4,25.6,383.044,25.6,256S128.956,25.6,256,25.6S486.4,128.956,486.4,256S383.044,486.4,256,486.4z"
   }))), /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("path", {
-    d: "M319.258,119.578c-13.858-11.981-31.718-17.98-53.581-17.98h-4.403c-22.673,0-42.001,7.074-58.001,21.197 c-17.604,15.753-26.402,36.804-26.402,63.198c0,4.275,1.203,7.603,3.601,10.001c2.398,2.15,5.325,3.072,8.798,2.799 c3.2,0,5.999-1.203,8.397-3.601c2.662-2.654,4.002-5.854,4.002-9.6c0-14.925,3.465-27.853,10.402-38.801 c10.129-15.454,26.522-23.202,49.203-23.202c19.2,0,33.724,5.197,43.597,15.599c8.26,8.55,12.527,19.601,12.8,33.203 c0,11.998-2.534,22.673-7.603,32c-5.871,10.675-16.401,22.4-31.599,35.2c-12.8,10.402-21.734,21.999-26.803,34.799 c-5.077,12.271-7.603,27.878-7.603,46.797c0,3.746,1.203,6.801,3.601,9.199c2.398,2.15,5.325,3.2,8.798,3.2 c3.2,0,5.999-1.05,8.397-3.2c2.662-2.398,4.002-5.453,4.002-9.199c0-18.654,2.261-33.05,6.801-43.204 c4.523-9.6,13.329-19.729,26.402-30.404c14.404-12.254,24.798-24.124,31.198-35.601c6.127-11.204,9.199-23.723,9.199-37.598 C342.46,150.929,334.72,132.651,319.258,119.578z"
+    d: "M319.258,119.578c-13.858-11.981-31.718-17.98-53.581-17.98h-4.403c-22.673,0-42.001,7.074-58.001,21.197\r c-17.604,15.753-26.402,36.804-26.402,63.198c0,4.275,1.203,7.603,3.601,10.001c2.398,2.15,5.325,3.072,8.798,2.799\r c3.2,0,5.999-1.203,8.397-3.601c2.662-2.654,4.002-5.854,4.002-9.6c0-14.925,3.465-27.853,10.402-38.801\r c10.129-15.454,26.522-23.202,49.203-23.202c19.2,0,33.724,5.197,43.597,15.599c8.26,8.55,12.527,19.601,12.8,33.203\r c0,11.998-2.534,22.673-7.603,32c-5.871,10.675-16.401,22.4-31.599,35.2c-12.8,10.402-21.734,21.999-26.803,34.799\r c-5.077,12.271-7.603,27.878-7.603,46.797c0,3.746,1.203,6.801,3.601,9.199c2.398,2.15,5.325,3.2,8.798,3.2\r c3.2,0,5.999-1.05,8.397-3.2c2.662-2.398,4.002-5.453,4.002-9.199c0-18.654,2.261-33.05,6.801-43.204\r c4.523-9.6,13.329-19.729,26.402-30.404c14.404-12.254,24.798-24.124,31.198-35.601c6.127-11.204,9.199-23.723,9.199-37.598\r C342.46,150.929,334.72,132.651,319.258,119.578z"
   }))), /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("g", null, /*#__PURE__*/React.createElement("circle", {
     cx: "256",
     cy: "384",
@@ -1440,7 +1489,7 @@ const CloseIcon = ({
     viewBox: "0 0 371.23 371.23",
     fill: `${color}`
   }, /*#__PURE__*/React.createElement("polygon", {
-    points: "371.23,21.213 350.018,0 185.615,164.402 21.213,0 0,21.213 164.402,185.615 0,350.018 21.213,371.23  185.615,206.828 350.018,371.23 371.23,350.018 206.828,185.615 "
+    points: "371.23,21.213 350.018,0 185.615,164.402 21.213,0 0,21.213 164.402,185.615 0,350.018 21.213,371.23 \r 185.615,206.828 350.018,371.23 371.23,350.018 206.828,185.615 "
   }), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null), /*#__PURE__*/React.createElement("g", null));
 };
 CloseIcon.propTypes = {
@@ -2850,25 +2899,14 @@ const StyledToastContainer$1 = styled.div`
   backgroundColor
 }) => backgroundColor};
 
-  &.animation-start {
-    animation: ${({
+  animation: ${({
   delay
 }) => delay / MILLISECCONDS_PER_SECCOND / TOAST_DEFAULT_DELIMETER_DELAY}s
-      ${({
+    ${({
   animation
 }) => animation === TOAST_ANIMATIONS.vertical ? 'start-y' : 'start-x'}
-      0s;
-  }
-
-  &.animation-end {
-    animation: ${({
-  delay
-}) => delay / MILLISECCONDS_PER_SECCOND / TOAST_DEFAULT_DELIMETER_DELAY}s
-      ${({
-  animation
-}) => animation === TOAST_ANIMATIONS.vertical ? 'end-y' : 'end-x'}
-      0s;
-  }
+    0s;
+  }  
 
   &:hover {
     -webkit-box-shadow: 4px 4px 8px 0px
@@ -2887,18 +2925,7 @@ const StyledToastContainer$1 = styled.div`
       opacity: 1;
     }
   }
-
-  @keyframes end-y {
-    from {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-  }
-
+  
   @keyframes start-x {
     from {
       transform: translateX(-100%);
@@ -2908,18 +2935,7 @@ const StyledToastContainer$1 = styled.div`
       transform: translateX(0);
       opacity: 1;
     }
-  }
-
-  @keyframes end-x {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
+  }  
 `;
 const StyledToastTitle = styled.h4`
   margin: 0;
@@ -2952,6 +2968,13 @@ const StyledCloseIcon = styled.button`
   cursor: pointer;
 `;
 
+const StyledErrorDetails = styled.details`
+  whitespace: 'pre-wrap';
+`;
+const StyledErrorTitle = styled.h2`
+  font-weight: bold;
+`;
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -2972,11 +2995,7 @@ class ErrorBoundary extends React.Component {
     const children = this.props.children;
 
     if (this.state.errorInfo) {
-      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, ERROR_MESSAGE), /*#__PURE__*/React.createElement("details", {
-        style: {
-          whiteSpace: 'pre-wrap'
-        }
-      }, this.state.error && this.state.error.toString(), /*#__PURE__*/React.createElement("br", null), this.state.errorInfo.componentStack));
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(StyledErrorTitle, null, ERROR_MESSAGE), /*#__PURE__*/React.createElement(StyledErrorDetails, null, this.state.error && this.state.error.toString(), /*#__PURE__*/React.createElement("br", null), this.state.errorInfo.componentStack));
     }
 
     return children;
@@ -2988,37 +3007,25 @@ ErrorBoundary.propTypes = {
   children: PropTypes.element.isRequired
 };
 
-const Toast = props => {
-  const [viewState, setViewState] = useState(true);
-  const {
-    id = '1',
-    title,
-    content,
-    size,
-    animationType,
-    toastType = TOAST_TYPES.info,
-    color,
-    bgcolor,
-    delay = TOAST_DEFAULT_DELAY,
-    handleClick
-  } = { ...props
-  };
-
+const Toast = ({
+  id = 1,
+  title,
+  content,
+  size,
+  animationType,
+  toastType = TOAST_TYPES.info,
+  color,
+  bgcolor,
+  delay = TOAST_DEFAULT_DELAY,
+  handleClick
+}) => {
   const deleteToast = () => {
-    setViewState(false);
-    setTimeout(() => {
-      if (handleClick) {
-        handleClick(id);
-      } else {
-        document.getElementById(id).remove();
-      }
-    }, delay / TOAST_DEFAULT_DELIMETER_DELAY);
+    handleClick && handleClick(id);
   };
 
   const typeIcon = getIcons(toastType, color);
   return /*#__PURE__*/React.createElement(ErrorBoundary, null, /*#__PURE__*/React.createElement(StyledToastContainer$1, {
     id: id,
-    className: viewState ? TOAST_ANIMATION_CLASSES.start : TOAST_ANIMATION_CLASSES.end,
     color: color === '' ? getDefaultColors(toastType).font : color,
     backgroundColor: bgcolor === '' ? getDefaultColors(toastType).background : bgcolor,
     animation: animationType,
@@ -3033,7 +3040,9 @@ const Toast = props => {
 };
 
 Toast.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string,
+  content: PropTypes.string,
   handleClick: PropTypes.func,
   animationType: PropTypes.oneOf([TOAST_ANIMATIONS.horizontal, TOAST_ANIMATIONS.vertical]),
   color: PropTypes.string,
@@ -3070,31 +3079,13 @@ const StyledToastContainer = styled.div`
   }
 `;
 
-const useToastContainer = () => {
-  const [toastList, setToastList] = useState(toastService.toastList);
-
-  const updateList = list => {
-    setToastList(list);
-  };
-
-  useEffect(() => {
-    toastService.subscribe('useToastContainer', updateList);
-    return () => {
-      toastService.unsubscribe('useToastContainer');
-    };
-  }, []);
-  return {
-    toastList
-  };
-};
-
 const ToastsContainer = ({
   position = TOAST_POSITIONS.top_left
 }) => {
   const {
     toastList
   } = useToastContainer();
-  return /*#__PURE__*/React.createElement(ToastPortal, null, /*#__PURE__*/React.createElement(StyledToastContainer, {
+  return /*#__PURE__*/React.createElement(Portal$2, null, /*#__PURE__*/React.createElement(StyledToastContainer, {
     className: position
   }, toastList?.map((toastProperty, index) => /*#__PURE__*/React.createElement(Toast, _extends({
     id: index,

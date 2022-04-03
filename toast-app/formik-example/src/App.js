@@ -1,4 +1,3 @@
-import { toastService } from 'library'
 import ToastForm from './components/ToastForm'
 
 function App() {
