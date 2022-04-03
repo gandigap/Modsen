@@ -32,8 +32,6 @@
 
 Ссылка на макет: [Макет "Toast"](https://xd.adobe.com/view/9efd755b-6a29-49bf-4e13-d5cd74643170-e8cc/). Также его можно найти в папке **doc** c расширением **.xd** для программы **Adobe XD**.
 
-> ![example_1](https://github.com/slava-ovchinnikov/education-task-toast-lib/blob/master/doc/example_1.png?raw=true)
-
 #### Также проект предполагает:
 - Разделить библиотеку на два основных компонента: представления и логики. Для реализации логики приложения необходимо использовать порождающий паттерн программирования ***"Одиночка"***, который гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа (см. подробнее [паттерн Одиночка](https://refactoring.guru/ru/design-patterns/singleton)). При помощи паттерна создать сервисный класс, в котором вы будете задавать конфигурацию и вызывать уведомление. Для реализация представления необходимо использовать **react portals**.
 
@@ -80,33 +78,3 @@ Will be soon...
 
 Эта инструкция поможет вам сделать копию проекта и запустить его на вашей локальной машине для разработки и тестирования.
 
-### React/ReactNative
-
-#### Установка 
-
-Для того чтобы получить шаблон проекта, необходимо сделать следующее:
-
-1. Зарегистрировать аккаунт в github.
-2. Получить доступ к репозиторию с шаблоном.
-3. Импортировать шаблон в свой репозиторий.
-4. Склонировать репозиторий на свою локальную машину.
-
-> ![template_1](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/template.png?raw=true)
-
-## Полезные ссылки
-
-[React](https://reactjs.org/docs/getting-started.html)
-
-[Rollup](https://rollupjs.org/guide/en/)
-
-[Storybook](https://storybook.js.org/docs/basics/introduction/)
-
-[Eslint](https://eslint.org/docs/user-guide/configuring)
-
-[Babel](https://babeljs.io/docs/en/configuration)
-
-[Тестирование Cypress](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell)
-
-[Тестирование Detox](https://github.com/wix/Detox/blob/master/docs/README.md)
-
-[Styled-components](https://www.styled-components.com/docs)

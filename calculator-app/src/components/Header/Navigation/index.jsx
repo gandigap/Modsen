@@ -5,7 +5,7 @@ import {
   HOME_PAGE_ROUTE,
   SETTING_PAGE_ROUTE,
   NAMES_OF_PAGES,
-} from 'constants'
+} from 'constants/'
 
 import NavigationContainer from './style'
 

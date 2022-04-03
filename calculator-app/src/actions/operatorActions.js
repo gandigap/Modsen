@@ -5,7 +5,7 @@ import {
   CLEAR_TOKENLIST,
   CLEAR_CALCHISTORY,
   ADD_PERIOD,
-} from 'constants'
+} from '../constants'
 
 export const updateTokenListAction = (payload) => ({
   type: UPDATE_TOKENLIST,

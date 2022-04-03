@@ -3,7 +3,7 @@ import {
   CHANGE_MODE_CALCULATOR,
   THEME_VIEW,
   MODE_CALCULATOR,
-} from 'constants'
+} from 'constants/'
 
 const themeState = {
   themeView: THEME_VIEW.dark,

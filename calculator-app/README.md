@@ -80,9 +80,6 @@
 
 ## Структура проекта
 
-#### Пример необходимой структуры проекта:
-
-> ![structure_1](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/structure_1.png?raw=true)
 
 #### Пояснения к корневой папке:
 
@@ -90,20 +87,6 @@
 - **_node_modules_** - здесь будут находится пакеты, установленные **_NPM_** или **_Yarn_**.
 - **_public_** - место, где находятся ваши статические файлы (например **_index.html_**, **_manifest.json_**).
 - **_src_** - место, где находятся ваши динамические файлы (исходный код вашего приложения). Также в корневой папке находятся все конфигурационные файлы вашего приложения.
-
-#### Пояснения к папке src:
-
-- **_assets_** - папка используется для нужных файлов/объектов, которые необходимы для работы приложения _(Например, картинки)_
-- **_components_** - в первую очередь связаны с тем, как все выглядит (глупые компоненты), содержит только метод рендеринга и немного другой логики, они не знают, как загружать или изменять данные, которые они отображают они лучше всего если они написаны как функциональные компоненты без сохранения состояния.
-- **_constants_** - константы, необходимые для работы приложения.
-- **_containers_** - контейнерные компоненты (умные компоненты) в первую очередь связаны с тем, как все работает они редко имеют свои собственные теги HTML, кроме оберточного `<div>`
-  они часто с состоянием, они несут ответственность за предоставление данных и поведения для своих детей (components).
-- **_srceens_** - в этой папке находятся страницы вашего приложения, которые состоят из компонентов и контейнеров.
-- **_utils_** - необходимые логические модули.
-
-#### Пример структуры react компонента:
-
-> ![structure_2](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/structure_2.png?raw=true)
 
 #### Пояснение для структуры файлов компонента:
 
@@ -122,69 +105,3 @@
 - Модуль навигации.
 - Модуль смены темы и т.д.
 
-## Как начать
-
-Эта инструкция поможет вам сделать копию проекта и запустить его на вашей локальной машине для разработки и тестирования.
-
-### React
-
-#### Установка
-
-Для того чтобы получить шаблон проекта, необходимо сделать следующее:
-
-1. Зарегистрировать аккаунт в github.
-2. Получить доступ к репозиторию с шаблоном.
-3. Импортировать шаблон в свой репозиторий.
-4. Склонировать репозиторий на свою локальную машину.
-
-> ![template_1](https://github.com/slava-ovchinnikov/education-task-calculator/blob/master/doc/template.png?raw=true)
-
-#### Запуск ESlint
-
-- Проверка eslint
-
-  `yarn eslint:test`
-
-- Проверка eslint и автофикс
-
-  `yarn eslint:fix`
-
-#### Запуск
-
-- Запуск проекта в режиме разработки
-
-  `yarn dev`
-
-#### Сборка
-
-- Сборка проекта:
-
-  `yarn build`
-
-#### Тесты
-
-- Запуск теста в командной строке
-
-  `yarn build && yarn cypress:test`
-
-- Запуск тестов в графическом интерфейсе
-
-  `yarn cypress`
-
-## Полезные ссылки
-
-[React](https://reactjs.org/docs/getting-started.html)
-
-[React hooks](https://reactjs.org/docs/hooks-intro.html)
-
-[React router dom](https://reacttraining.com/react-router/web/guides/quick-start)
-
-[React redux](https://react-redux.js.org/introduction/quick-start)
-
-[Тестирование Cypress](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell)
-
-[Тестирование Detox](https://github.com/wix/Detox/blob/master/docs/README.md)
-
-[Styled-components](https://www.styled-components.com/docs)
-
-[Commits convetional](https://www.conventionalcommits.org/en/v1.0.0/#specification)

@@ -15,8 +15,8 @@ import {
   DARK_COLORS,
   LIGHT_COLORS,
   THEME_VIEW,
-} from 'constants'
-import { themeSelector } from 'selectors'
+} from 'constants/'
+import { themeSelector } from 'selectors/'
 
 import theme from 'theme'
 import { ThemeProvider } from 'styled-components'
