@@ -15,7 +15,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "@constants/*": ["constants/*"],
+      "@reducers/*": ["reducers/*"],
+      "@saga/*": ["saga/*"],
+      "@components/*": ["components/*"],
+      "@actions/*": ["actions/*"]
+    }
   },
   "include": ["src"]
 }

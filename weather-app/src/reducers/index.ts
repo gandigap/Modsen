@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import todoReducer from './customReducer'
+import weatherReducer from './weatherReducer'
 
 const store = {
-  todos: todoReducer,
+  customState: weatherReducer,
 }
 
 export default combineReducers(store)

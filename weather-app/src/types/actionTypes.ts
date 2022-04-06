@@ -1,31 +1,20 @@
-export enum WeatherActionTypes {
-  FETCH_WEATHER = 'FETCH_WEATHER',
-  FETCH_WEATHER_SUCCESS = 'FETCH_WEATHER_SUCCESS',
-  FETCH_WEATHER_ERROR = 'FETCH_WEATHER_ERROR',
-  ADD_WEATHER = 'ADD_WEATHER',
-}
-
-export interface WeatherList {
-  [key: string]: WeatherInfo
-}
-
 interface FetchWeatherAction {
-  type: WeatherActionTypes.FETCH_WEATHER
+  type: string
 }
 
 interface FetchWeatherSuccessAction {
-  type: WeatherActionTypes.FETCH_WEATHER_SUCCESS
-  payload: WeatherList
+  type: string
+  payload: string
 }
 
 interface FetchWeatherErrorAction {
-  type: WeatherActionTypes.FETCH_WEATHER_ERROR
+  type: string
   payload: string
 }
 
 interface AddAlbumAction {
-  type: WeatherActionTypes.ADD_WEATHER
-  payload: WeatherList
+  type: string
+  payload: string
 }
 
 export type WeatherActions =
