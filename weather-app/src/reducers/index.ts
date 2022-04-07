@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 
+import locationReducer from './locationReducer'
 import weatherReducer from './weatherReducer'
 
 const store = {
-  customState: weatherReducer,
+  weatherState: weatherReducer,
+  locatonState: locationReducer,
 }
 
 export default combineReducers(store)

@@ -22,8 +22,3 @@ export type WeatherActions =
   | FetchWeatherErrorAction
   | FetchWeatherSuccessAction
   | AddAlbumAction
-
-export interface WeatherInfo {
-  Id: number
-  title: string
-}

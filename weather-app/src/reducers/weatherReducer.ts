@@ -1,11 +1,10 @@
 import { FETCH_WEATHER } from 'constants/'
-import { WeatherActions } from 'types/actionTypes'
-import WeatherStateType from 'types/stateTypes'
+import { WeatherActions, WeatherStateType } from 'types'
 
 const initialState = {
   weatherData: { data: {} },
   loading: false,
-  error: '',
+  error: null,
 }
 
 const weatherReducer = (state = initialState, action: WeatherActions): WeatherStateType => {

@@ -1,9 +1,7 @@
 import { WeatherDataType } from './weatherDataType'
 
-interface WeatherStateType {
+export interface WeatherStateType {
   weatherData: WeatherDataType
   loading: boolean
-  error: string
+  error: null | string
 }
-
-export default WeatherStateType

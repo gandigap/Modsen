@@ -1,5 +1,5 @@
 import { FETCH_WEATHER, FETCH_WEATHER_SUCCESS, FETCH_WEATHER_ERROR, ADD_WEATHER } from 'constants/'
-import { WeatherActions } from 'types/actionTypes'
+import { WeatherActions } from 'types'
 
 export const fetchWeatherActionCreator = (): WeatherActions => ({
   type: FETCH_WEATHER,
