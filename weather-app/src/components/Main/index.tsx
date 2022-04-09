@@ -1,19 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { fetchLocationActionCreator } from 'actions'
+
 import { useDispatch } from 'react-redux'
 
 import { StyledMain } from './styles'
 
 const Main = () => {
   const dispatch = useDispatch()
-  const handleClick = () => {
-    dispatch({ type: 'CLICK' })
-  }
-  return (
-    <StyledMain>
-      Main
-      <button onClick={handleClick}>Get Weather</button>
-    </StyledMain>
-  )
+
+  useEffect(() => {
+    dispatch(fetchLocationActionCreator())
+  }, [])
+
+  return <StyledMain>Main</StyledMain>
 }
 
 export default Main

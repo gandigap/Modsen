@@ -1,7 +1,5 @@
-import { LocationDataType } from './locationDataType'
-
 export interface LocationStateType {
-  location: LocationDataType
+  location: string
   loading: boolean
   error: null | string
 }

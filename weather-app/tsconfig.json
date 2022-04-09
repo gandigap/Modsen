@@ -16,13 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "paths": {
-      "@constants/*": ["constants/*"],
-      "@reducers/*": ["reducers/*"],
-      "@saga/*": ["saga/*"],
-      "@components/*": ["components/*"],
-      "@actions/*": ["actions/*"]
-    }
+    "paths": {}
   },
   "include": ["src"]
 }

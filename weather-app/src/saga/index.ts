@@ -1,4 +1,8 @@
 import { takeEvery, select, put, call } from 'redux-saga/effects'
+import { LocationActionTypes } from 'types'
+import axios from 'axios'
+import { fetchLocationErrorActionCreator } from 'actions'
+import { errors } from 'constants/'
 
 const getWeather = async () => {
   try {
@@ -13,16 +17,30 @@ const getWeather = async () => {
   }
 }
 
-const showPosition = (pos: GeolocationPosition) => {
-  console.log(pos, 'coordinates')
-  return pos.coords
+const getCityNameUseCoordinates = (pos: GeolocationPosition) => {
+  const { latitude, longitude } = pos.coords
+  axios
+    .get('https://us1.locationiq.com/v1/reverse.php', {
+      params: {
+        lat: latitude,
+        lon: longitude,
+        format: 'json',
+        key: 'pk.6ac9639b7b2a2a0a688dbff51d3854c4',
+      },
+    })
+    .then((response) => {
+      console.log(response.data.address.city)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
-const getCurrentPosition = () => {
+function* getCurrentPosition() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition)
+    navigator.geolocation.getCurrentPosition(getCityNameUseCoordinates)
   } else {
-    console.log('Geolocation is not supported by this browser.')
+    yield put(fetchLocationErrorActionCreator(errors.navigatorError))
   }
 }
 
@@ -31,18 +49,20 @@ interface ResponseGenerator {
   state?: any
 }
 
-export function* weatherWorker() {
+function* weatherWorker() {
   /* yield put() */
   const data: ResponseGenerator = yield getWeather()
   const state: ResponseGenerator = yield select()
   console.log(data, state, 'data state')
 }
 
-export function* weatherWatcher() {
-  yield takeEvery('CLICK', weatherWorker)
+function* weatherWatcher() {}
+
+export function* locationWatcher() {
+  yield takeEvery(LocationActionTypes.FETCH_LOCATION, getCurrentPosition)
 }
 
 export default function* rootSaga() {
-  yield getCurrentPosition()
+  yield locationWatcher()
   yield weatherWatcher()
 }

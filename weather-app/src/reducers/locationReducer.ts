@@ -1,46 +1,19 @@
-import { FETCH_LOCATION, FETCH_LOCATION_SUCCESS, FETCH_LOCATION_ERROR } from 'constants/'
-import { LocationStateType, LocationActions } from 'types'
+import { LocationStateType, LocationActions, LocationActionTypes } from 'types'
 
 const initialState = {
-  location: {
-    coordinates: {
-      latitude: '',
-      Longitude: '',
-    },
-    city: '',
-  },
+  location: '',
   loading: false,
   error: null,
 }
 
 const locationReducer = (state = initialState, action: LocationActions): LocationStateType => {
   switch (action.type) {
-    case FETCH_LOCATION:
-      return {
-        loading: true,
-        error: null,
-        location: {
-          coordinates: {
-            latitude: '',
-            longitude: '',
-          },
-          city: '',
-        },
-      }
-    case FETCH_LOCATION_SUCCESS:
-      return { loading: false, error: null, location: action.payload }
-    case FETCH_LOCATION_ERROR:
-      return {
-        loading: false,
-        error: action.payload,
-        location: {
-          coordinates: {
-            latitude: '',
-            longitude: '',
-          },
-          city: '',
-        },
-      }
+    case LocationActionTypes.FETCH_LOCATION:
+      return { ...state, loading: true }
+    case LocationActionTypes.FETCH_LOCATION_SUCCESS:
+      return { ...state, loading: false, location: action.payload }
+    case LocationActionTypes.FETCH_LOCATION_ERROR:
+      return { ...state, loading: false, error: action.payload }
     default:
       return state
   }
