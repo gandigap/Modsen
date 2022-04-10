@@ -1,6 +1,7 @@
-export * from './weatherActionTypes'
+export * from './weatherTypes'
 export * from './weatherDataType'
-export * from './weatherStateType'
 
 export * from './locationTypes'
 export * from './locationDataType'
+
+export * from './errorTypes'

@@ -1,3 +1,3 @@
 export type WeatherDataType = {
-  data: object
+  data: object[]
 }

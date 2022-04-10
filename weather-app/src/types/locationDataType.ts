@@ -1,7 +1,3 @@
-export type LocationDataType = {
-  coordinates: {
-    latitude: string
-    longitude: string
-  }
-  city: string
+export type NavigatorFetchDataType = {
+  data: { address: { city: string } }
 }

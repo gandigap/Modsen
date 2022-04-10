@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { fetchLocationActionCreator } from 'actions'
 
-import { useDispatch } from 'react-redux'
+import { DefaultRootState, useDispatch, useSelector } from 'react-redux'
 
 import { StyledMain } from './styles'
+import CityInput from './CityInput.tsx'
 
 const Main = () => {
   const dispatch = useDispatch()
@@ -12,7 +13,11 @@ const Main = () => {
     dispatch(fetchLocationActionCreator())
   }, [])
 
-  return <StyledMain>Main</StyledMain>
+  return (
+    <StyledMain>
+      <CityInput />
+    </StyledMain>
+  )
 }
 
 export default Main

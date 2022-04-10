@@ -3,9 +3,9 @@ import { combineReducers } from 'redux'
 import locationReducer from './locationReducer'
 import weatherReducer from './weatherReducer'
 
-const store = {
+export const rootReducer = combineReducers({
   weatherState: weatherReducer,
-  locatonState: locationReducer,
-}
+  locationState: locationReducer,
+})
 
-export default combineReducers(store)
+export type RootState = ReturnType<typeof rootReducer>

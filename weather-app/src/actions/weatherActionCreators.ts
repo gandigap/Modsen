@@ -1,11 +1,10 @@
-import { FETCH_WEATHER, FETCH_WEATHER_SUCCESS } from 'constants/'
-import { WeatherActions } from 'types'
+import { WeatherActions, WeatherActionTypes, WeatherDataType } from 'types'
 
 export const fetchWeatherActionCreator = (): WeatherActions => ({
-  type: FETCH_WEATHER,
+  type: WeatherActionTypes.FETCH_WEATHER,
 })
 
-export const fetchWeatherSuccessActionCreator = (payload: any): WeatherActions => ({
-  type: FETCH_WEATHER_SUCCESS,
+export const fetchWeatherSuccessActionCreator = (payload: WeatherDataType): WeatherActions => ({
+  type: WeatherActionTypes.FETCH_WEATHER_SUCCESS,
   payload,
 })

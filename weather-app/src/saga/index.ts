@@ -1,25 +1,55 @@
 import { takeEvery, select, put, call } from 'redux-saga/effects'
-import { LocationActionTypes } from 'types'
+import {
+  LocationActionTypes,
+  LocationStateType,
+  NavigatorFetchDataType,
+  WeatherStateType,
+} from 'types'
 import axios from 'axios'
-import { fetchLocationErrorActionCreator } from 'actions'
+import { fetchLocationErrorActionCreator, fetchLocationSuccessActionCreator } from 'actions'
 import { errors } from 'constants/'
 
-const getWeather = async () => {
+function* getWeather(location: string) {
   try {
-    const response = await fetch(
-      'https://api.openweathermap.org/data/2.5/weather?q=London&lang=en&appid=b9263267a94c30aaafc8ee41fb19e494&units=metric',
-    )
-
-    const data = await response.json()
-    return data
+    const urlApiWeather = `https://api.openweathermap.org/data/2.5/weather?q=${location}&lang=en&appid=b9263267a94c30aaafc8ee41fb19e494&units=metric`
+    const { data }: NavigatorFetchDataType = yield call(axios.get, urlApiWeather)
+    console.log(data, 'getWeather')
   } catch (err) {
     console.log(err)
   }
 }
 
-const getCityNameUseCoordinates = (pos: GeolocationPosition) => {
-  const { latitude, longitude } = pos.coords
-  axios
+function* getCityName(lat: number, lon: number) {
+  try {
+    const urlApiLocation = `https://us1.locationiq.com/v1/reverse.php?key=pk.6ac9639b7b2a2a0a688dbff51d3854c4&lat=${lat}&lon=${lon}&format=json`
+    const { data }: NavigatorFetchDataType = yield call(axios.get, urlApiLocation)
+    yield put(fetchLocationSuccessActionCreator(data.address.city))
+    const { location }: LocationStateType = yield select((state) => state.locatonState)
+    yield getWeather(location)
+  } catch (error) {
+    yield put(fetchLocationErrorActionCreator(errors.locationIQApiError))
+  }
+}
+
+const getCurrentPosition = () =>
+  new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (location) => resolve(location),
+      (error) => reject(error),
+    )
+  })
+
+function* getCityNameFromCoordinates() {
+  try {
+    const location: GeolocationPosition = yield call(getCurrentPosition)
+    const { latitude, longitude } = location.coords
+    yield getCityName(latitude, longitude)
+  } catch (error) {
+    yield put(fetchLocationErrorActionCreator(errors.navigatorError))
+  }
+}
+
+/* axios
     .get('https://us1.locationiq.com/v1/reverse.php', {
       params: {
         lat: latitude,
@@ -33,36 +63,12 @@ const getCityNameUseCoordinates = (pos: GeolocationPosition) => {
     })
     .catch((error) => {
       console.log(error)
-    })
-}
-
-function* getCurrentPosition() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getCityNameUseCoordinates)
-  } else {
-    yield put(fetchLocationErrorActionCreator(errors.navigatorError))
-  }
-}
-
-interface ResponseGenerator {
-  data?: any
-  state?: any
-}
-
-function* weatherWorker() {
-  /* yield put() */
-  const data: ResponseGenerator = yield getWeather()
-  const state: ResponseGenerator = yield select()
-  console.log(data, state, 'data state')
-}
-
-function* weatherWatcher() {}
+    }) */
 
 export function* locationWatcher() {
-  yield takeEvery(LocationActionTypes.FETCH_LOCATION, getCurrentPosition)
+  yield takeEvery(LocationActionTypes.FETCH_LOCATION, getCityNameFromCoordinates)
 }
 
 export default function* rootSaga() {
   yield locationWatcher()
-  yield weatherWatcher()
 }

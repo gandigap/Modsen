@@ -6,6 +6,13 @@ export const fetchLocationActionCreator = (): LocationActions => {
   }
 }
 
+export const fetchLocationSuccessActionCreator = (cityName: string): LocationActions => {
+  return {
+    type: LocationActionTypes.FETCH_LOCATION_SUCCESS,
+    payload: cityName,
+  }
+}
+
 export const fetchLocationErrorActionCreator = (errorMessage: string): LocationActions => {
   return {
     type: LocationActionTypes.FETCH_LOCATION_ERROR,
