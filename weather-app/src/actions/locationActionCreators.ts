@@ -1,4 +1,4 @@
-import { LocationActions, LocationActionTypes } from 'types'
+import { CoordinatesType, LocationActions, LocationActionTypes } from 'types'
 
 export const fetchLocationActionCreator = (): LocationActions => {
   return {
@@ -6,10 +6,10 @@ export const fetchLocationActionCreator = (): LocationActions => {
   }
 }
 
-export const fetchLocationSuccessActionCreator = (cityName: string): LocationActions => {
+export const fetchLocationSuccessActionCreator = (location: string): LocationActions => {
   return {
     type: LocationActionTypes.FETCH_LOCATION_SUCCESS,
-    payload: cityName,
+    payload: location,
   }
 }
 
@@ -18,4 +18,12 @@ export const fetchLocationErrorActionCreator = (errorMessage: string): LocationA
     type: LocationActionTypes.FETCH_LOCATION_ERROR,
     payload: errorMessage,
   }
+}
+
+export const updateLocationNameActionCreator = (location: string): LocationActions => {
+  return { type: LocationActionTypes.UPDATE_LOCATION, payload: location }
+}
+
+export const updateCoordinatesActionCreator = (coordinates: CoordinatesType): LocationActions => {
+  return { type: LocationActionTypes.UPDATE_COORDINATES, payload: coordinates }
 }

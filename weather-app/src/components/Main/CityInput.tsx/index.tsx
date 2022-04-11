@@ -1,29 +1,37 @@
-import useDebounce from 'hooks/useDebounce'
-import { useTypedSelector } from 'hooks/useTypedSelector'
 import React, { useState, useEffect, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { useTypedSelector, useDebounce } from 'hooks'
+
 import { StyledCityInput } from './styles'
+import { fetchWeatherActionCreator, updateLocationNameActionCreator } from 'actions'
 
-const CityInput = () => {
-  const [inputValue, setInputValue] = useState('')
-
+const CityInput: React.FC = () => {
   const { location } = useTypedSelector((state) => state.locationState)
+  const [locationName, setLocationName] = useState('')
 
-  const handleChangeInputValue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-    debounceHandleChangeInputValue()
-  }, [])
+  const dispatch = useDispatch()
 
-  const someThingDo = () => {
-    console.log('something do')
+  const updateLocationName = (value: string) => {
+    dispatch(updateLocationNameActionCreator(value))
+    dispatch(fetchWeatherActionCreator())
   }
 
-  const debounceHandleChangeInputValue = useDebounce(someThingDo, 2000)
+  const debounceHandleChangeInputValue = useDebounce(updateLocationName, 2000)
+
+  const handleChangeInputValue = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setLocationName(e.target.value)
+      debounceHandleChangeInputValue(e.target.value)
+    },
+    [debounceHandleChangeInputValue],
+  )
 
   useEffect(() => {
-    setInputValue(location)
+    location && setLocationName(location)
   }, [location])
 
-  return <StyledCityInput type={'text'} value={inputValue} onChange={handleChangeInputValue} />
+  return <StyledCityInput type={'text'} value={locationName} onChange={handleChangeInputValue} />
 }
 
 export default CityInput

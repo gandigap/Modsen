@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react'
 
-const useDebounce = (callback: any, delay: number) => {
+export const useDebounce = (callback: any, delay: number) => {
   const timer: { current: NodeJS.Timeout | null } = useRef(null)
 
   const debounceCallback = useCallback(
@@ -15,5 +15,3 @@ const useDebounce = (callback: any, delay: number) => {
 
   return debounceCallback
 }
-
-export default useDebounce

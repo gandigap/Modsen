@@ -4,7 +4,12 @@ export const fetchWeatherActionCreator = (): WeatherActions => ({
   type: WeatherActionTypes.FETCH_WEATHER,
 })
 
-export const fetchWeatherSuccessActionCreator = (payload: WeatherDataType): WeatherActions => ({
+export const fetchWeatherSuccessActionCreator = (dataWeather: WeatherDataType): WeatherActions => ({
   type: WeatherActionTypes.FETCH_WEATHER_SUCCESS,
-  payload,
+  payload: dataWeather,
+})
+
+export const fetchWeatherErrorActionCreator = (errorMessage: string): WeatherActions => ({
+  type: WeatherActionTypes.FETCH_WEATHER_ERROR,
+  payload: errorMessage,
 })

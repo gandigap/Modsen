@@ -1,19 +1,27 @@
 import { LocationStateType, LocationActions, LocationActionTypes } from 'types'
 
-const initialState = {
+const initialState: LocationStateType = {
   location: '',
-  loading: false,
-  error: null,
+  coordinates: {
+    lat: 0,
+    lon: 0,
+  },
+  locationLoading: false,
+  locationStateError: null,
 }
 
 const locationReducer = (state = initialState, action: LocationActions): LocationStateType => {
   switch (action.type) {
     case LocationActionTypes.FETCH_LOCATION:
-      return { ...state, loading: true }
+      return { ...state, locationLoading: true }
     case LocationActionTypes.FETCH_LOCATION_SUCCESS:
-      return { ...state, loading: false, location: action.payload }
+      return { ...state, locationLoading: false, location: action.payload }
     case LocationActionTypes.FETCH_LOCATION_ERROR:
-      return { ...state, loading: false, error: action.payload }
+      return { ...state, locationLoading: false, locationStateError: action.payload }
+    case LocationActionTypes.UPDATE_LOCATION:
+      return { ...state, location: action.payload }
+    case LocationActionTypes.UPDATE_COORDINATES:
+      return { ...state, coordinates: action.payload }
     default:
       return state
   }

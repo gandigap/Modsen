@@ -1,23 +1,14 @@
-import React, { useEffect } from 'react'
-import { fetchLocationActionCreator } from 'actions'
+import React from 'react'
 
-import { DefaultRootState, useDispatch, useSelector } from 'react-redux'
+import CityInput from './CityInput.tsx'
+import { useTypedSelector } from 'hooks'
 
 import { StyledMain } from './styles'
-import CityInput from './CityInput.tsx'
 
-const Main = () => {
-  const dispatch = useDispatch()
+const Main: React.FC = () => {
+  const { locationStateError, locationLoading } = useTypedSelector((state) => state.locationState)
 
-  useEffect(() => {
-    dispatch(fetchLocationActionCreator())
-  }, [])
-
-  return (
-    <StyledMain>
-      <CityInput />
-    </StyledMain>
-  )
+  return <StyledMain>{!locationStateError && !locationLoading && <CityInput />}</StyledMain>
 }
 
 export default Main

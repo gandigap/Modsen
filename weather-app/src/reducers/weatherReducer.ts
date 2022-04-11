@@ -1,6 +1,6 @@
 import { WeatherActions, WeatherActionTypes, WeatherStateType } from 'types'
 
-const initialState = {
+const initialState: WeatherStateType = {
   weatherData: { data: [] },
   loading: false,
   error: null,
