@@ -10,6 +10,7 @@ import {
   fetchLocationErrorActionCreator,
   updateCoordinatesActionCreator,
   fetchLocationActionCreator,
+  fetchWeatherActionCreator,
 } from 'actions'
 
 const App: React.FC = () => {
@@ -25,6 +26,9 @@ const App: React.FC = () => {
       (error: GeolocationPositionError) => dispatch(fetchLocationErrorActionCreator(error.message)),
     )
   }
+  const handleClick = () => {
+    dispatch(fetchWeatherActionCreator())
+  }
 
   useEffect(() => {
     getCoordinates()
@@ -34,6 +38,7 @@ const App: React.FC = () => {
     <StyledApp>
       <GlobalStyle />
       <Main />
+      <button onClick={handleClick}>Some</button>
       <Footer />
     </StyledApp>
   )

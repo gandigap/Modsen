@@ -1,10 +1,12 @@
-import { WeatherActions, WeatherActionTypes, WeatherDataType } from 'types'
+import { WeatherActions, WeatherActionTypes, OpenWeatherApicDataTypeDaily } from 'types'
 
 export const fetchWeatherActionCreator = (): WeatherActions => ({
   type: WeatherActionTypes.FETCH_WEATHER,
 })
 
-export const fetchWeatherSuccessActionCreator = (dataWeather: WeatherDataType): WeatherActions => ({
+export const fetchWeatherSuccessActionCreator = (
+  dataWeather: OpenWeatherApicDataTypeDaily[],
+): WeatherActions => ({
   type: WeatherActionTypes.FETCH_WEATHER_SUCCESS,
   payload: dataWeather,
 })

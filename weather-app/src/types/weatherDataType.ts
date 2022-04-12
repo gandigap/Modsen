@@ -1,7 +1,3 @@
-export type WeatherDataType = {
-  data: OpenWeatherApicDataTypeDaily[]
-}
-
 export type OpenWeatherApicDataType = {
   data: { daily: OpenWeatherApicDataTypeDaily[] }
 }

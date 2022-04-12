@@ -1,10 +1,11 @@
-import { takeEvery, select, put, call } from 'redux-saga/effects'
+import { all, takeEvery, select, put, call } from 'redux-saga/effects'
 import {
   CoordinatesType,
   LocationActionTypes,
   LocationStateType,
   NavigatorFetchDataType,
   OpenWeatherApicDataType,
+  OpenWeatherApicDataTypeDaily,
   OpenWeatherFetchGeocodeType,
   WeatherActionTypes,
 } from 'types'
@@ -14,6 +15,7 @@ import {
   fetchLocationSuccessActionCreator,
   fetchWeatherActionCreator,
   fetchWeatherErrorActionCreator,
+  fetchWeatherSuccessActionCreator,
 } from 'actions'
 import { errors } from 'constants/'
 import { getDataFromOpenWeatherApi } from 'utils'
@@ -32,11 +34,10 @@ function* getLocationCoordinates() {
 
 function* getWeather() {
   try {
-    console.log('hi')
     const { lat, lon } = yield getLocationCoordinates()
     const urlApiWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&units=metric&appid=b9263267a94c30aaafc8ee41fb19e494`
     const { data }: OpenWeatherApicDataType = yield call(axios.get, urlApiWeather)
-    /*  yield put(fetchWeatherSuccessActionCreator()) */
+    yield put(fetchWeatherSuccessActionCreator(data.daily))
     console.log(getDataFromOpenWeatherApi(data.daily), 'getWeather')
   } catch (err) {
     yield put(fetchWeatherErrorActionCreator(errors.weatherApiError))
@@ -50,8 +51,9 @@ function* getCityName() {
     )
     const urlApiLocation = `https://us1.locationiq.com/v1/reverse.php?key=pk.6ac9639b7b2a2a0a688dbff51d3854c4&lat=${lat}&lon=${lon}&format=json`
     const { data }: NavigatorFetchDataType = yield call(axios.get, urlApiLocation)
+
     yield put(fetchLocationSuccessActionCreator(data.address.city))
-    yield put(fetchWeatherActionCreator())
+    /* yield put(fetchWeatherActionCreator()) */
   } catch (error) {
     yield put(fetchLocationErrorActionCreator(errors.locationIQApiError))
   }
@@ -66,6 +68,5 @@ export function* weatherWatcher() {
 }
 
 export default function* rootSaga() {
-  yield locationWatcher()
-  yield weatherWatcher()
+  yield all([locationWatcher(), weatherWatcher()])
 }
