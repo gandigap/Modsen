@@ -3,6 +3,7 @@ import { LocationStateType, LocationActions, LocationActionTypes } from 'types';
 
 const initialState: LocationStateType = {
   location: '',
+  countryCode: '',
   coordinates: {
     lat: 0,
     lon: 0,
@@ -23,6 +24,8 @@ const locationReducer = (state = initialState, action: LocationActions): Locatio
       return { ...state, location: action.payload };
     case LocationActionTypes.UPDATE_COORDINATES:
       return { ...state, coordinates: action.payload };
+    case LocationActionTypes.UPDATE_COUNTRY_CODE:
+      return { ...state, countryCode: action.payload };
     default:
       return state;
   }

@@ -1,8 +1,8 @@
-import { OpenWeatherApicDataTypeDaily } from './weatherDataType';
+import { CurrentWeatherDataType } from './weatherDataType';
 
 export interface WeatherStateType {
   nameAPI: string;
-  weatherData: OpenWeatherApicDataTypeDaily[];
+  weatherData: CurrentWeatherDataType[];
   weatherLoading: boolean;
   weatherStateError: null | string;
 }
@@ -20,7 +20,7 @@ interface FetchWeatherAction {
 
 interface FetchWeatherSuccessAction {
   type: WeatherActionTypes.FETCH_WEATHER_SUCCESS;
-  payload: OpenWeatherApicDataTypeDaily[];
+  payload: CurrentWeatherDataType[];
 }
 
 interface FetchWeatherErrorAction {

@@ -1,4 +1,6 @@
 export const apiNames = {
-  openWeather: 'OpenWeather',
+  openWeatherDaily: 'openWeatherDaily',
+  openWeatherGeocode: 'openWeatherGeocode',
   weatherbit: 'Weatherbit',
+  locationiq: 'LocationIQ',
 };

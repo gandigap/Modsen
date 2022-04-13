@@ -1,13 +1,14 @@
 import { CoordinatesType } from './locationDataType';
 
 export interface LocationStateType {
-  location: string
+  location: string;
+  countryCode: string;
   coordinates: {
-    lat: number
-    lon: number
-  }
-  locationLoading: boolean
-  locationStateError: null | string
+    lat: number;
+    lon: number;
+  };
+  locationLoading: boolean;
+  locationStateError: null | string;
 }
 
 export enum LocationActionTypes {
@@ -17,35 +18,41 @@ export enum LocationActionTypes {
   UPDATE_LOCATION = 'UPDATE_LOCATION',
   UPDATE_COORDINATES = 'UPDATE_COORDINATES',
   ERROR_UPDATE_COORDINATES = 'ERROR_UPDATE_COORDINATES',
+  UPDATE_COUNTRY_CODE = 'UPDATE_COUNTRY_CODE',
 }
 
 interface FetchLocationAction {
-  type: LocationActionTypes.FETCH_LOCATION
+  type: LocationActionTypes.FETCH_LOCATION;
 }
 
 interface FetchLocationSuccessAction {
-  type: LocationActionTypes.FETCH_LOCATION_SUCCESS
-  payload: string
+  type: LocationActionTypes.FETCH_LOCATION_SUCCESS;
+  payload: string;
 }
 
 interface FetchLocationErrorAction {
-  type: LocationActionTypes.FETCH_LOCATION_ERROR
-  payload: string
+  type: LocationActionTypes.FETCH_LOCATION_ERROR;
+  payload: string;
 }
 
 interface UpdateLocationNameAction {
-  type: LocationActionTypes.UPDATE_LOCATION
-  payload: string
+  type: LocationActionTypes.UPDATE_LOCATION;
+  payload: string;
 }
 
 interface UpdateCoordinatesAction {
-  type: LocationActionTypes.UPDATE_COORDINATES
-  payload: CoordinatesType
+  type: LocationActionTypes.UPDATE_COORDINATES;
+  payload: CoordinatesType;
 }
 
 interface ErrorUpdateCoordinatesAction {
-  type: LocationActionTypes.ERROR_UPDATE_COORDINATES
-  payload: string
+  type: LocationActionTypes.ERROR_UPDATE_COORDINATES;
+  payload: string;
+}
+
+interface UpdateCountryCodeAction {
+  type: LocationActionTypes.UPDATE_COUNTRY_CODE;
+  payload: string;
 }
 
 export type LocationActions =
@@ -54,4 +61,5 @@ export type LocationActions =
   | FetchLocationErrorAction
   | UpdateLocationNameAction
   | UpdateCoordinatesAction
+  | UpdateCountryCodeAction
   | ErrorUpdateCoordinatesAction;

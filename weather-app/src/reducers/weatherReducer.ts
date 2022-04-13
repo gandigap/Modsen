@@ -3,7 +3,7 @@ import { apiNames } from 'constants/api';
 import { WeatherActions, WeatherActionTypes, WeatherStateType } from 'types';
 
 const initialState: WeatherStateType = {
-  nameAPI: apiNames.openWeather,
+  nameAPI: apiNames.openWeatherGeocode,
   weatherData: [],
   weatherLoading: false,
   weatherStateError: null,

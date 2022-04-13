@@ -6,6 +6,7 @@ import {
   LocationActionTypes,
   LocationStateType,
   NavigatorFetchDataType,
+  OpenWeatherApicDataType,
   OpenWeatherFetchGeocodeType,
   WeatherActionTypes,
 } from 'types';
@@ -14,32 +15,41 @@ import {
   fetchLocationErrorActionCreator,
   fetchLocationSuccessActionCreator,
   fetchWeatherActionCreator,
+  fetchWeatherErrorActionCreator,
+  fetchWeatherSuccessActionCreator,
+  updateCoordinatesActionCreator,
+  updateCountyCodeActionCreator,
 } from 'actions';
 import { errors } from 'constants/';
 import { RootState } from 'reducers';
+import { getDataFromOpenWeatherApi, getUrlApi } from 'utils';
+import { apiNames } from 'constants/api';
 
 function* getLocationCoordinates() {
   try {
     const { location }: LocationStateType = yield select((state) => state.locationState);
-    const urlApiGeocode = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=b9263267a94c30aaafc8ee41fb19e494`;
-    const { data }: OpenWeatherFetchGeocodeType = yield call(axios.get, urlApiGeocode);
-    console.log(data, 'hahaha');
+    const url = getUrlApi({ type: apiNames.openWeatherGeocode, location });
+    const { data }: OpenWeatherFetchGeocodeType = yield call(axios.get, url);
+    yield put(updateCountyCodeActionCreator(data[0].country));
+    yield put(updateCoordinatesActionCreator({ lat: data[0].lat, lon: data[0].lon }));
   } catch (err) {
     yield put(fetchLocationErrorActionCreator(errors.geocodeApiError));
   }
 }
 
 function* getWeather() {
-  yield getLocationCoordinates();
-  /* try {
-    const { lat, lon } = yield getLocationCoordinates();
-    const urlApiWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&units=metric&appid=b9263267a94c30aaafc8ee41fb19e494`;
-    const { data }: OpenWeatherApicDataType = yield call(axios.get, urlApiWeather);
-    yield put(fetchWeatherSuccessActionCreator(data.daily));
-    console.log(getDataFromOpenWeatherApi(data.daily), 'getWeather');
+  try {
+    yield getLocationCoordinates();
+    const { coordinates }: LocationStateType = yield select((state) => state.locationState);
+    const { lat, lon } = coordinates;
+    const url = getUrlApi({ type: apiNames.openWeatherDaily, lat, lon });
+    const { data }: OpenWeatherApicDataType = yield call(axios.get, url);
+    const info = getDataFromOpenWeatherApi(data.daily);
+    console.log(info);
+    yield put(fetchWeatherSuccessActionCreator(info));
   } catch (err) {
     yield put(fetchWeatherErrorActionCreator(errors.weatherApiError));
-  } */
+  }
 }
 
 function* getCityName() {

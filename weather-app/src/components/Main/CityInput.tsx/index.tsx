@@ -8,7 +8,7 @@ import { fetchWeatherActionCreator, updateLocationNameActionCreator } from 'acti
 import { StyledCityInput } from './styles';
 
 const CityInput: React.FC = () => {
-  const { location } = useTypedSelector((state) => state.locationState);
+  const { location, countryCode } = useTypedSelector((state) => state.locationState);
   const [locationName, setLocationName] = useState('');
 
   const dispatch = useDispatch();
@@ -32,7 +32,12 @@ const CityInput: React.FC = () => {
     location && setLocationName(location);
   }, [location]);
 
-  return <StyledCityInput type="text" value={locationName} onChange={handleChangeInputValue} />;
+  return (
+    <div>
+      <StyledCityInput type="text" value={locationName} onChange={handleChangeInputValue} />
+      {countryCode && <p>{countryCode}</p>}
+    </div>
+  );
 };
 
 export default CityInput;

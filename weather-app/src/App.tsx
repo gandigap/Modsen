@@ -17,10 +17,10 @@ const App: React.FC = () => {
 
   const getCoordinates = () => {
     navigator.geolocation.getCurrentPosition(
-      (pos: GeolocationPosition) => {
+      ({ coords }: GeolocationPosition) => {
         const coordinates = {
-          lat: pos.coords.latitude,
-          lon: pos.coords.longitude,
+          lat: coords.latitude,
+          lon: coords.longitude,
         };
         dispatch(updateCoordinatesActionCreator(coordinates));
         dispatch(fetchLocationActionCreator());
