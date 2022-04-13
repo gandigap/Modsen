@@ -1,3 +1,3 @@
 export type FetchLocationErrorResponse = {
-  error: string
-}
+  error: string;
+};

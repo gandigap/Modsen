@@ -1,2 +1,2 @@
-export * from './useDebounce'
-export * from './useTypedSelector'
+export * from './useDebounce';
+export * from './useTypedSelector';

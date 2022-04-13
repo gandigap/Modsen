@@ -1,4 +1,4 @@
-import { CoordinatesType } from './locationDataType'
+import { CoordinatesType } from './locationDataType';
 
 export interface LocationStateType {
   location: string
@@ -54,4 +54,4 @@ export type LocationActions =
   | FetchLocationErrorAction
   | UpdateLocationNameAction
   | UpdateCoordinatesAction
-  | ErrorUpdateCoordinatesAction
+  | ErrorUpdateCoordinatesAction;

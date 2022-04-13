@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const StyledApp = styled.div`
   width: 100%;
@@ -8,4 +8,4 @@ export const StyledApp = styled.div`
   grid-template-areas:
     'main'
     'footer';
-`
+`;

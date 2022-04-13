@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-import CityInput from './CityInput.tsx'
-import { useTypedSelector } from 'hooks'
+import { useTypedSelector } from 'hooks';
+import CityInput from './CityInput.tsx';
 
-import { StyledMain } from './styles'
+import { StyledMain } from './styles';
 
 const Main: React.FC = () => {
-  const { locationStateError, locationLoading } = useTypedSelector((state) => state.locationState)
+  const { locationStateError, locationLoading } = useTypedSelector((state) => state.locationState);
 
-  return <StyledMain>{!locationStateError && !locationLoading && <CityInput />}</StyledMain>
-}
+  return <StyledMain>{!locationStateError && !locationLoading && <CityInput />}</StyledMain>;
+};
 
-export default Main
+export default Main;

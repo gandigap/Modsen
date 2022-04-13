@@ -1,6 +1,6 @@
 export type OpenWeatherApicDataType = {
   data: { daily: OpenWeatherApicDataTypeDaily[] }
-}
+};
 
 export type OpenWeatherApicDataTypeDaily = {
   dt: number
@@ -13,4 +13,4 @@ export type OpenWeatherApicDataTypeDaily = {
       main: string
     },
   ]
-}
+};

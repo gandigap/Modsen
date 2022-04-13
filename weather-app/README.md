@@ -1,4 +1,4 @@
-# Waether APP
+# Weather APP
 
 ## Описание
 

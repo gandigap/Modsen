@@ -1,9 +1,10 @@
-import { OpenWeatherApicDataTypeDaily } from './weatherDataType'
+import { OpenWeatherApicDataTypeDaily } from './weatherDataType';
+
 export interface WeatherStateType {
-  nameAPI: string
-  weatherData: OpenWeatherApicDataTypeDaily[]
-  weatherLoading: boolean
-  weatherStateError: null | string
+  nameAPI: string;
+  weatherData: OpenWeatherApicDataTypeDaily[];
+  weatherLoading: boolean;
+  weatherStateError: null | string;
 }
 
 export enum WeatherActionTypes {
@@ -14,26 +15,26 @@ export enum WeatherActionTypes {
 }
 
 interface FetchWeatherAction {
-  type: WeatherActionTypes.FETCH_WEATHER
+  type: WeatherActionTypes.FETCH_WEATHER;
 }
 
 interface FetchWeatherSuccessAction {
-  type: WeatherActionTypes.FETCH_WEATHER_SUCCESS
-  payload: OpenWeatherApicDataTypeDaily[]
+  type: WeatherActionTypes.FETCH_WEATHER_SUCCESS;
+  payload: OpenWeatherApicDataTypeDaily[];
 }
 
 interface FetchWeatherErrorAction {
-  type: WeatherActionTypes.FETCH_WEATHER_ERROR
-  payload: string
+  type: WeatherActionTypes.FETCH_WEATHER_ERROR;
+  payload: string;
 }
 
 interface ChangeWeatherApiAction {
-  type: WeatherActionTypes.CHANGE_WEATHER_API
-  payload: string
+  type: WeatherActionTypes.CHANGE_WEATHER_API;
+  payload: string;
 }
 
 export type WeatherActions =
   | FetchWeatherAction
   | FetchWeatherErrorAction
   | FetchWeatherSuccessAction
-  | ChangeWeatherApiAction
+  | ChangeWeatherApiAction;
