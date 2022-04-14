@@ -8,12 +8,19 @@ import {
   fetchWeatherActionCreator,
   updateLocationNameActionCreator,
 } from 'actions';
+
 import { StyledCityInput } from './styles';
 
+/* const valueLocationName = () => {
+  const data = localStorage.getItem('location');
+
+  return JSON.parse(data?.slice(1, data.length - 1) || '');
+}; */
 const CityInput: React.FC = () => {
   const { location, countryCode } = useTypedSelector(
     (state) => state.locationState,
   );
+
   const [locationName, setLocationName] = useState('');
 
   const dispatch = useDispatch();

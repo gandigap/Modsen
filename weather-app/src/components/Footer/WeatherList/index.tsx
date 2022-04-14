@@ -7,6 +7,7 @@ import WeatherListItem from './WeatherListItem';
 
 const WeatherList = () => {
   const { weatherData } = useTypedSelector((state) => state.weatherState);
+
   const list = () =>
     weatherData &&
     weatherData

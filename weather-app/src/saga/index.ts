@@ -35,10 +35,10 @@ function* getLocationCoordinates() {
     );
     const url = getUrlApi({ type: apiNames.openWeatherGeocode, location });
     const { data }: OpenWeatherFetchGeocodeType = yield call(axios.get, url);
-    yield put(updateCountyCodeActionCreator(data[0].country));
-    yield put(
-      updateCoordinatesActionCreator({ lat: data[0].lat, lon: data[0].lon }),
-    );
+    const { country, lat, lon } = data[0];
+    localStorage.setItem('countryCode', JSON.stringify(country));
+    yield put(updateCountyCodeActionCreator(country));
+    yield put(updateCoordinatesActionCreator({ lat, lon }));
   } catch (err) {
     yield put(fetchLocationErrorActionCreator(errors.geocodeApiError));
   }
@@ -59,6 +59,7 @@ function* getWeather() {
         : getUrlApi({ type: nameAPI, location });
     const { data }: TotalWeatherDataType = yield call(axios.get, url);
     const info = getDataFromOpenWeatherApi(nameAPI, data);
+    localStorage.setItem('weatherData', JSON.stringify(info));
     yield put(fetchWeatherSuccessActionCreator(info));
   } catch (err) {
     yield put(fetchWeatherErrorActionCreator(errors.weatherApiError));
@@ -75,7 +76,9 @@ function* getCityName() {
       axios.get,
       urlApiLocation,
     );
-    yield put(fetchLocationSuccessActionCreator(data.address.city));
+    const location = data.address.city;
+    localStorage.setItem('location', JSON.stringify(location));
+    yield put(fetchLocationSuccessActionCreator(location));
     yield put(fetchWeatherActionCreator());
   } catch (error) {
     yield put(fetchLocationErrorActionCreator(errors.locationIQApiError));

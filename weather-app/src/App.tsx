@@ -1,3 +1,5 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect } from 'react';
 
 import Footer from 'components/Footer';
@@ -10,6 +12,9 @@ import {
   fetchLocationErrorActionCreator,
   updateCoordinatesActionCreator,
   fetchLocationActionCreator,
+  updateLocationNameActionCreator,
+  updateCountyCodeActionCreator,
+  fetchWeatherSuccessActionCreator,
 } from 'actions';
 
 const App: React.FC = () => {
@@ -22,6 +27,7 @@ const App: React.FC = () => {
           lat: coords.latitude,
           lon: coords.longitude,
         };
+        localStorage.setItem('coordinates', JSON.stringify(coordinates));
         dispatch(updateCoordinatesActionCreator(coordinates));
         dispatch(fetchLocationActionCreator());
       },
@@ -32,7 +38,17 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    getCoordinates();
+    const coordinates = localStorage.getItem('coordinates');
+    const location = localStorage.getItem('location');
+    const country = localStorage.getItem('countryCode');
+    const weatherData = localStorage.getItem('weatherData');
+    !coordinates
+      ? getCoordinates()
+      : dispatch(updateCoordinatesActionCreator(JSON.parse(coordinates)));
+    location && dispatch(updateLocationNameActionCreator(JSON.parse(location)));
+    country && dispatch(updateCountyCodeActionCreator(JSON.parse(country)));
+    weatherData &&
+      dispatch(fetchWeatherSuccessActionCreator(JSON.parse(weatherData)));
   }, []);
 
   return (
