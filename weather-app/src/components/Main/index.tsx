@@ -7,7 +7,9 @@ import { StyledMain } from './styles';
 import LocationSelector from './LocationSelector';
 
 const Main: React.FC = () => {
-  const { locationStateError, locationLoading } = useTypedSelector((state) => state.locationState);
+  const { locationStateError, locationLoading } = useTypedSelector(
+    (state) => state.locationState,
+  );
 
   return (
     <StyledMain>

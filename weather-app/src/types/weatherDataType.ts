@@ -1,25 +1,43 @@
-export type OpenWeatherApicDataType = {
-  data: { daily: OpenWeatherApicDataTypeDaily[] };
+export type TotalWeatherDataType = {
+  data: SubTotalWeatherDataType;
+};
+
+export type SubTotalWeatherDataType = {
+  daily: OpenWeatherApiDataTypeDaily[];
+  data: WeatherBitApiDataTypeDaily[];
 };
 
 export type CurrentWeatherDataType = {
   date: string;
-  tempDay: number;
-  tempNight: number;
-  weatherDescription: string;
+  temp: number;
   weatherIcon: string;
   weatherMain: string;
+  wind: number;
 };
 
-export type OpenWeatherApicDataTypeDaily = {
+export type OpenWeatherApiDataTypeDaily = {
   dt: number;
-  humidity: number;
-  temp: { day: number; night: number };
+  temp: { day: number };
   weather: [
     {
-      description: string;
       icon: string;
       main: string;
     },
   ];
+  wind_speed: number;
 };
+
+export type WeatherBitApiDataTypeDaily = {
+  ts: number;
+  temp: number;
+  weather: {
+    icon: string;
+    description: string;
+  };
+  wind_spd: number;
+};
+/* "trailingComma": "all",
+  "jsxBracketSameLine": true,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false, */

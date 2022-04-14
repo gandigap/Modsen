@@ -4,11 +4,16 @@ import { useDispatch } from 'react-redux';
 
 import { useTypedSelector, useDebounce } from 'hooks';
 
-import { fetchWeatherActionCreator, updateLocationNameActionCreator } from 'actions';
+import {
+  fetchWeatherActionCreator,
+  updateLocationNameActionCreator,
+} from 'actions';
 import { StyledCityInput } from './styles';
 
 const CityInput: React.FC = () => {
-  const { location, countryCode } = useTypedSelector((state) => state.locationState);
+  const { location, countryCode } = useTypedSelector(
+    (state) => state.locationState,
+  );
   const [locationName, setLocationName] = useState('');
 
   const dispatch = useDispatch();
@@ -34,7 +39,11 @@ const CityInput: React.FC = () => {
 
   return (
     <div>
-      <StyledCityInput type="text" value={locationName} onChange={handleChangeInputValue} />
+      <StyledCityInput
+        type="text"
+        value={locationName}
+        onChange={handleChangeInputValue}
+      />
       {countryCode && <p>{countryCode}</p>}
     </div>
   );

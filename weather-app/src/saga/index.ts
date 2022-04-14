@@ -6,7 +6,7 @@ import {
   LocationActionTypes,
   LocationStateType,
   NavigatorFetchDataType,
-  OpenWeatherApicDataType,
+  TotalWeatherDataType,
   OpenWeatherFetchGeocodeType,
   WeatherActionTypes,
 } from 'types';
@@ -22,16 +22,23 @@ import {
 } from 'actions';
 import { errors } from 'constants/';
 import { RootState } from 'reducers';
-import { getDataFromOpenWeatherApi, getUrlApi } from 'utils';
+import {
+  getDataFromOpenWeatherApi,
+  getUrlApi,
+} from 'utils'; /* getDataFromOpenWeatherApi, */
 import { apiNames } from 'constants/api';
 
 function* getLocationCoordinates() {
   try {
-    const { location }: LocationStateType = yield select((state) => state.locationState);
+    const { location }: LocationStateType = yield select(
+      (state) => state.locationState,
+    );
     const url = getUrlApi({ type: apiNames.openWeatherGeocode, location });
     const { data }: OpenWeatherFetchGeocodeType = yield call(axios.get, url);
     yield put(updateCountyCodeActionCreator(data[0].country));
-    yield put(updateCoordinatesActionCreator({ lat: data[0].lat, lon: data[0].lon }));
+    yield put(
+      updateCoordinatesActionCreator({ lat: data[0].lat, lon: data[0].lon }),
+    );
   } catch (err) {
     yield put(fetchLocationErrorActionCreator(errors.geocodeApiError));
   }
@@ -40,12 +47,18 @@ function* getLocationCoordinates() {
 function* getWeather() {
   try {
     yield getLocationCoordinates();
-    const { coordinates }: LocationStateType = yield select((state) => state.locationState);
-    const { lat, lon } = coordinates;
-    const url = getUrlApi({ type: apiNames.openWeatherDaily, lat, lon });
-    const { data }: OpenWeatherApicDataType = yield call(axios.get, url);
-    const info = getDataFromOpenWeatherApi(data.daily);
-    console.log(info);
+    const { locationState, weatherState }: RootState = yield select(
+      (state: RootState) => state,
+    );
+    const { lat, lon } = locationState.coordinates;
+    const { location } = locationState;
+    const { nameAPI } = weatherState;
+    const url =
+      nameAPI === apiNames.openWeather
+        ? getUrlApi({ type: nameAPI, lat, lon })
+        : getUrlApi({ type: nameAPI, location });
+    const { data }: TotalWeatherDataType = yield call(axios.get, url);
+    const info = getDataFromOpenWeatherApi(nameAPI, data);
     yield put(fetchWeatherSuccessActionCreator(info));
   } catch (err) {
     yield put(fetchWeatherErrorActionCreator(errors.weatherApiError));
@@ -58,7 +71,10 @@ function* getCityName() {
       (state: RootState) => state.locationState.coordinates,
     );
     const urlApiLocation = `https://us1.locationiq.com/v1/reverse.php?key=pk.6ac9639b7b2a2a0a688dbff51d3854c4&lat=${lat}&lon=${lon}&format=json`;
-    const { data }: NavigatorFetchDataType = yield call(axios.get, urlApiLocation);
+    const { data }: NavigatorFetchDataType = yield call(
+      axios.get,
+      urlApiLocation,
+    );
     yield put(fetchLocationSuccessActionCreator(data.address.city));
     yield put(fetchWeatherActionCreator());
   } catch (error) {

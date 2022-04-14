@@ -1,4 +1,7 @@
-import { changeWeatherApiActionCreator } from 'actions';
+import {
+  changeWeatherApiActionCreator,
+  fetchWeatherActionCreator,
+} from 'actions';
 import { apiNames } from 'constants/api';
 import { useTypedSelector } from 'hooks';
 import React, { useState } from 'react';
@@ -24,6 +27,7 @@ const DropDownApi = () => {
   const changeMode = (e: any) => {
     changeView();
     dispatch(changeWeatherApiActionCreator(e.target.textContent));
+    dispatch(fetchWeatherActionCreator());
   };
 
   return (
@@ -33,7 +37,9 @@ const DropDownApi = () => {
         <DropDownButtonText>{isOpen ? '▲' : '▼'}</DropDownButtonText>
       </DropDownButton>
       <DropDownList className={isOpen ? '' : 'hide_select_mode'}>
-        <DropDownListItem onClick={changeMode}>{apiNames.openWeatherDaily}</DropDownListItem>
+        <DropDownListItem onClick={changeMode}>
+          {apiNames.openWeather}
+        </DropDownListItem>
         <DropDownListItem type="button" onClick={changeMode}>
           {apiNames.weatherbit}
         </DropDownListItem>
