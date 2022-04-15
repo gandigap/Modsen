@@ -5,3 +5,7 @@ export * from './locationTypes';
 export * from './locationDataType';
 
 export * from './errorTypes';
+
+export * from './urlApiParams';
+
+export * from './toDoListDataType';

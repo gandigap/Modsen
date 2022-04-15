@@ -15,7 +15,7 @@ import {
   DropDownList,
 } from './styles';
 
-const DropDownApi = () => {
+const ApiSelector = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { nameAPI } = useTypedSelector((state) => state.weatherState);
@@ -48,4 +48,4 @@ const DropDownApi = () => {
   );
 };
 
-export default DropDownApi;
+export default ApiSelector;

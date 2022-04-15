@@ -1,20 +1,17 @@
 import React from 'react';
 
-import { useTypedSelector } from 'hooks';
-import CityInput from './CityInput.tsx';
+import ApiSelector from './DateAndLocation/ApiSelector';
+import ToDoList from './ToDoList';
+import DateAndLocation from './DateAndLocation';
 
 import { StyledMain } from './styles';
-import LocationSelector from './LocationSelector';
 
 const Main: React.FC = () => {
-  const { locationStateError, locationLoading } = useTypedSelector(
-    (state) => state.locationState,
-  );
-
   return (
     <StyledMain>
-      {!locationStateError && !locationLoading && <CityInput />}
-      <LocationSelector />
+      <DateAndLocation />
+      <ApiSelector />
+      <ToDoList />
     </StyledMain>
   );
 };

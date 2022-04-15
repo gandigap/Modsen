@@ -9,7 +9,11 @@ import {
   updateLocationNameActionCreator,
 } from 'actions';
 
-import { StyledCityInput } from './styles';
+import {
+  StyledCityInput,
+  StyledCityInputContainer,
+  StyledCoutryCode,
+} from './styles';
 
 /* const valueLocationName = () => {
   const data = localStorage.getItem('location');
@@ -45,14 +49,14 @@ const CityInput: React.FC = () => {
   }, [location]);
 
   return (
-    <div>
+    <StyledCityInputContainer>
       <StyledCityInput
         type="text"
         value={locationName}
         onChange={handleChangeInputValue}
       />
-      {countryCode && <p>{countryCode}</p>}
-    </div>
+      {countryCode && <StyledCoutryCode>{countryCode}</StyledCoutryCode>}
+    </StyledCityInputContainer>
   );
 };
 
