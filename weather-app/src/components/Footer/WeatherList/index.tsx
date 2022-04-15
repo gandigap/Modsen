@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { useTypedSelector } from 'hooks';
 
-import { StyledWeatherList } from './styles';
+import { useTypedSelector } from 'hooks';
 import WeatherListItem from './WeatherListItem';
 
-const WeatherList = () => {
+import { StyledWeatherList } from './styles';
+
+const WeatherList: React.FC = () => {
   const { weatherData } = useTypedSelector((state) => state.weatherState);
 
   const list = () =>

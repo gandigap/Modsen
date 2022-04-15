@@ -27,6 +27,7 @@ import {
   getUrlApi,
 } from 'utils'; /* getDataFromOpenWeatherApi, */
 import { apiNames } from 'constants/api';
+import { localeStorageItems } from 'constants/localeStorageItems';
 
 function* getLocationCoordinates() {
   try {
@@ -36,7 +37,10 @@ function* getLocationCoordinates() {
     const url = getUrlApi({ type: apiNames.openWeatherGeocode, location });
     const { data }: OpenWeatherFetchGeocodeType = yield call(axios.get, url);
     const { country, lat, lon } = data[0];
-    localStorage.setItem('countryCode', JSON.stringify(country));
+    localStorage.setItem(
+      localeStorageItems.countryCode,
+      JSON.stringify(country),
+    );
     yield put(updateCountyCodeActionCreator(country));
     yield put(updateCoordinatesActionCreator({ lat, lon }));
   } catch (err) {
@@ -59,7 +63,7 @@ function* getWeather() {
         : getUrlApi({ type: nameAPI, location });
     const { data }: TotalWeatherDataType = yield call(axios.get, url);
     const info = getDataFromOpenWeatherApi(nameAPI, data);
-    localStorage.setItem('weatherData', JSON.stringify(info));
+    localStorage.setItem(localeStorageItems.weatherData, JSON.stringify(info));
     yield put(fetchWeatherSuccessActionCreator(info));
   } catch (err) {
     yield put(fetchWeatherErrorActionCreator(errors.weatherApiError));
@@ -77,7 +81,7 @@ function* getCityName() {
       urlApiLocation,
     );
     const location = data.address.city;
-    localStorage.setItem('location', JSON.stringify(location));
+    localStorage.setItem(localeStorageItems.location, JSON.stringify(location));
     yield put(fetchLocationSuccessActionCreator(location));
     yield put(fetchWeatherActionCreator());
   } catch (error) {

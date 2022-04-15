@@ -1,7 +1,9 @@
+import React from 'react';
+
 import { apiNames } from 'constants/';
 import { useTypedSelector } from 'hooks';
-import React from 'react';
 import { CurrentWeatherDataType } from 'types';
+
 import {
   StyledWeatherListItem,
   StyledWeatherListItemIcon,
@@ -10,13 +12,13 @@ import {
   StyledWeatherListItemWind,
 } from './styles';
 
-const WeatherListItem = ({
+const WeatherListItem: React.FC<CurrentWeatherDataType> = ({
   date,
   temp,
   weatherIcon,
   weatherMain,
   wind,
-}: CurrentWeatherDataType) => {
+}) => {
   const { nameAPI, weatherLoading, weatherStateError } = useTypedSelector(
     (state) => state.weatherState,
   );

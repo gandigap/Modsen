@@ -16,6 +16,7 @@ import {
   updateCountyCodeActionCreator,
   fetchWeatherSuccessActionCreator,
 } from 'actions';
+import { localeStorageItems } from 'constants/localeStorageItems';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -38,10 +39,10 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const coordinates = localStorage.getItem('coordinates');
-    const location = localStorage.getItem('location');
-    const country = localStorage.getItem('countryCode');
-    const weatherData = localStorage.getItem('weatherData');
+    const coordinates = localStorage.getItem(localeStorageItems.coordinates);
+    const location = localStorage.getItem(localeStorageItems.location);
+    const country = localStorage.getItem(localeStorageItems.countryCode);
+    const weatherData = localStorage.getItem(localeStorageItems.weatherData);
     !coordinates
       ? getCoordinates()
       : dispatch(updateCoordinatesActionCreator(JSON.parse(coordinates)));

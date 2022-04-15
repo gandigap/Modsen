@@ -1,18 +1,21 @@
 import React from 'react';
 
 import { useTypedSelector } from 'hooks';
+
 import { StyledToday, StyledTodayIcon } from './styles';
 
-const Today = () => {
+const Today: React.FC = () => {
   const { weatherData } = useTypedSelector((state) => state.weatherState);
-  const { weatherIcon, weatherMain } = weatherData[0];
+
   return (
     <StyledToday>
       <div>Today</div>
-      <StyledTodayIcon
-        src={`https://openweathermap.org/img/wn/${weatherIcon}@2x.png`}
-        alt={weatherMain}
-      />
+      {weatherData[0] && (
+        <StyledTodayIcon
+          src={`https://openweathermap.org/img/wn/${weatherData[0].weatherMain}@2x.png`}
+          alt={weatherData[0].weatherMain}
+        />
+      )}
     </StyledToday>
   );
 };
