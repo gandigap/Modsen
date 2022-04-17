@@ -1,6 +1,12 @@
+import { text } from 'constant';
 import React from 'react';
 import { ToDoListDataType } from 'types';
-import { StyledToDoListItem } from './styles';
+import {
+  StyledToDoListItem,
+  StyledToDoListItemDeleteButton,
+  StyledToDoListItemText,
+  StyledToDoListItemTime,
+} from './styles';
 
 interface ToDOListItemProps {
   info: ToDoListDataType;
@@ -19,11 +25,11 @@ const ToDoListItem: React.FC<ToDOListItemProps> = ({
   };
   return (
     <StyledToDoListItem>
-      <span>{timeValue}</span>
-      <span>{toDoValue}</span>
-      <button type="button" onClick={some}>
-        Click
-      </button>
+      <StyledToDoListItemTime>{timeValue}</StyledToDoListItemTime>
+      <StyledToDoListItemText>{toDoValue}</StyledToDoListItemText>
+      <StyledToDoListItemDeleteButton onClick={some}>
+        {text.cross}
+      </StyledToDoListItemDeleteButton>
     </StyledToDoListItem>
   );
 };

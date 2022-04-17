@@ -1,8 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
+import { text } from 'constant';
 import React, { useState, useEffect } from 'react';
 import { ToDoListDataType } from 'types';
-import { StyledToDoList } from './styles';
+import { StyledToDoList, StyledToDoListTitle } from './styles';
 import ToDoListController from './ToDoListController';
 import ToDoListItem from './ToDoListItem';
 
@@ -40,6 +41,7 @@ const ToDoList = () => {
 
   return (
     <StyledToDoList>
+      <StyledToDoListTitle>{text.toDolist}</StyledToDoListTitle>
       {list()}
       <ToDoListController />
     </StyledToDoList>

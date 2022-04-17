@@ -65,6 +65,11 @@ function* getWeather() {
     const { data }: TotalWeatherDataType = yield call(axios.get, url);
     const info = getDataFromOpenWeatherApi(nameAPI, data);
     localStorage.setItem(localeStorageItems.weatherData, JSON.stringify(info));
+    localStorage.setItem(localeStorageItems.location, JSON.stringify(location));
+    localStorage.setItem(
+      localeStorageItems.coordinates,
+      JSON.stringify({ lat, lon }),
+    );
     yield put(fetchWeatherSuccessActionCreator(info));
   } catch (err) {
     yield put(fetchWeatherErrorActionCreator(errors.weatherApiError));
