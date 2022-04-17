@@ -4,18 +4,27 @@ import React from 'react';
 import { useTypedSelector } from 'hooks';
 import WeatherListItem from './WeatherListItem';
 
-import { StyledWeatherList } from './styles';
+import { StyledWeatherList, StyledWeatherListContainer } from './styles';
+import Today from './Today';
 
 const WeatherList: React.FC = () => {
-  const { weatherData } = useTypedSelector((state) => state.weatherState);
-
+  const { weatherData, weatherLoading, weatherStateError } = useTypedSelector(
+    (state) => state.weatherState,
+  );
+  if (weatherLoading) return <div>loading</div>;
+  if (weatherStateError) return <div>error</div>;
   const list = () =>
     weatherData &&
     weatherData
       .filter((_, index) => index)
       .map((el) => <WeatherListItem key={el.date} {...el} />);
 
-  return <StyledWeatherList>{list()}</StyledWeatherList>;
+  return (
+    <StyledWeatherList>
+      <Today />
+      <StyledWeatherListContainer>{list()}</StyledWeatherListContainer>
+    </StyledWeatherList>
+  );
 };
 
 export default WeatherList;

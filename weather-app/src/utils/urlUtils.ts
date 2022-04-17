@@ -1,4 +1,4 @@
-import { apiNames } from 'constants/';
+import { apiNames } from 'constant';
 import { UrlParams } from 'types';
 
 export const getUrlApi = (params: UrlParams) => {
@@ -15,5 +15,14 @@ export const getUrlApi = (params: UrlParams) => {
       return `https://api.weatherbit.io/v2.0/forecast/daily?city=${location}&key=0ed3b712ceb34b3181b59d7b67057487`;
     default:
       return '';
+  }
+};
+
+export const getUrlIcon = (nameApi: string, weatherIcon: string) => {
+  switch (nameApi) {
+    case apiNames.openWeather:
+      return `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+    default:
+      return `https://www.weatherbit.io/static/img/icons/${weatherIcon}.png`;
   }
 };

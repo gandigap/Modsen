@@ -3,7 +3,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useTypedSelector, useDebounce } from 'hooks';
-
 import {
   fetchWeatherActionCreator,
   updateLocationNameActionCreator,
@@ -15,11 +14,6 @@ import {
   StyledCoutryCode,
 } from './styles';
 
-/* const valueLocationName = () => {
-  const data = localStorage.getItem('location');
-
-  return JSON.parse(data?.slice(1, data.length - 1) || '');
-}; */
 const CityInput: React.FC = () => {
   const { location, countryCode } = useTypedSelector(
     (state) => state.locationState,
@@ -54,6 +48,7 @@ const CityInput: React.FC = () => {
         type="text"
         value={locationName}
         onChange={handleChangeInputValue}
+        style={{ width: `${(locationName.length + 1) * 20}px` }}
       />
       {countryCode && <StyledCoutryCode>{countryCode}</StyledCoutryCode>}
     </StyledCityInputContainer>

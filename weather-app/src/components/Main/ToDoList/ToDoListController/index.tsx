@@ -2,7 +2,12 @@
 import React, { useState } from 'react';
 import { ToDoListDataType } from 'types';
 import { getListAfterAdd } from 'utils';
-import { StyledToDoListController } from './styles';
+import {
+  StyledToDoListController,
+  StyledToDoListControllerButton,
+  StyledToDoListControllerInputText,
+  StyledToDoListControllerInputTime,
+} from './styles';
 
 const ToDoListController = () => {
   const [timeValue, setTimeValue] = useState('');
@@ -31,19 +36,18 @@ const ToDoListController = () => {
   return (
     <StyledToDoListController>
       <div>
-        <button
-          type="button"
+        <StyledToDoListControllerButton
           onClick={addToDo}
           disabled={!timeValue || !toDoValue}
         >
           +
-        </button>
-        <input
+        </StyledToDoListControllerButton>
+        <StyledToDoListControllerInputTime
           type="time"
           value={timeValue}
           onChange={changeInputValue('time')}
         />
-        <input
+        <StyledToDoListControllerInputText
           type="text"
           value={toDoValue}
           onChange={changeInputValue('toDo')}

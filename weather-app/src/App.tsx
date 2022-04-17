@@ -15,8 +15,9 @@ import {
   updateLocationNameActionCreator,
   updateCountyCodeActionCreator,
   fetchWeatherSuccessActionCreator,
+  changeWeatherApiActionCreator,
 } from 'actions';
-import { localeStorageItems } from 'constants/localeStorageItems';
+import { localeStorageItems } from 'constant';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,10 @@ const App: React.FC = () => {
           lat: coords.latitude,
           lon: coords.longitude,
         };
-        localStorage.setItem('coordinates', JSON.stringify(coordinates));
+        localStorage.setItem(
+          localeStorageItems.coordinates,
+          JSON.stringify(coordinates),
+        );
         dispatch(updateCoordinatesActionCreator(coordinates));
         dispatch(fetchLocationActionCreator());
       },
@@ -43,6 +47,7 @@ const App: React.FC = () => {
     const location = localStorage.getItem(localeStorageItems.location);
     const country = localStorage.getItem(localeStorageItems.countryCode);
     const weatherData = localStorage.getItem(localeStorageItems.weatherData);
+    const apiName = localStorage.getItem(localeStorageItems.apiName);
     !coordinates
       ? getCoordinates()
       : dispatch(updateCoordinatesActionCreator(JSON.parse(coordinates)));
@@ -50,6 +55,7 @@ const App: React.FC = () => {
     country && dispatch(updateCountyCodeActionCreator(JSON.parse(country)));
     weatherData &&
       dispatch(fetchWeatherSuccessActionCreator(JSON.parse(weatherData)));
+    apiName && dispatch(changeWeatherApiActionCreator(JSON.parse(apiName)));
   }, []);
 
   return (

@@ -1,11 +1,12 @@
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
   changeWeatherApiActionCreator,
   fetchWeatherActionCreator,
 } from 'actions';
-import { apiNames } from 'constants/api';
+import { localeStorageItems, apiNames } from 'constant';
 import { useTypedSelector } from 'hooks';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
   DropDownButton,
@@ -26,17 +27,19 @@ const ApiSelector = () => {
 
   const changeMode = (e: any) => {
     changeView();
-    dispatch(changeWeatherApiActionCreator(e.target.textContent));
+    const value = e.target.textContent;
+    localStorage.setItem(localeStorageItems.apiName, JSON.stringify(value));
+    dispatch(changeWeatherApiActionCreator(value));
     dispatch(fetchWeatherActionCreator());
   };
 
   return (
-    <DropDownContainer>
-      <DropDownButton onClick={changeView}>
+    <DropDownContainer color="red" onClick={changeView}>
+      <DropDownButton>
         <DropDownButtonText>{nameAPI}</DropDownButtonText>
         <DropDownButtonText>{isOpen ? '▲' : '▼'}</DropDownButtonText>
       </DropDownButton>
-      <DropDownList className={isOpen ? '' : 'hide_select_mode'}>
+      <DropDownList color="red" className={isOpen ? '' : 'hide_select_mode'}>
         <DropDownListItem onClick={changeMode}>
           {apiNames.openWeather}
         </DropDownListItem>

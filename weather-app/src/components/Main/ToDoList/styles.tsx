@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
 export const StyledToDoList = styled.div`
-  background-color: #999;
+  padding: 20px 0px;
 `;

@@ -7,7 +7,7 @@ export const StyledWeatherListItem = styled.div`
 `;
 
 export const StyledWeatherListItemIcon = styled.img`
-  width: 60px;
+  width: 40px;
   border-radius: 100%;
 `;
 
@@ -17,7 +17,7 @@ export const StyledWeatherListItemTemp = styled.p`
 `;
 
 export const StyledWeatherListItemWeekday = styled.p`
-  font-size: 24px;
+  font-size: 14px;
 `;
 
 export const StyledWeatherListItemWind = styled.p`

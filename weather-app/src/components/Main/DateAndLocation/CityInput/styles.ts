@@ -5,7 +5,7 @@ export const StyledCityInput = styled.input`
   font-size: 36px;
   border: none;
   text-align: right;
-  max-width: 400px;
+  width: 400px;
 
   &:focus {
     outline: none;

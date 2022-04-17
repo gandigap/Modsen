@@ -3,4 +3,5 @@ export const localeStorageItems = {
   location: 'location',
   countryCode: 'countryCode',
   weatherData: 'weatherData',
+  apiName: 'apiName',
 };

@@ -1,13 +1,14 @@
 /* eslint-disable max-len */
 import React from 'react';
 
-import { StyledFooter } from './styles';
 import WeatherList from './WeatherList';
-import Today from './WeatherList/Today';
 
-const Footer = () => (
+import { StyledFooter } from './styles';
+import ApiSelector from './ApiSelector';
+
+const Footer: React.FC = () => (
   <StyledFooter>
-    <Today />
+    <ApiSelector />
     <WeatherList />
   </StyledFooter>
 );
