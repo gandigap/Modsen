@@ -16,6 +16,7 @@ export const getDataFromOpenWeatherApi = (
           weatherIcon: dayInfo.weather[0].icon,
           weatherMain: dayInfo.weather[0].main,
           wind: dayInfo.wind_speed,
+          code: dayInfo.weather[0].id,
         }))
       : data &&
         data.map((dayInfo) => ({
@@ -24,6 +25,7 @@ export const getDataFromOpenWeatherApi = (
           weatherIcon: dayInfo.weather.icon,
           weatherMain: dayInfo.weather.description,
           wind: dayInfo.wind_spd,
+          code: dayInfo.weather.code,
         }));
   return result && result.filter((_, index) => index < 7);
 };

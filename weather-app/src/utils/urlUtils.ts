@@ -1,6 +1,14 @@
 import { apiNames } from 'constant';
 import { UrlParams } from 'types';
 
+import thunderstorm from 'images/thunderstorm.jpg';
+import drizzle from 'images/drizzle.jpg';
+import rain from 'images/rain.jpg';
+import snow from 'images/snow.jpg';
+import atmosphere from 'images/atmosphere.jpg';
+import clear from 'images/clear.jpg';
+import clouds from 'images/clouds.jpg';
+
 export const getUrlApi = (params: UrlParams) => {
   const { type, location, lat, lon } = params;
 
@@ -26,3 +34,16 @@ export const getUrlIcon = (nameApi: string, weatherIcon: string) => {
       return `https://www.weatherbit.io/static/img/icons/${weatherIcon}.png`;
   }
 };
+
+export const getBackgroundUrlAndColor = (weatherCode: number) => {
+  console.log(clouds);
+  if (weatherCode < 300)
+    return { backgroundUrl: thunderstorm, color: '#9b9b9b' };
+  if (weatherCode < 500) return { backgroundUrl: drizzle, color: '#444433' };
+  if (weatherCode < 600) return { backgroundUrl: rain, color: '#000000' };
+  if (weatherCode < 700) return { backgroundUrl: snow, color: '#222222' };
+  if (weatherCode < 800) return { backgroundUrl: atmosphere, color: '#555555' };
+  if (weatherCode === 800) return { backgroundUrl: clear, color: '#cc9999' };
+  return { backgroundUrl: clouds, color: '#ff9900' };
+};
+/* { backgroundUrl: clouds, color: '#000' } */

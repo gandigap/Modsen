@@ -12,12 +12,9 @@ export const DropDownButton = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: none;
   width: 100%;
   text-decoration: none;
   cursor: pointer;
-  border: none;
-  background: transparent;
 `;
 
 export const DropDownButtonText = styled.span`
@@ -41,8 +38,6 @@ export const DropDownListItem = styled.button`
   display: inline-block;
   cursor: pointer;
   text-transform: uppercase;
-  background: transparent;
-  border: none;
   text-align: start;
 
   &:hover {

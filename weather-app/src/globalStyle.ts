@@ -127,10 +127,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html,body,#root{
-    width:100%;
-    height:100%;
-    font-family: sans-serif, monospace;
-    background-color: #D01B3A;
+    width: 100%;
+    height: 100%;
+    font-family: sans-serif, monospace;   
   }
 `;
 export default GlobalStyle;

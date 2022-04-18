@@ -1,18 +1,21 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
-import { text } from 'constant';
+
 import React, { useState, useEffect } from 'react';
+
 import { ToDoListDataType } from 'types';
-import { StyledToDoList, StyledToDoListTitle } from './styles';
+import { localeStorageItems, text } from 'constant';
 import ToDoListController from './ToDoListController';
 import ToDoListItem from './ToDoListItem';
 
-const ToDoList = () => {
+import { StyledToDoList, StyledToDoListTitle } from './styles';
+
+const ToDoList: React.FC = () => {
   const [toDoList, setToDoList] = useState<ToDoListDataType[] | null>(null);
 
   const deleteToDo = (indexEl: number) => {
     localStorage.setItem(
-      'toDoList',
+      localeStorageItems.toDoList,
       JSON.stringify(
         toDoList && toDoList.filter((_, index) => indexEl !== index),
       ),

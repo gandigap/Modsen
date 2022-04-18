@@ -1,6 +1,8 @@
-import { text } from 'constant';
 import React from 'react';
+
+import { text } from 'constant';
 import { ToDoListDataType } from 'types';
+
 import {
   StyledToDoListItem,
   StyledToDoListItemDeleteButton,

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const StyledToDoListItem = styled.div`
-  font-size: 20px;
   display: flex;
   align-items: center;
+  font-size: 20px;
 
   &:hover {
     & button {
@@ -13,8 +13,9 @@ export const StyledToDoListItem = styled.div`
 `;
 
 export const StyledToDoListItemTime = styled.span`
+  padding: 2px;
   font-size: 20px;
-  color: white;
+  background-color: white;
 `;
 
 export const StyledToDoListItemText = styled.span`
@@ -24,7 +25,4 @@ export const StyledToDoListItemText = styled.span`
 
 export const StyledToDoListItemDeleteButton = styled.button`
   display: none;
-  color: white;
-  background: transparent;
-  border: none;
 `;

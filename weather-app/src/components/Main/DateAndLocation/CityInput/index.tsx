@@ -24,7 +24,9 @@ const CityInput: React.FC = () => {
   const dispatch = useDispatch();
 
   const updateLocationName = (value: string) => {
-    dispatch(updateLocationNameActionCreator(value));
+    value
+      ? dispatch(updateLocationNameActionCreator(value))
+      : setLocationName(location);
     dispatch(fetchWeatherActionCreator());
   };
 

@@ -18,9 +18,18 @@ import {
   changeWeatherApiActionCreator,
 } from 'actions';
 import { localeStorageItems } from 'constant';
+import { useTypedSelector } from 'hooks';
+import { getBackgroundUrlAndColor } from 'utils';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
+  const weatherdata = useTypedSelector(
+    (state) => state.weatherState.weatherData,
+  );
+
+  const backgroundAndColor = weatherdata[0]
+    ? getBackgroundUrlAndColor(weatherdata[0].code)
+    : getBackgroundUrlAndColor(800);
 
   const getCoordinates = () => {
     navigator.geolocation.getCurrentPosition(
@@ -59,7 +68,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <StyledApp>
+    <StyledApp backgroundAndColor={backgroundAndColor}>
       <GlobalStyle />
       <Main />
       <Footer />

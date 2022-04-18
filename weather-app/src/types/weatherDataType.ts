@@ -13,6 +13,7 @@ export type CurrentWeatherDataType = {
   weatherIcon: string;
   weatherMain: string;
   wind: number;
+  code: number;
 };
 
 export type OpenWeatherApiDataTypeDaily = {
@@ -20,6 +21,7 @@ export type OpenWeatherApiDataTypeDaily = {
   temp: { day: number };
   weather: [
     {
+      id: number;
       icon: string;
       main: string;
     },
@@ -31,6 +33,7 @@ export type WeatherBitApiDataTypeDaily = {
   ts: number;
   temp: number;
   weather: {
+    code: number;
     icon: string;
     description: string;
   };
