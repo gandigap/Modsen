@@ -12,10 +12,11 @@ export const StyledToDoListItem = styled.div`
   }
 `;
 
-export const StyledToDoListItemTime = styled.span`
+export const StyledToDoListItemTime = styled.time`
   padding: 2px;
   font-size: 20px;
   background-color: white;
+  border-radius: 10px;
 `;
 
 export const StyledToDoListItemText = styled.span`

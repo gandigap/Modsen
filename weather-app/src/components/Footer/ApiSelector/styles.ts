@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
-export const DropDownContainer = styled.div.attrs(
-  (props: { color: string }) => props,
-)`
+export const DropDownContainer = styled.div`
   width: 200px;
   margin: 0 auto;
-  background-color: ${(props) => props.color};
 `;
 
 export const DropDownButton = styled.button`
@@ -14,7 +11,6 @@ export const DropDownButton = styled.button`
   align-items: center;
   width: 100%;
   text-decoration: none;
-  cursor: pointer;
 `;
 
 export const DropDownButtonText = styled.span`
@@ -27,7 +23,6 @@ export const DropDownList = styled.div`
   list-style: none;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.color};
 
   &.hide_select_mode {
     display: none;
@@ -36,7 +31,6 @@ export const DropDownList = styled.div`
 
 export const DropDownListItem = styled.button`
   display: inline-block;
-  cursor: pointer;
   text-transform: uppercase;
   text-align: start;
 

@@ -5,7 +5,13 @@ import {
   changeWeatherApiActionCreator,
   fetchWeatherActionCreator,
 } from 'actions';
-import { localeStorageItems, apiNames } from 'constant';
+import {
+  localeStorageItems,
+  apiNames,
+  text,
+  defaultValues,
+  classNames,
+} from 'constant';
 import { useTypedSelector } from 'hooks';
 
 import {
@@ -16,7 +22,7 @@ import {
   DropDownList,
 } from './styles';
 
-const ApiSelector = () => {
+const ApiSelector: React.FC = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { nameAPI } = useTypedSelector((state) => state.weatherState);
@@ -34,12 +40,18 @@ const ApiSelector = () => {
   };
 
   return (
-    <DropDownContainer color="red" onClick={changeView}>
+    <DropDownContainer onClick={changeView}>
       <DropDownButton>
         <DropDownButtonText>{nameAPI}</DropDownButtonText>
-        <DropDownButtonText>{isOpen ? '▲' : '▼'}</DropDownButtonText>
+        <DropDownButtonText>
+          {isOpen ? text.arrowTop : text.arrowBottom}
+        </DropDownButtonText>
       </DropDownButton>
-      <DropDownList color="red" className={isOpen ? '' : 'hide_select_mode'}>
+      <DropDownList
+        className={
+          isOpen ? defaultValues.emptyString : classNames.hideSelectMode
+        }
+      >
         <DropDownListItem onClick={changeMode}>
           {apiNames.openWeather}
         </DropDownListItem>

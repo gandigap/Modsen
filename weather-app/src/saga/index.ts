@@ -31,6 +31,7 @@ function* getLocationCoordinates() {
     const { location }: LocationStateType = yield select(
       (state) => state.locationState,
     );
+    localStorage.setItem(localeStorageItems.location, JSON.stringify(location));
     const url = getUrlApi({ type: apiNames.openWeatherGeocode, location });
     const {
       data: [{ lat, country, lon }],
@@ -62,11 +63,10 @@ function* getWeather() {
       nameAPI === apiNames.openWeather
         ? getUrlApi({ type: nameAPI, lat, lon })
         : getUrlApi({ type: nameAPI, location });
-    console.log(url);
+
     const { data }: TotalWeatherDataType = yield call(axios.get, url);
     const info = getDataFromOpenWeatherApi(nameAPI, data);
     localStorage.setItem(localeStorageItems.weatherData, JSON.stringify(info));
-    localStorage.setItem(localeStorageItems.location, JSON.stringify(location));
     localStorage.setItem(
       localeStorageItems.coordinates,
       JSON.stringify({ lat, lon }),

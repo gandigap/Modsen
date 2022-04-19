@@ -7,6 +7,7 @@ import {
   fetchWeatherActionCreator,
   updateLocationNameActionCreator,
 } from 'actions';
+import { classNames, text } from 'constant';
 
 import {
   StyledCityInput,
@@ -34,8 +35,10 @@ const CityInput: React.FC = () => {
 
   const handleChangeInputValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLocationName(e.target.value);
-      debounceHandleChangeInputValue(e.target.value);
+      const { value } = e.target;
+      const refactorVal = value.charAt(0).toUpperCase() + value.slice(1);
+      setLocationName(refactorVal);
+      debounceHandleChangeInputValue(refactorVal);
     },
     [debounceHandleChangeInputValue],
   );
@@ -45,12 +48,12 @@ const CityInput: React.FC = () => {
   }, [location]);
 
   return (
-    <StyledCityInputContainer>
+    <StyledCityInputContainer className={classNames.cityIputContainer}>
       <StyledCityInput
         type="text"
         value={locationName}
         onChange={handleChangeInputValue}
-        style={{ width: `${(locationName.length + 1) * 20}px` }}
+        style={{ width: `${(locationName.length + 1) * 20}${text.px}` }}
       />
       {countryCode && <StyledCoutryCode>{countryCode}</StyledCoutryCode>}
     </StyledCityInputContainer>

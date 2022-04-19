@@ -2,9 +2,9 @@
 import React from 'react';
 
 import WeatherList from './WeatherList';
+import ApiSelector from './ApiSelector';
 
 import { StyledFooter } from './styles';
-import ApiSelector from './ApiSelector';
 
 const Footer: React.FC = () => (
   <StyledFooter>

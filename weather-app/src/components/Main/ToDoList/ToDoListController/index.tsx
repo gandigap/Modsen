@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useState } from 'react';
+
+import { inputValues, localeStorageItems, text, defaultValues } from 'constant';
 import { ToDoListDataType } from 'types';
 import { getListAfterAdd } from 'utils';
+
 import {
   StyledToDoListController,
   StyledToDoListControllerButton,
@@ -15,11 +18,12 @@ const ToDoListController = () => {
 
   const addToDo = () => {
     const anotherList: ToDoListDataType[] = JSON.parse(
-      localStorage.getItem('toDoList') || '[]',
+      localStorage.getItem(localeStorageItems.toDoList) ||
+        defaultValues.emptyArray,
     );
 
     localStorage.setItem(
-      'toDoList',
+      localeStorageItems.toDoList,
       JSON.stringify(
         getListAfterAdd(anotherList || [], { timeValue, toDoValue }),
       ),
@@ -28,31 +32,30 @@ const ToDoListController = () => {
 
   const changeInputValue =
     (type: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      type === 'time'
+      type === inputValues.time
         ? setTimeValue(e.target.value)
         : setToDoValue(e.target.value);
     };
 
   return (
     <StyledToDoListController>
-      <div>
-        <StyledToDoListControllerButton
-          onClick={addToDo}
-          disabled={!timeValue || !toDoValue}
-        >
-          +
-        </StyledToDoListControllerButton>
-        <StyledToDoListControllerInputTime
-          type="time"
-          value={timeValue}
-          onChange={changeInputValue('time')}
-        />
-        <StyledToDoListControllerInputText
-          type="text"
-          value={toDoValue}
-          onChange={changeInputValue('toDo')}
-        />
-      </div>
+      <StyledToDoListControllerButton
+        onClick={addToDo}
+        disabled={!timeValue || !toDoValue}
+      >
+        {text.plus}
+      </StyledToDoListControllerButton>
+      <StyledToDoListControllerInputTime
+        type="time"
+        value={timeValue}
+        onChange={changeInputValue(inputValues.time)}
+      />
+      <StyledToDoListControllerInputText
+        type="text"
+        value={toDoValue}
+        placeholder={defaultValues.placeholder}
+        onChange={changeInputValue(inputValues.toDo)}
+      />
     </StyledToDoListController>
   );
 };

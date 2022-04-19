@@ -8,6 +8,7 @@ import snow from 'images/snow.jpg';
 import atmosphere from 'images/atmosphere.jpg';
 import clear from 'images/clear.jpg';
 import clouds from 'images/clouds.jpg';
+import { weatherCodes } from 'constant/weatherCodes';
 
 export const getUrlApi = (params: UrlParams) => {
   const { type, location, lat, lon } = params;
@@ -36,14 +37,17 @@ export const getUrlIcon = (nameApi: string, weatherIcon: string) => {
 };
 
 export const getBackgroundUrlAndColor = (weatherCode: number) => {
-  console.log(clouds);
-  if (weatherCode < 300)
+  if (weatherCode < weatherCodes.drizzle)
     return { backgroundUrl: thunderstorm, color: '#9b9b9b' };
-  if (weatherCode < 500) return { backgroundUrl: drizzle, color: '#444433' };
-  if (weatherCode < 600) return { backgroundUrl: rain, color: '#000000' };
-  if (weatherCode < 700) return { backgroundUrl: snow, color: '#222222' };
-  if (weatherCode < 800) return { backgroundUrl: atmosphere, color: '#555555' };
-  if (weatherCode === 800) return { backgroundUrl: clear, color: '#cc9999' };
+  if (weatherCode < weatherCodes.rain)
+    return { backgroundUrl: drizzle, color: '#444433' };
+  if (weatherCode < weatherCodes.snow)
+    return { backgroundUrl: rain, color: '#000000' };
+  if (weatherCode < weatherCodes.atmosphere)
+    return { backgroundUrl: snow, color: '#222222' };
+  if (weatherCode < weatherCodes.clear)
+    return { backgroundUrl: atmosphere, color: '#555555' };
+  if (weatherCode === weatherCodes.clear)
+    return { backgroundUrl: clear, color: '#cc9999' };
   return { backgroundUrl: clouds, color: '#ff9900' };
 };
-/* { backgroundUrl: clouds, color: '#000' } */

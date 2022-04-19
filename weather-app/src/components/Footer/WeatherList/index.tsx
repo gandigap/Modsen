@@ -2,10 +2,10 @@
 import React from 'react';
 
 import { useTypedSelector } from 'hooks';
+import Today from './Today';
 import WeatherListItem from './WeatherListItem';
 
 import { StyledWeatherList, StyledWeatherListContainer } from './styles';
-import Today from './Today';
 
 const WeatherList: React.FC = () => {
   const { weatherData, weatherLoading, weatherStateError } = useTypedSelector(

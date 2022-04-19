@@ -20,8 +20,7 @@ const Today: React.FC = () => {
     <StyledToday>
       {weatherData[0] && (
         <StyledTodayContainer>
-          <StyledTodayTitle>{`${text.today} ${weatherData[0].temp}°`}</StyledTodayTitle>
-
+          <StyledTodayTitle>{`${text.today} ${weatherData[0].temp}${text.degree}`}</StyledTodayTitle>
           <StyledTodayIcon
             src={getUrlIcon(nameAPI, weatherData[0].weatherIcon)}
             alt={weatherData[0].weatherMain}

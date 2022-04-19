@@ -3,6 +3,7 @@ import React from 'react';
 import { useTypedSelector } from 'hooks';
 import { CurrentWeatherDataType } from 'types';
 import { getUrlIcon } from 'utils';
+import { text } from 'constant';
 
 import {
   StyledWeatherListItem,
@@ -26,14 +27,13 @@ const WeatherListItem: React.FC<CurrentWeatherDataType> = ({
       <StyledWeatherListItemWeekday>
         {[...date.split(' ')][0]}
       </StyledWeatherListItemWeekday>
-      <StyledWeatherListItemWind>{`${wind} m/c`}</StyledWeatherListItemWind>
+      <StyledWeatherListItemWind>{`${wind} ${text.mc}`}</StyledWeatherListItemWind>
       <StyledWeatherListItemIcon
         src={getUrlIcon(nameAPI, weatherIcon)}
         alt={weatherMain}
         title={weatherMain}
       />
-
-      <StyledWeatherListItemTemp>{`${temp}°`}</StyledWeatherListItemTemp>
+      <StyledWeatherListItemTemp>{`${temp}${text.degree}`}</StyledWeatherListItemTemp>
     </StyledWeatherListItem>
   );
 };

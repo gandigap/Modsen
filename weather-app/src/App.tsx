@@ -5,8 +5,6 @@ import React, { useEffect } from 'react';
 import Footer from 'components/Footer';
 import Main from 'components/Main';
 
-import GlobalStyle from 'globalStyle';
-import { StyledApp } from 'style';
 import { useDispatch } from 'react-redux';
 import {
   fetchLocationErrorActionCreator,
@@ -20,6 +18,9 @@ import {
 import { localeStorageItems } from 'constant';
 import { useTypedSelector } from 'hooks';
 import { getBackgroundUrlAndColor } from 'utils';
+
+import { StyledApp } from 'style';
+import GlobalStyle from 'globalStyle';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();

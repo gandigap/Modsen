@@ -1,21 +1,17 @@
 import styled from 'styled-components';
 
+import { classNames } from './constant';
+
 interface StyledAppProps {
   backgroundAndColor: { backgroundUrl: string; color: string };
 }
 
 export const StyledApp = styled.div<StyledAppProps>`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 70% auto;
-  grid-template-areas:
-    'main'
-    'footer';
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: relative;
   z-index: 3;
-  /* background: url(${(props) => props.backgroundAndColor.backgroundUrl})
-    no-repeat center center fixed; */
   color: ${(props) => props.backgroundAndColor.color};
 
   &::after {
@@ -32,8 +28,15 @@ export const StyledApp = styled.div<StyledAppProps>`
   }
 
   button {
-    background-color: transparent;
     border: none;
+    cursor: pointer;
+    background-color: ${(props) => props.backgroundAndColor.color};
+    color: #fff;
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.8;
+    }
   }
 
   input {
@@ -43,6 +46,33 @@ export const StyledApp = styled.div<StyledAppProps>`
 
     &:focus {
       outline: none;
+    }
+
+    &::placeholder {
+      color: ${(props) => props.backgroundAndColor.color};
+    }
+  }
+
+  input[type='time'] {
+    background-color: ${(props) => props.backgroundAndColor.color};
+    color: #000;
+    border: none;
+    font-size: 20px;
+    border: 3px solid ${(props) => props.backgroundAndColor.color};
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    width: 20px;
+    height: 20px;
+  }
+
+  & .${classNames.cityIputContainer} {
+    background-color: ${(props) => props.backgroundAndColor.color};
+    color: #fff;
+    border-radius: 10px;
+
+    & input {
+      color: #fff;
     }
   }
 `;
