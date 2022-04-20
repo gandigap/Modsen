@@ -4,27 +4,23 @@ import {
   CurrentWeatherDataType,
 } from 'types';
 
-export const fetchWeatherActionCreator = (): WeatherActions => ({
+export const fetchWeather = (): WeatherActions => ({
   type: WeatherActionTypes.FETCH_WEATHER,
 });
 
-export const fetchWeatherSuccessActionCreator = (
+export const fetchWeatherSuccess = (
   dataWeather: CurrentWeatherDataType[],
 ): WeatherActions => ({
   type: WeatherActionTypes.FETCH_WEATHER_SUCCESS,
   payload: dataWeather,
 });
 
-export const fetchWeatherErrorActionCreator = (
-  errorMessage: string,
-): WeatherActions => ({
+export const fetchWeatherError = (errorMessage: string): WeatherActions => ({
   type: WeatherActionTypes.FETCH_WEATHER_ERROR,
   payload: errorMessage,
 });
 
-export const changeWeatherApiActionCreator = (
-  nameApi: string,
-): WeatherActions => ({
+export const changeWeatherApi = (nameApi: string): WeatherActions => ({
   type: WeatherActionTypes.CHANGE_WEATHER_API,
   payload: nameApi,
 });

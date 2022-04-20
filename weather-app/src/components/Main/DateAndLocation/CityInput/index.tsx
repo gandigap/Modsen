@@ -3,10 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useTypedSelector, useDebounce } from 'hooks';
-import {
-  fetchWeatherActionCreator,
-  updateLocationNameActionCreator,
-} from 'actions';
+import { fetchWeather, updateLocationName } from 'actions';
 import { classNames, text } from 'constant';
 
 import {
@@ -24,14 +21,12 @@ const CityInput: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const updateLocationName = (value: string) => {
-    value
-      ? dispatch(updateLocationNameActionCreator(value))
-      : setLocationName(location);
-    dispatch(fetchWeatherActionCreator());
+  const updateLocation = (value: string) => {
+    value ? dispatch(updateLocationName(value)) : setLocationName(location);
+    dispatch(fetchWeather());
   };
 
-  const debounceHandleChangeInputValue = useDebounce(updateLocationName, 2000);
+  const debounceHandleChangeInputValue = useDebounce(updateLocation, 2000);
 
   const handleChangeInputValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

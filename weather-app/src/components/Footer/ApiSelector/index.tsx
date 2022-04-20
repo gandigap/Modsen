@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import {
-  changeWeatherApiActionCreator,
-  fetchWeatherActionCreator,
-} from 'actions';
+import { changeWeatherApi, fetchWeather } from 'actions';
 import {
   localeStorageItems,
   apiNames,
@@ -35,8 +32,8 @@ const ApiSelector: React.FC = () => {
     changeView();
     const value = e.target.textContent;
     localStorage.setItem(localeStorageItems.apiName, JSON.stringify(value));
-    dispatch(changeWeatherApiActionCreator(value));
-    dispatch(fetchWeatherActionCreator());
+    dispatch(changeWeatherApi(value));
+    dispatch(fetchWeather());
   };
 
   return (

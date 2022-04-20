@@ -12,13 +12,13 @@ import {
 } from 'types';
 import axios from 'axios';
 import {
-  fetchLocationErrorActionCreator,
-  fetchLocationSuccessActionCreator,
-  fetchWeatherActionCreator,
-  fetchWeatherErrorActionCreator,
-  fetchWeatherSuccessActionCreator,
-  updateCoordinatesActionCreator,
-  updateCountyCodeActionCreator,
+  fetchLocationError,
+  fetchLocationSuccess,
+  fetchWeather,
+  fetchWeatherError,
+  fetchWeatherSuccess,
+  updateCoordinates,
+  updateCountyCode,
 } from 'actions';
 import { errors, apiNames } from 'constant';
 import { RootState } from 'reducers';
@@ -41,10 +41,10 @@ function* getLocationCoordinates() {
       localeStorageItems.countryCode,
       JSON.stringify(country),
     );
-    yield put(updateCountyCodeActionCreator(country));
-    yield put(updateCoordinatesActionCreator({ lat, lon }));
+    yield put(updateCountyCode(country));
+    yield put(updateCoordinates({ lat, lon }));
   } catch (err) {
-    yield put(fetchLocationErrorActionCreator(errors.geocodeApiError));
+    yield put(fetchLocationError(errors.geocodeApiError));
   }
 }
 
@@ -71,9 +71,9 @@ function* getWeather() {
       localeStorageItems.coordinates,
       JSON.stringify({ lat, lon }),
     );
-    yield put(fetchWeatherSuccessActionCreator(info));
+    yield put(fetchWeatherSuccess(info));
   } catch (err) {
-    yield put(fetchWeatherErrorActionCreator(errors.weatherApiError));
+    yield put(fetchWeatherError(errors.weatherApiError));
   }
 }
 
@@ -89,10 +89,10 @@ function* getCityName() {
     );
     const location = data.address.city;
     localStorage.setItem(localeStorageItems.location, JSON.stringify(location));
-    yield put(fetchLocationSuccessActionCreator(location));
-    yield put(fetchWeatherActionCreator());
+    yield put(fetchLocationSuccess(location));
+    yield put(fetchWeather());
   } catch (error) {
-    yield put(fetchLocationErrorActionCreator(errors.locationIQApiError));
+    yield put(fetchLocationError(errors.locationIQApiError));
   }
 }
 

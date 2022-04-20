@@ -1,37 +1,29 @@
 import { CoordinatesType, LocationActions, LocationActionTypes } from 'types';
 
-export const fetchLocationActionCreator = (): LocationActions => ({
+export const fetchLocation = (): LocationActions => ({
   type: LocationActionTypes.FETCH_LOCATION,
 });
 
-export const fetchLocationSuccessActionCreator = (
-  location: string,
-): LocationActions => ({
+export const fetchLocationSuccess = (location: string): LocationActions => ({
   type: LocationActionTypes.FETCH_LOCATION_SUCCESS,
   payload: location,
 });
 
-export const fetchLocationErrorActionCreator = (
-  errorMessage: string,
-): LocationActions => ({
+export const fetchLocationError = (errorMessage: string): LocationActions => ({
   type: LocationActionTypes.FETCH_LOCATION_ERROR,
   payload: errorMessage,
 });
 
-export const updateLocationNameActionCreator = (
-  cityName: string,
-): LocationActions => ({
+export const updateLocationName = (cityName: string): LocationActions => ({
   type: LocationActionTypes.UPDATE_LOCATION,
   payload: cityName,
 });
-export const updateCountyCodeActionCreator = (
-  countryCode: string,
-): LocationActions => ({
+export const updateCountyCode = (countryCode: string): LocationActions => ({
   type: LocationActionTypes.UPDATE_COUNTRY_CODE,
   payload: countryCode,
 });
 
-export const updateCoordinatesActionCreator = (
+export const updateCoordinates = (
   coordinates: CoordinatesType,
 ): LocationActions => ({
   type: LocationActionTypes.UPDATE_COORDINATES,

@@ -7,13 +7,13 @@ import Main from 'components/Main';
 
 import { useDispatch } from 'react-redux';
 import {
-  fetchLocationErrorActionCreator,
-  updateCoordinatesActionCreator,
-  fetchLocationActionCreator,
-  updateLocationNameActionCreator,
-  updateCountyCodeActionCreator,
-  fetchWeatherSuccessActionCreator,
-  changeWeatherApiActionCreator,
+  fetchLocationError,
+  updateCoordinates,
+  fetchLocation,
+  updateLocationName,
+  updateCountyCode,
+  fetchWeatherSuccess,
+  changeWeatherApi,
 } from 'actions';
 import { localeStorageItems } from 'constant';
 import { useTypedSelector } from 'hooks';
@@ -43,11 +43,11 @@ const App: React.FC = () => {
           localeStorageItems.coordinates,
           JSON.stringify(coordinates),
         );
-        dispatch(updateCoordinatesActionCreator(coordinates));
-        dispatch(fetchLocationActionCreator());
+        dispatch(updateCoordinates(coordinates));
+        dispatch(fetchLocation());
       },
       (error: GeolocationPositionError) => {
-        dispatch(fetchLocationErrorActionCreator(error.message));
+        dispatch(fetchLocationError(error.message));
       },
     );
   };
@@ -60,12 +60,11 @@ const App: React.FC = () => {
     const apiName = localStorage.getItem(localeStorageItems.apiName);
     !coordinates
       ? getCoordinates()
-      : dispatch(updateCoordinatesActionCreator(JSON.parse(coordinates)));
-    location && dispatch(updateLocationNameActionCreator(JSON.parse(location)));
-    country && dispatch(updateCountyCodeActionCreator(JSON.parse(country)));
-    weatherData &&
-      dispatch(fetchWeatherSuccessActionCreator(JSON.parse(weatherData)));
-    apiName && dispatch(changeWeatherApiActionCreator(JSON.parse(apiName)));
+      : dispatch(updateCoordinates(JSON.parse(coordinates)));
+    location && dispatch(updateLocationName(JSON.parse(location)));
+    country && dispatch(updateCountyCode(JSON.parse(country)));
+    weatherData && dispatch(fetchWeatherSuccess(JSON.parse(weatherData)));
+    apiName && dispatch(changeWeatherApi(JSON.parse(apiName)));
   }, []);
 
   return (
