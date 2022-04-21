@@ -1,20 +1,26 @@
 import React from 'react';
 
 import { useTypedSelector } from 'hooks';
+import { locationStateSelector } from 'selectors';
+import { Spinner } from 'components/Spinner';
+import { ErrorComponent } from 'components/ErrorComponent';
+
 import Clock from './Clock';
 import CityInput from './CityInput';
-
 import { StyledDateAndLocation } from './styles';
 
-const DateAndLocation = () => {
+const DateAndLocation: React.FC = () => {
   const { locationStateError, locationLoading } = useTypedSelector(
-    (state) => state.locationState,
+    locationStateSelector,
   );
 
+  if (locationLoading) return <Spinner />;
+  if (locationStateError)
+    return <ErrorComponent errorMessage={locationStateError} />;
   return (
     <StyledDateAndLocation>
       <Clock />
-      {!locationStateError && !locationLoading && <CityInput />}
+      <CityInput />
     </StyledDateAndLocation>
   );
 };

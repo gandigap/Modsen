@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useRef, useCallback } from 'react';
 
-export const useDebounce = (callback: any, delay: number) => {
+export const useDebounce = (
+  callback: (value: string) => void,
+  delay: number,
+) => {
   const timer: { current: NodeJS.Timeout | null } = useRef(null);
 
   const debounceCallback = useCallback(
-    (...args) => {
+    (value: string) => {
       timer.current && clearTimeout(timer.current);
       timer.current = setTimeout(() => {
-        callback(...args);
+        callback(value);
       }, delay);
     },
     [callback, delay],

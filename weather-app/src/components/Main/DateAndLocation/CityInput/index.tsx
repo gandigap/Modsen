@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useTypedSelector, useDebounce } from 'hooks';
 import { fetchWeather, updateLocationName } from 'actions';
 import { classNames, text } from 'constant';
+import { locationStateSelector } from 'selectors';
 
 import {
   StyledCityInput,
@@ -13,9 +14,7 @@ import {
 } from './styles';
 
 const CityInput: React.FC = () => {
-  const { location, countryCode } = useTypedSelector(
-    (state) => state.locationState,
-  );
+  const { location, countryCode } = useTypedSelector(locationStateSelector);
 
   const [locationName, setLocationName] = useState('');
 

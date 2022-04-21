@@ -3,6 +3,7 @@ import React from 'react';
 import { useTypedSelector } from 'hooks';
 import { text } from 'constant';
 import { getUrlIcon } from 'utils';
+import { weatherStateSelector } from 'selectors';
 
 import {
   StyledToday,
@@ -12,9 +13,7 @@ import {
 } from './styles';
 
 const Today: React.FC = () => {
-  const { weatherData, nameAPI } = useTypedSelector(
-    (state) => state.weatherState,
-  );
+  const { weatherData, nameAPI } = useTypedSelector(weatherStateSelector);
 
   return (
     <StyledToday>

@@ -10,13 +10,13 @@ import {
   StyledToDoListItemTime,
 } from './styles';
 
-interface ToDOListItemProps {
+interface ToDoListItemProps {
   info: ToDoListDataType;
   handleDelete: (index: number) => void;
   index: number;
 }
 
-const ToDoListItem: React.FC<ToDOListItemProps> = ({
+const ToDoListItem: React.FC<ToDoListItemProps> = ({
   info,
   handleDelete,
   index,

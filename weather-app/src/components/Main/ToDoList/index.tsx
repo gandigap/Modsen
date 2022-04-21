@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react';
 
 import { ToDoListDataType } from 'types';
 import { localeStorageItems, text } from 'constant';
+
 import ToDoListController from './ToDoListController';
 import ToDoListItem from './ToDoListItem';
-
 import { StyledToDoList, StyledToDoListTitle } from './styles';
 
 const ToDoList: React.FC = () => {
@@ -22,21 +22,18 @@ const ToDoList: React.FC = () => {
     );
   };
 
-  const list = () => {
-    return (
-      toDoList &&
-      toDoList.map((toDoListItem, index) => {
-        return (
-          <ToDoListItem
-            key={`${toDoListItem.timeValue} + ${index}`}
-            info={toDoListItem}
-            handleDelete={deleteToDo}
-            index={index}
-          />
-        );
-      })
-    );
-  };
+  const renderToDoListItems = () =>
+    toDoList &&
+    toDoList.map((toDoListItem, index) => {
+      return (
+        <ToDoListItem
+          key={`${toDoListItem.timeValue} + ${index}`}
+          info={toDoListItem}
+          handleDelete={deleteToDo}
+          index={index}
+        />
+      );
+    });
 
   useEffect(() => {
     setToDoList(JSON.parse(localStorage.getItem('toDoList') || '[]'));
@@ -45,7 +42,7 @@ const ToDoList: React.FC = () => {
   return (
     <StyledToDoList>
       <StyledToDoListTitle>{text.toDolist}</StyledToDoListTitle>
-      {list()}
+      {renderToDoListItems()}
       <ToDoListController />
     </StyledToDoList>
   );

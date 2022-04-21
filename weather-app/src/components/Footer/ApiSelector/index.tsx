@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { useTypedSelector } from 'hooks';
 import { changeWeatherApi, fetchWeather } from 'actions';
+import { weatherStateSelector } from 'selectors';
 import {
   localeStorageItems,
   apiNames,
@@ -9,7 +12,6 @@ import {
   defaultValues,
   classNames,
 } from 'constant';
-import { useTypedSelector } from 'hooks';
 
 import {
   DropDownButton,
@@ -22,17 +24,17 @@ import {
 const ApiSelector: React.FC = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { nameAPI } = useTypedSelector((state) => state.weatherState);
+  const { nameAPI } = useTypedSelector(weatherStateSelector);
 
   const changeView = () => {
     setIsOpen(!isOpen);
   };
 
-  const changeMode = (e: any) => {
+  const changeMode = (e: React.MouseEvent<HTMLButtonElement>) => {
     changeView();
-    const value = e.target.textContent;
+    const value = e.currentTarget.textContent;
     localStorage.setItem(localeStorageItems.apiName, JSON.stringify(value));
-    dispatch(changeWeatherApi(value));
+    value && dispatch(changeWeatherApi(value));
     dispatch(fetchWeather());
   };
 

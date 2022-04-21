@@ -1,11 +1,13 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { useTypedSelector } from 'hooks';
 
 import Footer from 'components/Footer';
 import Main from 'components/Main';
 
-import { useDispatch } from 'react-redux';
 import {
   fetchLocationError,
   updateCoordinates,
@@ -15,18 +17,16 @@ import {
   fetchWeatherSuccess,
   changeWeatherApi,
 } from 'actions';
-import { localeStorageItems } from 'constant';
-import { useTypedSelector } from 'hooks';
+import { weatherDataSelector } from 'selectors';
 import { getBackgroundUrlAndColor } from 'utils';
+import { localeStorageItems } from 'constant';
 
-import { StyledApp } from 'style';
 import GlobalStyle from 'globalStyle';
+import { StyledApp } from 'style';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  const weatherdata = useTypedSelector(
-    (state) => state.weatherState.weatherData,
-  );
+  const weatherdata = useTypedSelector(weatherDataSelector);
 
   const backgroundAndColor = weatherdata[0]
     ? getBackgroundUrlAndColor(weatherdata[0].code)

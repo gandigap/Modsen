@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/default-param-last */
-import { apiNames } from 'constant/api';
+import { apiNames } from 'constant';
 import { WeatherActions, WeatherActionTypes, WeatherStateType } from 'types';
 
 const initialState: WeatherStateType = {

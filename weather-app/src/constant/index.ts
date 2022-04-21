@@ -5,3 +5,6 @@ export * from './text';
 export * from './inputValues';
 export * from './defaultValues';
 export * from './classNames';
+export * from './weatherCodes';
+export * from './colors';
+export * from './baseUrl';

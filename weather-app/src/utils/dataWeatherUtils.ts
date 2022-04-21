@@ -1,5 +1,6 @@
 import { apiNames } from 'constant';
 import { SubTotalWeatherDataType, CurrentWeatherDataType } from 'types';
+
 import { getDate } from './dateUtils';
 
 export const getDataFromOpenWeatherApi = (

@@ -55,8 +55,7 @@ export const StyledApp = styled.div<StyledAppProps>`
   }
 
   input[type='time'] {
-    background-color: ${(props) => props.backgroundAndColor.color};
-    color: #000;
+    color: #fff;
     border: none;
     font-size: 20px;
     border: 3px solid ${(props) => props.backgroundAndColor.color};
@@ -75,5 +74,14 @@ export const StyledApp = styled.div<StyledAppProps>`
     & input {
       color: #fff;
     }
+  }
+
+  svg {
+    fill: ${(props) => props.backgroundAndColor.color};
+  }
+
+  .errorContainer {
+    background-color: ${(props) => props.backgroundAndColor.color};
+    color: #fff;
   }
 `;
