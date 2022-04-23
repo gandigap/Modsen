@@ -28,6 +28,7 @@ const WeatherList: React.FC = () => {
   if (weatherStateError)
     return <ErrorComponent errorMessage={weatherStateError} />;
   if (locationStateError) return null;
+
   return (
     <StyledWeatherList>
       <Today />

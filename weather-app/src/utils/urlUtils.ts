@@ -14,7 +14,7 @@ export const getUrlApi = (params: UrlParams) => {
 
   switch (type) {
     case apiNames.locationiq:
-      return `${baseUrl.locationiqApi}/v1/reverse.php?lat=${lat}&lon=${lon}&format=json?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}`;
+      return `${baseUrl.locationiqApi}/v1/reverse.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lon}&format=json`;
     case apiNames.openWeather:
       return `${baseUrl.openWeatherApi}/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&units=metric&appid=${process.env.REACT_APP_OPEN_WEATHER_API_KEY}`;
     case apiNames.openWeatherGeocode:

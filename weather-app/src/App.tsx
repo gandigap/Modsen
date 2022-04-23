@@ -39,10 +39,6 @@ const App: React.FC = () => {
           lat: coords.latitude,
           lon: coords.longitude,
         };
-        localStorage.setItem(
-          localeStorageItems.coordinates,
-          JSON.stringify(coordinates),
-        );
         dispatch(updateCoordinates(coordinates));
         dispatch(fetchLocation());
       },
@@ -61,10 +57,10 @@ const App: React.FC = () => {
     !coordinates
       ? getCoordinates()
       : dispatch(updateCoordinates(JSON.parse(coordinates)));
-    location && dispatch(updateLocationName(JSON.parse(location)));
-    country && dispatch(updateCountyCode(JSON.parse(country)));
+    location && dispatch(updateLocationName(location));
+    country && dispatch(updateCountyCode(country));
     weatherData && dispatch(fetchWeatherSuccess(JSON.parse(weatherData)));
-    apiName && dispatch(changeWeatherApi(JSON.parse(apiName)));
+    apiName && dispatch(changeWeatherApi(apiName));
   }, []);
 
   return (

@@ -5,13 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useTypedSelector } from 'hooks';
 import { changeWeatherApi, fetchWeather } from 'actions';
 import { weatherStateSelector } from 'selectors';
-import {
-  localeStorageItems,
-  apiNames,
-  text,
-  defaultValues,
-  classNames,
-} from 'constant';
+import { apiNames, text, defaultValues, classNames } from 'constant';
 
 import {
   DropDownButton,
@@ -33,7 +27,6 @@ const ApiSelector: React.FC = () => {
   const changeMode = (e: React.MouseEvent<HTMLButtonElement>) => {
     changeView();
     const value = e.currentTarget.textContent;
-    localStorage.setItem(localeStorageItems.apiName, JSON.stringify(value));
     value && dispatch(changeWeatherApi(value));
     dispatch(fetchWeather());
   };
