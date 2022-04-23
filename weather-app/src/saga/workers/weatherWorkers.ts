@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { select, put, call } from 'redux-saga/effects';
 
-import { fetchWeatherError, fetchWeatherSuccess } from 'actions';
+import {
+  fetchWeatherError,
+  fetchWeatherSuccess,
+  updateLocaleStorage,
+} from 'actions';
 import { apiNames, errors, localeStorageItems } from 'constant';
 import { RootState } from 'reducers';
 import { CurrentWeatherDataType, TotalWeatherDataType } from 'types';
 import { getDataFromOpenWeatherApi, getUrlApi } from 'utils';
-import { updateLocaleStorage } from 'actions/localeStorageActions';
 
 import { getLocationCoordinates } from './locationWorkers';
 

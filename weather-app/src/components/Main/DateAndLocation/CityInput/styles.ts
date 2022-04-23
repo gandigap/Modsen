@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface StyledCityInputProps {
+  customWidth: string;
+}
+
 export const StyledCityInputContainer = styled.div`
   padding: 0 5px;
   display: flex;
@@ -7,10 +11,10 @@ export const StyledCityInputContainer = styled.div`
   text-align: right;
 `;
 
-export const StyledCityInput = styled.input`
+export const StyledCityInput = styled.input<StyledCityInputProps>`
   font-size: 36px;
   text-align: right;
-  width: 400px;
+  width: ${(props) => props.customWidth};
 `;
 
 export const StyledCoutryCode = styled.label`

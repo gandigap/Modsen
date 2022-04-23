@@ -22,6 +22,7 @@ export const StyledToDoListItemTime = styled.time`
 export const StyledToDoListItemText = styled.span`
   margin: 5px;
   font-style: italic;
+  font-weight: bold;
 `;
 
 export const StyledToDoListItemDeleteButton = styled.button`

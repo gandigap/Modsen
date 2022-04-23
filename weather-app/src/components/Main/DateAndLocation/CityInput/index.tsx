@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { useTypedSelector, useDebounce } from 'hooks';
@@ -17,6 +17,10 @@ const CityInput: React.FC = () => {
   const { location, countryCode } = useTypedSelector(locationStateSelector);
 
   const [locationName, setLocationName] = useState('');
+  const customWidth = useMemo(
+    () => `${(locationName.length + 1) * 20}${text.px}`,
+    [locationName],
+  );
 
   const dispatch = useDispatch();
 
@@ -47,7 +51,7 @@ const CityInput: React.FC = () => {
         type="text"
         value={locationName}
         onChange={handleChangeInputValue}
-        style={{ width: `${(locationName.length + 1) * 20}${text.px}` }}
+        customWidth={customWidth}
       />
       {countryCode && <StyledCoutryCode>{countryCode}</StyledCoutryCode>}
     </StyledCityInputContainer>

@@ -10,39 +10,24 @@ export function* localeStorageWorker() {
   const action: LocaleStorageActions = yield take(
     LocaleStorageActionTypes.UPDATE_LOCALE_STORAGE,
   );
+  let nameItem: string | null = null;
   switch (action.payload.item) {
     case localeStorageItems.location:
-      yield localStorage.setItem(
-        localeStorageItems.location,
-        action.payload.data,
-      );
+      nameItem = localeStorageItems.location;
       break;
     case localeStorageItems.coordinates:
-      yield localStorage.setItem(
-        localeStorageItems.coordinates,
-        action.payload.data,
-      );
+      nameItem = localeStorageItems.coordinates;
       break;
     case localeStorageItems.countryCode:
-      yield localStorage.setItem(
-        localeStorageItems.countryCode,
-        action.payload.data,
-      );
+      nameItem = localeStorageItems.countryCode;
       break;
     case localeStorageItems.weatherData:
-      yield localStorage.setItem(
-        localeStorageItems.weatherData,
-        action.payload.data,
-      );
+      nameItem = localeStorageItems.weatherData;
       break;
-    case localeStorageItems.apiName:
-      yield localStorage.setItem(
-        localeStorageItems.apiName,
-        action.payload.data,
-      );
-      break;
-
     default:
+      nameItem = localeStorageItems.apiName;
       break;
   }
+
+  yield localStorage.setItem(nameItem, action.payload.data);
 }

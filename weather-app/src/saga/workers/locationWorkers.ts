@@ -14,12 +14,12 @@ import {
   fetchWeather,
   updateCoordinates,
   updateCountyCode,
+  updateLocaleStorage,
 } from 'actions';
 import { RootState } from 'reducers';
 import { locationStateSelector } from 'selectors';
 import { errors, apiNames, localeStorageItems } from 'constant';
 import { getUrlApi } from 'utils';
-import { updateLocaleStorage } from 'actions/localeStorageActions';
 
 export function* getLocationCoordinates() {
   try {
